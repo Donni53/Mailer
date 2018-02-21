@@ -57,6 +57,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\MvvmLightLibs.5.4.1\lib\net45\System.Windows.Interactivity.dll</HintPath>
     </Reference>
@@ -81,9 +82,11 @@
     <Compile Include="Behaviours\FocusBehaviour.cs" />
     <Compile Include="Behaviours\TransitionBehaviour.cs" />
     <Compile Include="Behaviours\VisibilityTransitionBehaviour.cs" />
+    <Compile Include="Controls\BindablePasswordBox.cs" />
     <Compile Include="Controls\FlyoutControl.xaml.cs">
       <DependentUpon>FlyoutControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\TextBoxWithHint.cs" />
     <Compile Include="Domain\Settings.cs" />
     <Compile Include="Helpers\DateTimeConverter.cs" />
     <Compile Include="Helpers\ImageAsyncHelper.cs" />
@@ -92,7 +95,9 @@
     <Compile Include="Helpers\NativeMethods.cs" />
     <Compile Include="Helpers\NetworkHelper.cs" />
     <Compile Include="Helpers\StringHelper.cs" />
+    <Compile Include="Model\Account.cs" />
     <Compile Include="Model\ColorScheme.cs" />
+    <Compile Include="Model\SettingsLanguage.cs" />
     <Compile Include="Resources\Localization\ErrorResources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -112,14 +117,14 @@
     <Compile Include="View\Flyouts\CommonErrorView.xaml.cs">
       <DependentUpon>CommonErrorView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Main\MainPageView.xaml.cs">
+      <DependentUpon>MainPageView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Settings\AboutView.xaml.cs">
       <DependentUpon>AboutView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Settings\AccountsView.xaml.cs">
       <DependentUpon>AccountsView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Settings\AutoResponsesView.xaml.cs">
-      <DependentUpon>AutoResponsesView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Settings\NotificationsView.xaml.cs">
       <DependentUpon>NotificationsView.xaml</DependentUpon>
@@ -161,7 +166,23 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Resources\Styles\TextBoxStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Themes\Accents\Green.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Themes\Accents\Grey.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\Flyouts\CommonErrorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Main\MainPageView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -182,10 +203,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Resources\Styles\WindowButtons.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Resources\Themes\Accent.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -229,10 +246,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Resources\Themes\Graphite.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Resources\Themes\Light.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -242,10 +255,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Settings\AccountsView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Settings\AutoResponsesView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

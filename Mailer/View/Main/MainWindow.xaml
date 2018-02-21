@@ -7,7 +7,6 @@
         xmlns:localization="clr-namespace:Mailer.Resources.Localization"
         mc:Ignorable="d"
         Height="800" Width="1024"
-        MaxHeight="800"
         AllowsTransparency="True"
         ResizeMode="CanResize"
         WindowStyle="None"
@@ -34,16 +33,12 @@
             <Image Stretch="UniformToFill" x:Name="BackgroundArtControl" Margin="0,0,0,0"/>
         </Grid>
         <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
-            <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,5,5,0">
-                <Button Style="{StaticResource MinimizeButtonStyle}" Command="{Binding MinimizeCommand}"/>
+            <Frame x:Name="MainFrame" Background="Transparent" NavigationUIVisibility="Hidden"/>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,5,5,0">
+                <Button Style="{StaticResource MinimizeButtonStyle}" Command="{Binding MinimizeWindowCommand}"/>
                 <ToggleButton x:Name="MaximizeButton" Style="{StaticResource MaximizeButtonStyle}" IsChecked="{Binding IsWindowMaximized, Mode=OneWay}" Command="{Binding MaximizeWindowCommand}"/>
-                <Button Style="{StaticResource CloseButtonStyle}" Command="{Binding CloseCommand}"/>
+                <Button Style="{StaticResource CloseButtonStyle}" Command="{Binding CloseWindowCommand}"/>
             </StackPanel>
-            <Frame Grid.Row="1" x:Name="MainFrame" Background="Transparent" NavigationUIVisibility="Hidden"/>
         </Grid>
     </Grid>
 </Window>

@@ -17,9 +17,12 @@ namespace Mailer.ViewModel
             InitiailizeCommands();
         }
 
-        public RelayCommand CloseCommand { get; private set; }
+        public RelayCommand CloseWindowCommand { get; private set; }
         public RelayCommand MinimizeWindowCommand { get; private set; }
+        public RelayCommand MaximizeWindowCommand { get; private set; }
         public RelayCommand RestartCommand { get; private set; }
+        public RelayCommand GoBackCommand { get; private set; }
+        public RelayCommand GoToSettingsCommand { get; private set; }
 
 
         public WindowState WindowState
@@ -36,14 +39,27 @@ namespace Mailer.ViewModel
 
         private void InitiailizeCommands()
         {
-            CloseCommand = new RelayCommand(() => Application.Current.MainWindow.Close());
-            MinimizeWindowCommand = new RelayCommand(Minimize);
+            CloseWindowCommand = new RelayCommand(() => Application.Current.MainWindow.Close());
+            MinimizeWindowCommand = new RelayCommand(() => WindowState = WindowState.Minimized);
+            MaximizeWindowCommand = new RelayCommand(() => WindowState = IsWindowMaximized ? WindowState.Normal : WindowState.Maximized);
+            GoToSettingsCommand = new RelayCommand(() =>
+            {
+                //TODO OnNavigateToPage(new NavigateToPageMessage() { Page = "/Settings.SettingsView" });
+            });
             RestartCommand = new RelayCommand(Restart);
         }
 
         private void Minimize()
         {
             WindowState = WindowState.Minimized;
+        }
+
+        public bool IsWindowMaximized
+        {
+            get
+            {
+                return WindowState == WindowState.Maximized;
+            }
         }
 
         private void Restart()

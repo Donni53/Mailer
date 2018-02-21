@@ -138,11 +138,32 @@
   <data name="SettingsAbout" xml:space="preserve">
     <value>About</value>
   </data>
+  <data name="SettingsAccountAdd" xml:space="preserve">
+    <value>Add new</value>
+  </data>
+  <data name="SettingsAccountDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="SettingsAccountEdit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
   <data name="SettingsAccounts" xml:space="preserve">
     <value>Accounts</value>
   </data>
+  <data name="SettingsAccountSelectAccount" xml:space="preserve">
+    <value>Select an account to use</value>
+  </data>
+  <data name="SettingsAutomaticReplies" xml:space="preserve">
+    <value>Automatic replies settings</value>
+  </data>
   <data name="SettingsAutoResponses" xml:space="preserve">
     <value>Automatic Responses</value>
+  </data>
+  <data name="SettingsEnableAutoReplies" xml:space="preserve">
+    <value>Enable automatic replies for this account</value>
+  </data>
+  <data name="SettingsEnterText" xml:space="preserve">
+    <value>Enter your message here</value>
   </data>
   <data name="SettingsMenuGeneral" xml:space="preserve">
     <value>General</value>
@@ -164,6 +185,12 @@
   </data>
   <data name="SettingsSecurity" xml:space="preserve">
     <value>Security</value>
+  </data>
+  <data name="SettingsSecurityPasswordReminder" xml:space="preserve">
+    <value>Password Reminder</value>
+  </data>
+  <data name="SettingsSecurityUsePassword" xml:space="preserve">
+    <value>Use a password to access the application</value>
   </data>
   <data name="SettingsUIAccentColor" xml:space="preserve">
     <value>Accent color</value>

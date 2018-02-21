@@ -41,5 +41,10 @@ namespace Mailer.View.Main
         {
             //throw new NotImplementedException();
         }
+
+        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+        {
+            MainFrame.Navigate(new Uri("View/Settings/SettingsView.xaml", UriKind.Relative));
+        }
     }
 }

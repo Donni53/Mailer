@@ -40,6 +40,9 @@ namespace Mailer.Domain
 
         public bool BlurBackground { get; set; }
 
+        public bool EnableTrayIcon { get; set; }
+        public bool ShowBackgroundArt { get; set; }
+
         public Settings()
         {
             CheckForUpdates = true;
@@ -48,6 +51,8 @@ namespace Mailer.Domain
             Language = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
             SendStats = true;
             BlurBackground = false;
+            EnableTrayIcon = false;
+            ShowBackgroundArt = false;
         }
 
         public static void Load()

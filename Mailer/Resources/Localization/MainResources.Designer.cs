@@ -124,6 +124,33 @@ namespace Mailer.Resources.Localization {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Add new.
+        /// </summary>
+        public static string SettingsAccountAdd {
+            get {
+                return ResourceManager.GetString("SettingsAccountAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Delete.
+        /// </summary>
+        public static string SettingsAccountDelete {
+            get {
+                return ResourceManager.GetString("SettingsAccountDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Edit.
+        /// </summary>
+        public static string SettingsAccountEdit {
+            get {
+                return ResourceManager.GetString("SettingsAccountEdit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Accounts.
         /// </summary>
         public static string SettingsAccounts {
@@ -133,11 +160,47 @@ namespace Mailer.Resources.Localization {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Select an account to use.
+        /// </summary>
+        public static string SettingsAccountSelectAccount {
+            get {
+                return ResourceManager.GetString("SettingsAccountSelectAccount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Automatic replies settings.
+        /// </summary>
+        public static string SettingsAutomaticReplies {
+            get {
+                return ResourceManager.GetString("SettingsAutomaticReplies", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Automatic Responses.
         /// </summary>
         public static string SettingsAutoResponses {
             get {
                 return ResourceManager.GetString("SettingsAutoResponses", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Enable automatic replies for this account.
+        /// </summary>
+        public static string SettingsEnableAutoReplies {
+            get {
+                return ResourceManager.GetString("SettingsEnableAutoReplies", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Enter your message here.
+        /// </summary>
+        public static string SettingsEnterText {
+            get {
+                return ResourceManager.GetString("SettingsEnterText", resourceCulture);
             }
         }
         
@@ -201,6 +264,24 @@ namespace Mailer.Resources.Localization {
         public static string SettingsSecurity {
             get {
                 return ResourceManager.GetString("SettingsSecurity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Password Reminder.
+        /// </summary>
+        public static string SettingsSecurityPasswordReminder {
+            get {
+                return ResourceManager.GetString("SettingsSecurityPasswordReminder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Use a password to access the application.
+        /// </summary>
+        public static string SettingsSecurityUsePassword {
+            get {
+                return ResourceManager.GetString("SettingsSecurityUsePassword", resourceCulture);
             }
         }
         

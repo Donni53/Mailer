@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Mailer.View.Settings
+namespace Mailer.View.Main
 {
     /// <summary>
-    /// Логика взаимодействия для AutomaticResponses.xaml
+    /// Логика взаимодействия для MainPage.xaml
     /// </summary>
-    public partial class AutomaticResponses : Page
+    public partial class MainPage : Page
     {
-        public AutomaticResponses()
+        public MainPage()
         {
             InitializeComponent();
         }

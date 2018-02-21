@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 
-namespace Meridian.Controls
+namespace Mailer.Controls
 {
     public class TextBoxWithHint : TextBox
     {
