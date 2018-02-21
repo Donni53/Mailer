@@ -1,9 +1,49 @@
-﻿<Application x:Class="Mailer.App"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:Mailer"
-             StartupUri="MainWindow.xaml">
+<Application x:Class="Mailer.App" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="clr-namespace:Mailer" 
+             Startup="App_OnStartup" DispatcherUnhandledException="App_OnDispatcherUnhandledException" 
+             StartupUri="View/Main/MainWindow.xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             d1p1:Ignorable="d" xmlns:d1p1="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:converters="clr-namespace:Mailer.UI.Converters">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Resources/Themes/Accents/Blue.xaml"/>
+                <ResourceDictionary Source="/Resources/Themes/Light.xaml"/>
+                <ResourceDictionary Source="/Resources/Styles/Icons.xaml"/>
+                <ResourceDictionary Source="/Resources/Styles/ComboBoxStyles.xaml" />
+                <ResourceDictionary Source="/Resources/Styles/CheckBoxStyles.xaml" />
+                <ResourceDictionary Source="/Resources/Styles/WindowButtons.xaml"/>
+                <ResourceDictionary Source="/Resources/Styles/ListBoxStyles.xaml" />
+                <ResourceDictionary Source="/Resources/Styles/Animations.xaml" />
+                <ResourceDictionary Source="/Resources/Styles/ScrollbarStyles.xaml" />
+                <ResourceDictionary Source="/Resources/Styles/ButtonStyles.xaml" />
+                <!--<ResourceDictionary Source="/Resources/Styles/ExpanderStyles.xaml" />
+                <ResourceDictionary Source="/Resources/Styles/ListViewStyles.xaml" />
+                <ResourceDictionary Source="/Resources/Styles/AudioControlStyles.xaml" />
+                <ResourceDictionary Source="/Resources/Styles/MainControlStyles.xaml" />
+                <ResourceDictionary Source="/Resources/Styles/SliderStyles.xaml" />
+                <ResourceDictionary Source="/Resources/Styles/TextBoxStyles.xaml" />
+                <ResourceDictionary Source="/Resources/Styles/ProgressBarStyles.xaml" />
+                <ResourceDictionary Source="/Resources/Styles/ContextMenuStyles.xaml" />
+                <ResourceDictionary Source="/Resources/Styles/TabControlStyles.xaml" />
+                <ResourceDictionary Source="/Resources/Styles/Styles.xaml" />-->
+                <ResourceDictionary>
+                    <converters:BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+                    <!--<viewModel:ViewModelLocator x:Key="Locator"/>
+                    <converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
+                    <converters:NullToBooleanConverter x:Key="NullToBoolConverter"/>
+                    <converters:StringToUpperConverter x:Key="StringToUpperConverter"/>
+                    <converters:TimeSpanConverter x:Key="TimeSpanConverter"/>
+                    <converters:InvertBooleanConverter x:Key="InvertBoolConverter" />-->
+                    <!--<converters1:AlbumContextMenuVisibilityConverter x:Key="AlbumContextMenuVisibilityConverter"/>-->
+                    <!--<converters:BooleanToObjectConverter x:Key="PlayIconConverter" TrueObject="/Meridian;component/Resources/Images/pause_thumb.png" FalseObject="/Meridian;component/Resources/Images/play_thumb.png"/>-->
+                    <vm:ViewModelLocator x:Key="Locator" d:IsDataSource="True" xmlns:vm="clr-namespace:Mailer.ViewModel" />
+                </ResourceDictionary>
+                <!--<ResourceDictionary Source="/Resources/Styles/DataTemplates.xaml"/>
+                <ResourceDictionary Source="/Resources/Styles/DataTemplatesOld.xaml"/>
+                <ResourceDictionary Source="/Layout/Templates/PageBaseTemplate.xaml" />
+                <ResourceDictionary Source="/Layout/Templates/TwoColumnPageLayoutTemplate.xaml" />-->
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>
