@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +14,8 @@ using Mailer.Controls;
 using Mailer.Helpers;
 using Mailer.Model;
 using Mailer.Resources.Localization;
+using Mailer.View.Account;
+using Mailer.ViewModel.Account;
 
 namespace Mailer.ViewModel.Settings
 {
@@ -23,7 +26,7 @@ namespace Mailer.ViewModel.Settings
         {
             {MainResources.SettingsAccounts, "/View/Settings/AccountsView.xaml"},
             {MainResources.SettingsPersonalization, "/View/Settings/PersonalizationView.xaml"},
-            {MainResources.SettingsSecurity, "/View/Settings/SecurityView.xaml"},
+            //{MainResources.SettingsSecurity, "/View/Settings/SecurityView.xaml"},
             {MainResources.SettingsNotifications, "/View/Settings/NotificationsView.xaml"},
             {MainResources.SettingsAbout, "/View/Settings/AboutView.xaml"}
         };
@@ -66,12 +69,16 @@ namespace Mailer.ViewModel.Settings
         private bool _blurBackground;
         private string _cacheSize;
         private SettingsLanguage _selectedLanguage;
+        private int _selectedAccount;
 
         public RelayCommand CloseSettingsCommand { get; private set; }
         public RelayCommand SaveCommand { get; private set; }
         public RelayCommand SaveRestartCommand { get; private set; }
         public RelayCommand CheckUpdatesCommand { get; private set; }
         public RelayCommand ClearCacheCommand { get; private set; }
+        public RelayCommand EditAccountCommand { get; private set; }
+        public RelayCommand DeleteAccountCommand { get; private set; }
+        public RelayCommand AddAccountCommand { get; private set; }
 
         public SettingsViewModel()
         {
@@ -84,7 +91,7 @@ namespace Mailer.ViewModel.Settings
             _enableTrayIcon = Domain.Settings.Instance.EnableTrayIcon;
             _showBackgroundArt = Domain.Settings.Instance.ShowBackgroundArt;
             _blurBackground = Domain.Settings.Instance.BlurBackground;
-
+            _selectedAccount = Domain.Settings.Instance.SelectedAccount;
 
             var lang = _languages.FirstOrDefault(l => l.LanguageCode == Domain.Settings.Instance.Language);
             if (lang != null)
@@ -93,6 +100,9 @@ namespace Mailer.ViewModel.Settings
                 _selectedLanguage = _languages.First();
         }
 
+        public List<Model.Account> Accounts => Domain.Settings.Instance.Accounts;
+
+        public string Version => Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
         public string SelectedTheme
         {
@@ -194,6 +204,16 @@ namespace Mailer.ViewModel.Settings
             set => Set(ref _cacheSize, value);
         }
 
+        public int SelectedAccount
+        {
+            get => _selectedAccount;
+            set
+            {
+                if (Set(ref _selectedAccount, value))
+                    CanSave = true;
+            }
+        }
+
         public List<SettingsLanguage> Languages => _languages;
 
         public SettingsLanguage SelectedLanguage
@@ -223,6 +243,9 @@ namespace Mailer.ViewModel.Settings
 
         private void InitializeCommands()
         {
+            EditAccountCommand = new RelayCommand(EditAccount);
+            DeleteAccountCommand = new RelayCommand(DeleteAccount);
+            AddAccountCommand = new RelayCommand(AddAccount);
             CloseSettingsCommand = new RelayCommand(() =>
             {
                 ViewModelLocator.MainViewModel.GoBackCommand.Execute(null);
@@ -274,6 +297,27 @@ namespace Mailer.ViewModel.Settings
             });
         }
 
+        private void AddAccount()
+        {
+            /*var flyout = new FlyoutControl();
+            flyout.FlyoutContent = new AccountSettingsView();
+            flyout.Show();*/
+        }
+
+        private void EditAccount()
+        {
+            /*var flyout = new FlyoutControl();
+            flyout.FlyoutContent = new AccountSettingsView(Accounts[SelectedAccount]);
+            flyout.Show();*/
+        }
+
+        private void DeleteAccount()
+        {
+            Accounts.RemoveAt(SelectedAccount);
+            if (Accounts.Count == 0) ;
+            //TODO GoToAuth
+        }
+
         private void SaveSettings()
         {
             switch (SelectedTheme)
@@ -322,6 +366,7 @@ namespace Mailer.ViewModel.Settings
             Domain.Settings.Instance.EnableTrayIcon = EnableTrayIcon;
             Domain.Settings.Instance.InstallDevUpdates = InstallDevUpdates;
             Domain.Settings.Instance.Language = SelectedLanguage.LanguageCode;
+            Domain.Settings.Instance.SelectedAccount = SelectedAccount;
 
             Domain.Settings.Instance.Save();
 

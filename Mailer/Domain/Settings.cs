@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using Mailer.Controls;
+using Mailer.Model;
 using Mailer.Resources.Localization;
 using Mailer.View.Flyouts;
 using Newtonsoft.Json;
@@ -42,6 +43,8 @@ namespace Mailer.Domain
 
         public bool EnableTrayIcon { get; set; }
         public bool ShowBackgroundArt { get; set; }
+        public List<Account> Accounts { get; set; }
+        public int SelectedAccount { get; set; }
 
         public Settings()
         {
@@ -53,6 +56,8 @@ namespace Mailer.Domain
             BlurBackground = false;
             EnableTrayIcon = false;
             ShowBackgroundArt = false;
+            Accounts = new List<Account>();
+            SelectedAccount = -1;
         }
 
         public static void Load()

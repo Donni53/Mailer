@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Input;
+using Mailer.Controls;
+using Mailer.View.Account;
+using Mailer.View.Flyouts;
 
 namespace Mailer.View.Main
 {
@@ -28,23 +31,20 @@ namespace Mailer.View.Main
 
         public void InitializeControls()
         {
-            MainFrame.Navigate(new Uri("View/Settings/SettingsView.xaml", UriKind.Relative));
+            //MainFrame.Navigate(new Uri("View/Settings/SettingsView.xaml", UriKind.Relative));
+            //MainFrame.Navigate(new Uri("View/Account/AccountSettingsView.xaml", UriKind.Relative));
             //BackgroundArtControl.Effect = new BlurEffect() { RenderingBias = RenderingBias.Quality, Radius = 35 };
         }
 
         private void MainPage_OnLoaded(object sender, RoutedEventArgs e)
         {
-            //throw new NotImplementedException();
+            var flyout = new FlyoutControl {FlyoutContent = new AccountSetupView()};
+            flyout.Show();
         }
 
         private void MainPage_OnContentRendered(object sender, EventArgs e)
         {
             //throw new NotImplementedException();
-        }
-
-        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
-        {
-            MainFrame.Navigate(new Uri("View/Settings/SettingsView.xaml", UriKind.Relative));
         }
     }
 }

@@ -32,17 +32,26 @@
                 <TextBlock Text="{x:Static localization:MainResources.SettingsAccountSelectAccount}" FontSize="12" Opacity="0.7" Margin="0,0,0,0" Foreground="{DynamicResource ForegroundBrush}"/>
                 <StackPanel Orientation="Horizontal" Margin="0,3,0,0" HorizontalAlignment="Left">
                     <ComboBox Width="200" Style="{StaticResource CommonComboBoxStyle}" HorizontalAlignment="Left" ItemsSource="{Binding Accounts}"
-                              SelectedValue="{Binding SelectedAccount, Mode=TwoWay}" DisplayMemberPath="Title"/>
+                              SelectedIndex="{Binding SelectedAccount, Mode=TwoWay}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding ImapData.Login}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                        </ComboBox>
                     <Button Style="{StaticResource HighlightedButtonStyle}" Content="{x:Static localization:MainResources.SettingsAccountEdit}" Command="{Binding EditAccountCommand}"  Margin="15,0,0,0"/>
                     <Button Style="{StaticResource CommonButtonStyle}" Content="{x:Static localization:MainResources.SettingsAccountDelete}" Margin="15,0,0,0" Command="{Binding DeleteAccountCommand}"/>
                 </StackPanel>
-                <Button Style="{StaticResource HighlightedButtonStyle}" Content="{x:Static localization:MainResources.SettingsAccountAdd}" Command="{Binding EditAccountCommand}"  Margin="0,3,0,0" HorizontalAlignment="Left"/>
+                <Button Style="{StaticResource HighlightedButtonStyle}" Content="{x:Static localization:MainResources.SettingsAccountAdd}" Command="{Binding AddAccountCommand}"  Margin="0,3,0,0" HorizontalAlignment="Left"/>
                 <TextBlock Text="{x:Static localization:MainResources.SettingsAutomaticReplies}" FontSize="12" Opacity="0.7" Margin="0,15,0,0" Foreground="{DynamicResource ForegroundBrush}"/>
                 <CheckBox Content="{x:Static localization:MainResources.SettingsEnableAutoReplies}" FontSize="12" Opacity="0.7" Margin="0,3,0,0" Foreground="{DynamicResource ForegroundBrush}"/>
-                <StackPanel Margin="0,20,0,0">
+                <StackPanel Margin="0,20,0,0" >
                     <TextBlock Text="{x:Static localization:MainResources.SettingsEnterText}" FontSize="12" Opacity="0.7" Margin="0,0,0,0" Foreground="{DynamicResource ForegroundBrush}"/>
                     <ScrollViewer Margin="0,3,0,0">
-                        <TextBox AcceptsReturn="True" Text="{Binding AutoMessage, Mode=TwoWay}" TextWrapping="Wrap" Style="{StaticResource CommonTextBoxStyle}" Height="100"
+                        <TextBox Visibility="{Binding AutoReplies, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=True}" AcceptsReturn="True" 
+                                 Text="{Binding AutoMessage, Mode=TwoWay}" TextWrapping="Wrap" Style="{StaticResource CommonTextBoxStyle}" Height="100"
                                  Foreground="{DynamicResource ForegroundBrush}" MaxLength="999999"/>
                     </ScrollViewer>
                 </StackPanel>

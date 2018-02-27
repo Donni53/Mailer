@@ -19,29 +19,29 @@
                 <ResourceDictionary Source="/Resources/Styles/ScrollbarStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/ButtonStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/TextBoxStyles.xaml" />
+                <ResourceDictionary Source="/Resources/Styles/ProgressBarStyles.xaml" />
                 <!--<ResourceDictionary Source="/Resources/Styles/ExpanderStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/ListViewStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/AudioControlStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/MainControlStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/SliderStyles.xaml" />
-                <ResourceDictionary Source="/Resources/Styles/ProgressBarStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/ContextMenuStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/TabControlStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/Styles.xaml" />-->
                 <ResourceDictionary>
                     <converters:BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
-                    <!--<viewModel:ViewModelLocator x:Key="Locator"/>
                     <converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
                     <converters:NullToBooleanConverter x:Key="NullToBoolConverter"/>
                     <converters:StringToUpperConverter x:Key="StringToUpperConverter"/>
                     <converters:TimeSpanConverter x:Key="TimeSpanConverter"/>
-                    <converters:InvertBooleanConverter x:Key="InvertBoolConverter" />-->
+                    <converters:InvertBooleanConverter x:Key="InvertBoolConverter" />
+                    <!--<viewModel:ViewModelLocator x:Key="Locator"/>-->
                     <!--<converters1:AlbumContextMenuVisibilityConverter x:Key="AlbumContextMenuVisibilityConverter"/>-->
                     <!--<converters:BooleanToObjectConverter x:Key="PlayIconConverter" TrueObject="/Meridian;component/Resources/Images/pause_thumb.png" FalseObject="/Meridian;component/Resources/Images/play_thumb.png"/>-->
                     <vm:ViewModelLocator x:Key="Locator" d:IsDataSource="True" xmlns:vm="clr-namespace:Mailer.ViewModel" />
                 </ResourceDictionary>
-                <!--<ResourceDictionary Source="/Resources/Styles/DataTemplates.xaml"/>
-                <ResourceDictionary Source="/Resources/Styles/DataTemplatesOld.xaml"/>
+                <ResourceDictionary Source="/Resources/Styles/DataTemplates.xaml"/>
+                <!--<ResourceDictionary Source="/Resources/Styles/DataTemplatesOld.xaml"/>
                 <ResourceDictionary Source="/Layout/Templates/PageBaseTemplate.xaml" />
                 <ResourceDictionary Source="/Layout/Templates/TwoColumnPageLayoutTemplate.xaml" />-->
             </ResourceDictionary.MergedDictionaries>

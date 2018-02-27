@@ -240,4 +240,37 @@
   <data name="SettingsUpdatesUpdated" xml:space="preserve">
     <value>Mailer was updated. Restart to apply changes.</value>
   </data>
+  <data name="AccountImapAddr" xml:space="preserve">
+    <value>IMAP address</value>
+  </data>
+  <data name="AccountImapSsl" xml:space="preserve">
+    <value>Use SSL for IMAP</value>
+  </data>
+  <data name="AccountLogin" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="AccountMessagesName" xml:space="preserve">
+    <value>Name in messages</value>
+  </data>
+  <data name="AccountPassword" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="AccountSave" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="AccountSetup" xml:space="preserve">
+    <value>Account setup</value>
+  </data>
+  <data name="AccountSmtpAddr" xml:space="preserve">
+    <value>SMTP address</value>
+  </data>
+  <data name="AccountSmtpSsl" xml:space="preserve">
+    <value>Use SSL for SMTP</value>
+  </data>
+  <data name="AccountUsername" xml:space="preserve">
+    <value>Username</value>
+  </data>
+  <data name="CloseButton" xml:space="preserve">
+    <value>Close</value>
+  </data>
 </root>

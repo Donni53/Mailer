@@ -55,6 +55,9 @@
     <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.11.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.4.12\lib\net45\NLog.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Windows.Forms" />
@@ -83,9 +86,8 @@
     <Compile Include="Behaviours\TransitionBehaviour.cs" />
     <Compile Include="Behaviours\VisibilityTransitionBehaviour.cs" />
     <Compile Include="Controls\BindablePasswordBox.cs" />
-    <Compile Include="Controls\FlyoutControl.xaml.cs">
-      <DependentUpon>FlyoutControl.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="Controls\FlyoutContent.cs" />
+    <Compile Include="Controls\FlyoutControl.xaml.cs" />
     <Compile Include="Controls\TextBoxWithHint.cs" />
     <Compile Include="Domain\Settings.cs" />
     <Compile Include="Helpers\DateTimeConverter.cs" />
@@ -97,7 +99,9 @@
     <Compile Include="Helpers\StringHelper.cs" />
     <Compile Include="Model\Account.cs" />
     <Compile Include="Model\ColorScheme.cs" />
+    <Compile Include="Model\ImapData.cs" />
     <Compile Include="Model\SettingsLanguage.cs" />
+    <Compile Include="Model\SmtpData.cs" />
     <Compile Include="Resources\Localization\ErrorResources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -108,12 +112,24 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MainResources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Services\AccountManager.cs" />
+    <Compile Include="Services\LoggingService.cs" />
+    <Compile Include="UI\Converters\BooleanToObjectConverter.cs" />
     <Compile Include="UI\Converters\BooleanToVisibilityConverter.cs" />
+    <Compile Include="UI\Converters\InvertBooleanConverter.cs" />
+    <Compile Include="UI\Converters\NullToBooleanConverter.cs" />
+    <Compile Include="UI\Converters\NullToVisibilityConverter.cs" />
+    <Compile Include="UI\Converters\StringToUpperConverter.cs" />
+    <Compile Include="UI\Converters\TimeSpanConverter.cs" />
     <Compile Include="UI\Extensions\VisualTreeHelperExtensions.cs" />
+    <Compile Include="ViewModel\Account\AccountSetupViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\Settings\SettingsViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
+    <Compile Include="View\Account\AccountSetupView.xaml.cs">
+      <DependentUpon>AccountSetupView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Flyouts\CommonErrorView.xaml.cs">
       <DependentUpon>CommonErrorView.xaml</DependentUpon>
     </Compile>
@@ -139,8 +155,8 @@
       <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
     <Page Include="Controls\FlyoutControl.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Resources\Styles\Animations.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -158,7 +174,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Resources\Styles\DataTemplates.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Resources\Styles\ListBoxStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Styles\ProgressBarStyles.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -177,6 +201,10 @@
     <Page Include="Resources\Themes\Accents\Grey.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Account\AccountSetupView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Flyouts\CommonErrorView.xaml">
       <SubType>Designer</SubType>

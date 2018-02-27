@@ -61,6 +61,96 @@ namespace Mailer.Resources.Localization {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на IMAP address.
+        /// </summary>
+        public static string AccountImapAddr {
+            get {
+                return ResourceManager.GetString("AccountImapAddr", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Use SSL for IMAP.
+        /// </summary>
+        public static string AccountImapSsl {
+            get {
+                return ResourceManager.GetString("AccountImapSsl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Login.
+        /// </summary>
+        public static string AccountLogin {
+            get {
+                return ResourceManager.GetString("AccountLogin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Name in messages.
+        /// </summary>
+        public static string AccountMessagesName {
+            get {
+                return ResourceManager.GetString("AccountMessagesName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Password.
+        /// </summary>
+        public static string AccountPassword {
+            get {
+                return ResourceManager.GetString("AccountPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Save.
+        /// </summary>
+        public static string AccountSave {
+            get {
+                return ResourceManager.GetString("AccountSave", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Account setup.
+        /// </summary>
+        public static string AccountSetup {
+            get {
+                return ResourceManager.GetString("AccountSetup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на SMTP address.
+        /// </summary>
+        public static string AccountSmtpAddr {
+            get {
+                return ResourceManager.GetString("AccountSmtpAddr", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Use SSL for SMTP.
+        /// </summary>
+        public static string AccountSmtpSsl {
+            get {
+                return ResourceManager.GetString("AccountSmtpSsl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Username.
+        /// </summary>
+        public static string AccountUsername {
+            get {
+                return ResourceManager.GetString("AccountUsername", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Back.
         /// </summary>
         public static string BackButton {
@@ -75,6 +165,15 @@ namespace Mailer.Resources.Localization {
         public static string CancelButton {
             get {
                 return ResourceManager.GetString("CancelButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Close.
+        /// </summary>
+        public static string CloseButton {
+            get {
+                return ResourceManager.GetString("CloseButton", resourceCulture);
             }
         }
         

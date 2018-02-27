@@ -1,47 +1,47 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media.Animation;
 using GongSolutions.Wpf.DragDrop.Utilities;
-using Application = System.Windows.Application;
-using MessageBox = System.Windows.MessageBox;
-using Panel = System.Windows.Controls.Panel;
-using UserControl = System.Windows.Controls.UserControl;
 
 namespace Mailer.Controls
 {
     /// <summary>
-    /// Логика взаимодействия для FlyoutControl.xaml
+    ///     Interaction logic for FlyoutControl.xaml
     /// </summary>
     public partial class FlyoutControl : UserControl
     {
-        private object _result = null;
+        public delegate void ClosedEventHandler(object result);
 
         public static readonly DependencyProperty FlyoutContentProperty =
-            DependencyProperty.Register("FlyoutContent", typeof(object), typeof(FlyoutControl), new PropertyMetadata(default(object)));
-
-        public object FlyoutContent
-        {
-            get => (object)GetValue(FlyoutContentProperty);
-            set => SetValue(FlyoutContentProperty, value);
-        }
+            DependencyProperty.Register("FlyoutContent", typeof (object), typeof (FlyoutControl),
+                new PropertyMetadata(default(object)));
 
         public static readonly DependencyProperty FlyoutContentTemplateProperty =
-            DependencyProperty.Register("FlyoutContentTemplate", typeof(DataTemplate), typeof(FlyoutControl), new PropertyMetadata(default(DataTemplate)));
+            DependencyProperty.Register("FlyoutContentTemplate", typeof (DataTemplate), typeof (FlyoutControl),
+                new PropertyMetadata(default(DataTemplate)));
 
-        public DataTemplate FlyoutContentTemplate
-        {
-            get => (DataTemplate)GetValue(FlyoutContentTemplateProperty);
-            set => SetValue(FlyoutContentTemplateProperty, value);
-        }
-
-        public delegate void ClosedEventHandler(object result);
-        public event ClosedEventHandler Closed;
+        private object _result;
 
         public FlyoutControl()
         {
             InitializeComponent();
         }
+
+        public object FlyoutContent
+        {
+            get { return GetValue(FlyoutContentProperty); }
+            set { SetValue(FlyoutContentProperty, value); }
+        }
+
+        public DataTemplate FlyoutContentTemplate
+        {
+            get { return (DataTemplate) GetValue(FlyoutContentTemplateProperty); }
+            set { SetValue(FlyoutContentTemplateProperty, value); }
+        }
+
+        public event ClosedEventHandler Closed;
 
         public void Show()
         {
@@ -63,7 +63,7 @@ namespace Mailer.Controls
             var tcs = new TaskCompletionSource<object>();
 
             Show();
-            Closed += (result) => tcs.TrySetResult(result);
+            Closed += result => tcs.TrySetResult(result);
 
             return tcs.Task;
         }
@@ -72,7 +72,7 @@ namespace Mailer.Controls
         {
             _result = result;
 
-            ((Storyboard)Resources["CloseAnim"]).Begin(this);
+            ((Storyboard) Resources["CloseAnim"]).Begin(this);
         }
 
         public void CloseNow(object result = null)
@@ -94,7 +94,7 @@ namespace Mailer.Controls
             if (mainWindow.Content == null)
                 return;
 
-            var panel = mainWindow.GetVisualDescendent<Panel>();//mainWindow.Content as Panel;
+            var panel = mainWindow.GetVisualDescendent<Panel>(); //mainWindow.Content as Panel;
             if (panel == null)
             {
                 return;
