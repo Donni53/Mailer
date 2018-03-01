@@ -7,7 +7,7 @@
       mc:Ignorable="d" 
       xmlns:localization="clr-namespace:Mailer.Resources.Localization"
       xmlns:controls="clr-namespace:Mailer.Controls"
-      d:DesignHeight="600" d:DesignWidth="600" KeepAlive="False"
+      d:DesignHeight="600" d:DesignWidth="700" KeepAlive="False"
       Background="{DynamicResource MainBackgroundBrush}">
     <Page.RenderTransform>
         <TranslateTransform />
