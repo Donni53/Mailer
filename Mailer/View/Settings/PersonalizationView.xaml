@@ -106,6 +106,8 @@
                     </ListBox.ItemTemplate>
                 </ListBox>
 
+                <CheckBox IsChecked="{Binding CustomBackground, Mode=TwoWay}" Content="{x:Static localization:MainResources.UseImageAsBg}" FontSize="12" Opacity="0.7" Margin="0,15,0,0" Foreground="{DynamicResource ForegroundBrush}"/>
+
                 <TextBlock Text="{x:Static localization:MainResources.SettingsUILanguage}" FontSize="12" Opacity="0.7" Foreground="{DynamicResource ForegroundBrush}" Margin="0,15,0,0"/>
                 <ComboBox Width="200" Style="{StaticResource CommonComboBoxStyle}" Margin="0,3,0,0" HorizontalAlignment="Left" ItemsSource="{Binding Languages}" 
                       SelectedValue="{Binding SelectedLanguage, Mode=TwoWay}" DisplayMemberPath="Title"/>

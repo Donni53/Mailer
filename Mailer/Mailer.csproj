@@ -100,6 +100,7 @@
     <Compile Include="Helpers\NetworkHelper.cs" />
     <Compile Include="Helpers\StringHelper.cs" />
     <Compile Include="Layout\PageBase.cs" />
+    <Compile Include="Messages\ChangeBackgroundMessage.cs" />
     <Compile Include="Messages\NavigateToPageMessage.cs" />
     <Compile Include="Model\Account.cs" />
     <Compile Include="Model\ColorScheme.cs" />

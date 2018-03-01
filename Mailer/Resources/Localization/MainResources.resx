@@ -309,4 +309,7 @@
   <data name="ShowNotifications" xml:space="preserve">
     <value>Show notifications about new messages</value>
   </data>
+  <data name="UseImageAsBg" xml:space="preserve">
+    <value>Use image as custom background</value>
+  </data>
 </root>

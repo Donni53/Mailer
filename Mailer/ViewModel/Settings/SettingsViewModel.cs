@@ -9,6 +9,9 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using Mailer.Controls;
@@ -17,8 +20,10 @@ using Mailer.Messages;
 using Mailer.Model;
 using Mailer.Resources.Localization;
 using Mailer.Services;
+using Mailer.UI.Extensions;
 using Mailer.View.Accounts;
 using Mailer.View.Flyouts;
+using Microsoft.Win32;
 
 namespace Mailer.ViewModel.Settings
 {
@@ -73,6 +78,8 @@ namespace Mailer.ViewModel.Settings
         private string _cacheSize;
         private SettingsLanguage _selectedLanguage;
         private int _selectedAccount;
+        private bool _customBackground;
+        private string _customBackgroundPath;
 
         public RelayCommand CloseSettingsCommand { get; private set; }
         public RelayCommand SaveCommand { get; private set; }
@@ -95,7 +102,8 @@ namespace Mailer.ViewModel.Settings
             _showBackgroundArt = Domain.Settings.Instance.ShowBackgroundArt;
             _blurBackground = Domain.Settings.Instance.BlurBackground;
             _selectedAccount = Domain.Settings.Instance.SelectedAccount;
-
+            _customBackground = Domain.Settings.Instance.CustomBackground;
+            _customBackgroundPath = Domain.Settings.Instance.CustomBackgroundPath;
             var lang = _languages.FirstOrDefault(l => l.LanguageCode == Domain.Settings.Instance.Language);
             if (lang != null)
                 _selectedLanguage = lang;
@@ -124,6 +132,34 @@ namespace Mailer.ViewModel.Settings
             {
                 if (Set(ref _selectedColorScheme, value))
                     CanSave = true;
+            }
+        }
+
+        public bool CustomBackground
+        {
+            get => _customBackground;
+            set
+            {
+                if (Set(ref _customBackground, value))
+                {
+                    if (_customBackground)
+                        SelectBackgroundImage();
+                    else
+                        HideBackgroundImage();
+                    CanSave = true;
+                }
+            }
+        }
+
+        public string CustomBackgroundPath
+        {
+            get => _customBackgroundPath;
+            set
+            {
+                if (Set(ref _customBackgroundPath, value))
+                {
+                    CanSave = true;
+                }
             }
         }
 
@@ -325,6 +361,45 @@ namespace Mailer.ViewModel.Settings
             });
         }
 
+        private void SelectBackgroundImage()
+        {
+            var openfile = new OpenFileDialog();
+            var result = openfile.ShowDialog();
+            if (result == true)
+            {
+                CustomBackgroundPath = openfile.FileName;
+                SetBackgroundImage();
+            }
+        }
+
+
+        //необходимое зло
+        private void SetBackgroundImage()
+        {
+            ImageSource backgroundImageSource = new BitmapImage(new Uri(CustomBackgroundPath));
+            try
+            {
+                var image = Application.Current.MainWindow.GetVisualDescendents().OfType<Image>().FirstOrDefault();
+                if (image != null)
+                    image.Source = backgroundImageSource;
+            }
+            catch (Exception e)
+            {
+                CustomBackground = false;
+                LoggingService.Log(e);
+            }
+        }
+
+        
+        private void HideBackgroundImage()
+        {
+            ImageSource backgroundImageSource = new BitmapImage();
+            var image = Application.Current.MainWindow.GetVisualDescendents().OfType<Image>().FirstOrDefault();
+            if (image != null)
+                image.Source = backgroundImageSource;
+            CustomBackgroundPath = "";
+        }
+
         private void AddAccount()
         {
             ViewModelLocator.AccountSetupViewModel.UserName = "";
@@ -423,6 +498,8 @@ namespace Mailer.ViewModel.Settings
             Domain.Settings.Instance.InstallDevUpdates = InstallDevUpdates;
             Domain.Settings.Instance.Language = SelectedLanguage.LanguageCode;
             Domain.Settings.Instance.SelectedAccount = SelectedAccount;
+            Domain.Settings.Instance.CustomBackground = CustomBackground;
+            Domain.Settings.Instance.CustomBackgroundPath = CustomBackgroundPath;
 
             Domain.Settings.Instance.Save();
 

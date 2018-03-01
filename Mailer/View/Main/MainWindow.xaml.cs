@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media.Effects;
+using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using GalaSoft.MvvmLight.Messaging;
 using Mailer.Controls;
@@ -37,13 +39,12 @@ namespace Mailer.View.Main
 
         public void InitializeControls()
         {
-            //MainFrame.Navigate(new Uri("View/Settings/SettingsView.xaml", UriKind.Relative));
-            //MainFrame.Navigate(new Uri("View/Account/AccountSettingsView.xaml", UriKind.Relative));
-            //BackgroundArtControl.Effect = new BlurEffect() { RenderingBias = RenderingBias.Quality, Radius = 35 };
+            BackgroundImage.Effect = new BlurEffect() { RenderingBias = RenderingBias.Quality, Radius = 35 };
         }
 
         private void MainPage_OnLoaded(object sender, RoutedEventArgs e)
         {
+            SetBackground();
             RootFrame.Navigated += RootFrame_Navigated;
             RootFrame.Navigating += RootFrame_Navigating;
             if (Domain.Settings.Instance.Accounts.Count > 0)
@@ -88,6 +89,19 @@ namespace Mailer.View.Main
         private void MainPage_OnContentRendered(object sender, EventArgs e)
         {
             //throw new NotImplementedException();
+        }
+
+        private void SetBackground()
+        {
+            try
+            {
+                if (Domain.Settings.Instance.CustomBackground)
+                    BackgroundImage.Source = new BitmapImage(new Uri(Domain.Settings.Instance.CustomBackgroundPath));
+            }
+            catch (Exception e)
+            {
+                LoggingService.Log(e);
+            }
         }
     }
 }

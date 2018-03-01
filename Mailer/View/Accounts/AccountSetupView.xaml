@@ -9,7 +9,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="700" d:DesignWidth="400"
              Focusable="True" FocusManager.IsFocusScope="True"
-             Background="{DynamicResource MainBackgroundBrush}"
+             Background="Transparent"
              VerticalAlignment="Center">
     <Page.RenderTransform>
         <TranslateTransform />
@@ -20,7 +20,7 @@
             <BeginStoryboard Storyboard="{StaticResource PageLoadAnim}" />
         </EventTrigger>
     </Page.Triggers>
-    <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Width="320" Height="700">
+    <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Width="320">
         <StackPanel VerticalAlignment="Center" Margin="0,20,0,20" Visibility="{Binding IsWorking, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=True}">
             <TextBlock HorizontalAlignment="Center" Text="{x:Static localization:MainResources.AccountSetup}" Foreground="{DynamicResource ForegroundBrush}" FontSize="24" FontWeight="Light"/>
             <TextBlock Text="{x:Static localization:MainResources.AccountLogin}" FontSize="12" Margin="0,20,0,0" Foreground="{DynamicResource ForegroundBrush}"/>

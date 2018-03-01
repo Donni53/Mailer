@@ -628,6 +628,15 @@ namespace Mailer.Resources.Localization {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Use image as custom background.
+        /// </summary>
+        public static string UseImageAsBg {
+            get {
+                return ResourceManager.GetString("UseImageAsBg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Please, wait....
         /// </summary>
         public static string WaitMessage {

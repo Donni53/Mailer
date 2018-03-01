@@ -46,6 +46,8 @@ namespace Mailer.Domain
         public bool ShowBackgroundArt { get; set; }
         public List<Account> Accounts { get; set; }
         public int SelectedAccount { get; set; }
+        public bool CustomBackground { get; set; }
+        public string CustomBackgroundPath { get; set; }
 
         public Settings()
         {
@@ -59,6 +61,8 @@ namespace Mailer.Domain
             ShowBackgroundArt = false;
             Accounts = new List<Account>();
             SelectedAccount = -1;
+            CustomBackgroundPath = "";
+            CustomBackground = false;
         }
 
         public static void Load()

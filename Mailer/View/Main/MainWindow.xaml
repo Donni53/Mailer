@@ -36,7 +36,7 @@
                     <GradientStop Offset="1" Color="Transparent" />
                 </LinearGradientBrush>
             </Grid.OpacityMask>
-            <Image Stretch="UniformToFill" x:Name="BackgroundArtControl" Margin="0,0,0,0"/>
+            <Image Stretch="UniformToFill" x:Name="BackgroundImage" Margin="0,0,0,0"/>
         </Grid>
         <Grid>
             <Frame x:Name="RootFrame" Background="Transparent" NavigationUIVisibility="Hidden"/>
