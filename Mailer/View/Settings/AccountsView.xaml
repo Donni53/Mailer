@@ -43,6 +43,7 @@
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                         </ComboBox>
+                    <Button Style="{StaticResource HighlightedButtonStyle}" Content="{x:Static localization:MainResources.Apply}" Command="{Binding ApplyCommand}"  Margin="15,0,0,0"/>
                     <Button Style="{StaticResource HighlightedButtonStyle}" Content="{x:Static localization:MainResources.OmsSetup}" Command="{Binding OmsSetupCommand}"  Margin="15,0,0,0"/>
                     <Button Style="{StaticResource HighlightedButtonStyle}" Content="{x:Static localization:MainResources.SettingsAccountEdit}" Command="{Binding EditAccountCommand}"  Margin="15,0,0,0"/>
                     <Button Style="{StaticResource CommonButtonStyle}" Content="{x:Static localization:MainResources.SettingsAccountDelete}" Margin="15,0,0,0" Command="{Binding DeleteAccountCommand}"/>

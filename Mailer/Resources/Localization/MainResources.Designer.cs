@@ -160,6 +160,15 @@ namespace Mailer.Resources.Localization {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Apply.
+        /// </summary>
+        public static string Apply {
+            get {
+                return ResourceManager.GetString("Apply", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Back.
         /// </summary>
         public static string BackButton {
@@ -295,7 +304,7 @@ namespace Mailer.Resources.Localization {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Select an account to use.
+        ///   Ищет локализованную строку, похожую на Select an account to edit or use.
         /// </summary>
         public static string SettingsAccountSelectAccount {
             get {

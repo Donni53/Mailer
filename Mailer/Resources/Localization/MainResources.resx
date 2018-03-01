@@ -151,7 +151,7 @@
     <value>Accounts</value>
   </data>
   <data name="SettingsAccountSelectAccount" xml:space="preserve">
-    <value>Select an account to use</value>
+    <value>Select an account to edit or use</value>
   </data>
   <data name="SettingsAutomaticReplies" xml:space="preserve">
     <value>Automatic replies settings</value>
@@ -308,6 +308,9 @@
   </data>
   <data name="ShowNotifications" xml:space="preserve">
     <value>Show notifications about new messages</value>
+  </data>
+  <data name="Apply" xml:space="preserve">
+    <value>Apply</value>
   </data>
   <data name="UseImageAsBg" xml:space="preserve">
     <value>Use image as custom background</value>
