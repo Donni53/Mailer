@@ -115,6 +115,15 @@ namespace Mailer.Resources.Localization {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Select an account or add new.
+        /// </summary>
+        public static string AccountSelect {
+            get {
+                return ResourceManager.GetString("AccountSelect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Account setup.
         /// </summary>
         public static string AccountSetup {
@@ -201,6 +210,33 @@ namespace Mailer.Resources.Localization {
         public static string CommonErrorViewTitle {
             get {
                 return ResourceManager.GetString("CommonErrorViewTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Loading all the necessary information....
+        /// </summary>
+        public static string LoadingMessage {
+            get {
+                return ResourceManager.GetString("LoadingMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Ok.
+        /// </summary>
+        public static string Ok {
+            get {
+                return ResourceManager.GetString("Ok", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на OMS.
+        /// </summary>
+        public static string OmsSetup {
+            get {
+                return ResourceManager.GetString("OmsSetup", resourceCulture);
             }
         }
         
@@ -525,6 +561,78 @@ namespace Mailer.Resources.Localization {
         public static string SettingsUpdatesUpdated {
             get {
                 return ResourceManager.GetString("SettingsUpdatesUpdated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Show notifications about new messages.
+        /// </summary>
+        public static string ShowNotifications {
+            get {
+                return ResourceManager.GetString("ShowNotifications", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на SMTP address.
+        /// </summary>
+        public static string SmtpAddressTitle {
+            get {
+                return ResourceManager.GetString("SmtpAddressTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Login.
+        /// </summary>
+        public static string SmtpEmailTitle {
+            get {
+                return ResourceManager.GetString("SmtpEmailTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на SMTP auth needed.
+        /// </summary>
+        public static string SmtpNeedAuth {
+            get {
+                return ResourceManager.GetString("SmtpNeedAuth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Password.
+        /// </summary>
+        public static string SmtpPasswordTitle {
+            get {
+                return ResourceManager.GetString("SmtpPasswordTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на SMTP Setup.
+        /// </summary>
+        public static string SmtpSetupTitle {
+            get {
+                return ResourceManager.GetString("SmtpSetupTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Use SSL for SMTP.
+        /// </summary>
+        public static string SmtpUseSslTitle {
+            get {
+                return ResourceManager.GetString("SmtpUseSslTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Please, wait....
+        /// </summary>
+        public static string WaitMessage {
+            get {
+                return ResourceManager.GetString("WaitMessage", resourceCulture);
             }
         }
     }

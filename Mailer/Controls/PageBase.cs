@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 
-namespace Meridian.Controls
+namespace Mailer.Controls
 {
     public sealed class NavigationContext
     {

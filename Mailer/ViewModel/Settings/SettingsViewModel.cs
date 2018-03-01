@@ -10,12 +10,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Messaging;
 using Mailer.Controls;
 using Mailer.Helpers;
+using Mailer.Messages;
 using Mailer.Model;
 using Mailer.Resources.Localization;
-using Mailer.View.Account;
-using Mailer.ViewModel.Account;
+using Mailer.Services;
+using Mailer.View.Accounts;
+using Mailer.View.Flyouts;
 
 namespace Mailer.ViewModel.Settings
 {
@@ -79,12 +82,12 @@ namespace Mailer.ViewModel.Settings
         public RelayCommand EditAccountCommand { get; private set; }
         public RelayCommand DeleteAccountCommand { get; private set; }
         public RelayCommand AddAccountCommand { get; private set; }
+        public RelayCommand OmsSetupCommand { get; private set; }
 
         public SettingsViewModel()
         {
             Domain.Settings.Load();
             InitializeCommands();
-            Activate();
             _selectedTheme = Domain.Settings.Instance.Theme;
             _selectedColorScheme = AccentColors.FirstOrDefault(c => c.Name == Domain.Settings.Instance.AccentColor);
             _checkForUpdates = Domain.Settings.Instance.CheckForUpdates;
@@ -211,6 +214,8 @@ namespace Mailer.ViewModel.Settings
             {
                 if (Set(ref _selectedAccount, value))
                     CanSave = true;
+                RaisePropertyChanged("AutoReplie");
+                RaisePropertyChanged("AutoReplieText");
             }
         }
 
@@ -231,6 +236,28 @@ namespace Mailer.ViewModel.Settings
             }
         }
 
+        public bool AutoReplie
+        {
+            get => Domain.Settings.Instance.Accounts[SelectedAccount].AutoReplie;
+            set
+            {
+                Domain.Settings.Instance.Accounts[SelectedAccount].AutoReplie = value;
+                CanSave = true;
+                RaisePropertyChanged("AutoReplie");
+            }
+        }
+
+        public string AutoReplieText
+        {
+            get => Domain.Settings.Instance.Accounts[SelectedAccount].AutoReplieText;
+            set
+            {
+                Domain.Settings.Instance.Accounts[SelectedAccount].AutoReplieText = value;
+                CanSave = true;
+                RaisePropertyChanged("AutoReplieText");
+            }
+        }
+
         public new async void Activate()
         {
             //check cache
@@ -246,6 +273,7 @@ namespace Mailer.ViewModel.Settings
             EditAccountCommand = new RelayCommand(EditAccount);
             DeleteAccountCommand = new RelayCommand(DeleteAccount);
             AddAccountCommand = new RelayCommand(AddAccount);
+            OmsSetupCommand = new RelayCommand(OmsSetup);
             CloseSettingsCommand = new RelayCommand(() =>
             {
                 ViewModelLocator.MainViewModel.GoBackCommand.Execute(null);
@@ -299,23 +327,51 @@ namespace Mailer.ViewModel.Settings
 
         private void AddAccount()
         {
-            /*var flyout = new FlyoutControl();
-            flyout.FlyoutContent = new AccountSettingsView();
-            flyout.Show();*/
+            ViewModelLocator.AccountSetupViewModel.UserName = "";
+            ViewModelLocator.AccountSetupViewModel.Login = "";
+            ViewModelLocator.AccountSetupViewModel.Password = "";
+            ViewModelLocator.AccountSetupViewModel.ImapServer = "";
+            ViewModelLocator.AccountSetupViewModel.ImapSsl = false;
+            ViewModelLocator.AccountSetupViewModel.NewAccount = true;
+            ViewModelLocator.AccountSetupViewModel.Id = -1;
+            Messenger.Default.Send(new NavigateToPageMessage()
+            {
+                Page = "/Accounts.AccountSetupView"
+            });
         }
 
         private void EditAccount()
         {
-            /*var flyout = new FlyoutControl();
-            flyout.FlyoutContent = new AccountSettingsView(Accounts[SelectedAccount]);
-            flyout.Show();*/
+            //sorry for that ((
+            //TODO Fix it
+            ViewModelLocator.AccountSetupViewModel.UserName =
+                Domain.Settings.Instance.Accounts[SelectedAccount].UserName;
+            ViewModelLocator.AccountSetupViewModel.Login =
+                Domain.Settings.Instance.Accounts[SelectedAccount].ImapData.Login;
+            ViewModelLocator.AccountSetupViewModel.Password =
+                Domain.Settings.Instance.Accounts[SelectedAccount].ImapData.Password;
+            ViewModelLocator.AccountSetupViewModel.ImapServer =
+                Domain.Settings.Instance.Accounts[SelectedAccount].ImapData.Address;
+            ViewModelLocator.AccountSetupViewModel.ImapSsl =
+                Domain.Settings.Instance.Accounts[SelectedAccount].ImapData.UseSsl;
+            ViewModelLocator.AccountSetupViewModel.NewAccount = false;
+            ViewModelLocator.AccountSetupViewModel.Id = SelectedAccount;
+            Messenger.Default.Send(new NavigateToPageMessage()
+            {
+                Page = "/Accounts.AccountSetupView"
+            });
         }
 
         private void DeleteAccount()
         {
-            Accounts.RemoveAt(SelectedAccount);
-            if (Accounts.Count == 0) ;
-            //TODO GoToAuth
+            AccountManager.ImapLogout(SelectedAccount);
+            //TODO Delete confirmation
+        }
+
+        private void OmsSetup()
+        {
+            var flyout = new FlyoutControl {FlyoutContent = new SmtpSetupView(null, 0)};
+            flyout.Show();
         }
 
         private void SaveSettings()
@@ -382,33 +438,22 @@ namespace Mailer.ViewModel.Settings
             float folderSize = 0.0f;
             try
             {
-                //Checks if the path is valid or not
                 if (!Directory.Exists(folder))
                     return folderSize;
-                else
+                try
                 {
-                    try
-                    {
-                        foreach (string file in Directory.EnumerateFiles(folder))
-                        {
-                            if (File.Exists(file))
-                            {
-                                var finfo = new FileInfo(file);
-                                folderSize += finfo.Length;
-                            }
-                        }
+                    folderSize = (from file in Directory.EnumerateFiles(folder) where File.Exists(file) select new FileInfo(file)).Aggregate(folderSize, (current, finfo) => current + finfo.Length);
 
-                        folderSize += Directory.GetDirectories(folder).Sum(dir => CalculateFolderSize(dir));
-                    }
-                    catch (NotSupportedException ex)
-                    {
-                        //TODO LoggingService.Log(string.Format("Unable to calculate folder size: {0}", ex.Message));
-                    }
+                    folderSize += Directory.GetDirectories(folder).Sum(dir => CalculateFolderSize(dir));
+                }
+                catch (NotSupportedException ex)
+                {
+                    LoggingService.Log($"Unable to calculate folder size: {ex.Message}");
                 }
             }
             catch (UnauthorizedAccessException ex)
             {
-                //TODO LoggingService.Log(string.Format("Unable to calculate folder size: {0}", ex.Message));
+                LoggingService.Log($"Unable to calculate folder size: {ex.Message}");
             }
             return folderSize;
         }

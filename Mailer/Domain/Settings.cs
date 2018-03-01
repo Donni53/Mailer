@@ -10,6 +10,7 @@ using System.Windows;
 using Mailer.Controls;
 using Mailer.Model;
 using Mailer.Resources.Localization;
+using Mailer.Services;
 using Mailer.View.Flyouts;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -78,7 +79,7 @@ namespace Mailer.Domain
             }
             catch (Exception ex)
             {
-                //LoggingService.Log(ex);
+                LoggingService.Log(ex);
             }
         }
 
@@ -88,7 +89,8 @@ namespace Mailer.Domain
             {
                 var settings = new JsonSerializerSettings()
                 {
-                    ContractResolver = new CamelCasePropertyNamesContractResolver()
+                    ContractResolver = new CamelCasePropertyNamesContractResolver(),
+                    Formatting = Formatting.Indented
                 };
 
                 var json = JsonConvert.SerializeObject(this, settings);
@@ -118,12 +120,12 @@ namespace Mailer.Domain
 
                     Application.Current.Shutdown();
 
-                    //LoggingService.Log(ex);
+                    LoggingService.Log(ex);
                 });
             }
             catch (Exception ex)
             {
-                //LoggingService.Log(ex);
+                LoggingService.Log(ex);
             }
         }
     }

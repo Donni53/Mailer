@@ -1,9 +1,14 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Navigation;
+using GalaSoft.MvvmLight.Messaging;
 using Mailer.Controls;
-using Mailer.View.Account;
+using Mailer.Messages;
+using Mailer.Services;
+using Mailer.View.Accounts;
 using Mailer.View.Flyouts;
+using Mailer.ViewModel;
 
 namespace Mailer.View.Main
 {
@@ -12,6 +17,7 @@ namespace Mailer.View.Main
     /// </summary>
     public partial class MainWindow : Window
     {
+        private bool _clearStack;
         public MainWindow()
         {
             InitializeComponent();
@@ -38,8 +44,45 @@ namespace Mailer.View.Main
 
         private void MainPage_OnLoaded(object sender, RoutedEventArgs e)
         {
-            var flyout = new FlyoutControl {FlyoutContent = new AccountSetupView()};
-            flyout.Show();
+            RootFrame.Navigated += RootFrame_Navigated;
+            RootFrame.Navigating += RootFrame_Navigating;
+            if (Domain.Settings.Instance.Accounts.Count > 0)
+            {
+                Messenger.Default.Send(new NavigateToPageMessage()
+                {
+                    Page = "/Accounts.AccountSelectView"
+                });
+            }
+            else
+            {
+                Messenger.Default.Send(new NavigateToPageMessage()
+                {
+                    Page = "/Accounts.AccountSetupView"
+                });
+            }
+        }
+
+        private void RootFrame_Navigating(object sender, NavigatingCancelEventArgs e)
+        {
+            if (RootFrame.Content is AccountSetupView)
+            {
+                _clearStack = true;
+            }
+        }
+
+        private void RootFrame_Navigated(object sender, NavigationEventArgs e)
+        {
+            if(_clearStack)
+            {
+                _clearStack = false;
+
+                while (RootFrame.CanGoBack)
+                {
+                    RootFrame.RemoveBackEntry();
+                }
+            }
+
+            ViewModelLocator.MainViewModel.UpdateCanGoBack();
         }
 
         private void MainPage_OnContentRendered(object sender, EventArgs e)

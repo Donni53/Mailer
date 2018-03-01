@@ -49,6 +49,7 @@
     <Reference Include="GongSolutions.Wpf.DragDrop, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\gong-wpf-dragdrop.1.1.0\lib\net46\GongSolutions.Wpf.DragDrop.dll</HintPath>
     </Reference>
+    <Reference Include="MailBee.NET, Version=11.2.0.590, Culture=neutral, PublicKeyToken=cd85b70fb26f9fc1, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Expression.Interactions, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Unofficial.Blend.Interactivity.1.0.0\lib\net45\Microsoft.Expression.Interactions.dll</HintPath>
     </Reference>
@@ -88,6 +89,7 @@
     <Compile Include="Controls\BindablePasswordBox.cs" />
     <Compile Include="Controls\FlyoutContent.cs" />
     <Compile Include="Controls\FlyoutControl.xaml.cs" />
+    <Compile Include="Controls\PageBase.cs" />
     <Compile Include="Controls\TextBoxWithHint.cs" />
     <Compile Include="Domain\Settings.cs" />
     <Compile Include="Helpers\DateTimeConverter.cs" />
@@ -97,6 +99,8 @@
     <Compile Include="Helpers\NativeMethods.cs" />
     <Compile Include="Helpers\NetworkHelper.cs" />
     <Compile Include="Helpers\StringHelper.cs" />
+    <Compile Include="Layout\PageBase.cs" />
+    <Compile Include="Messages\NavigateToPageMessage.cs" />
     <Compile Include="Model\Account.cs" />
     <Compile Include="Model\ColorScheme.cs" />
     <Compile Include="Model\ImapData.cs" />
@@ -122,19 +126,28 @@
     <Compile Include="UI\Converters\StringToUpperConverter.cs" />
     <Compile Include="UI\Converters\TimeSpanConverter.cs" />
     <Compile Include="UI\Extensions\VisualTreeHelperExtensions.cs" />
-    <Compile Include="ViewModel\Account\AccountSetupViewModel.cs" />
-    <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\Accounts\AccountSelectViewModel.cs" />
+    <Compile Include="ViewModel\Accounts\AccountSetupViewModel.cs" />
+    <Compile Include="ViewModel\Flyouts\SmtpSetupViewModel.cs" />
+    <Compile Include="ViewModel\Main\MailViewModel.cs" />
+    <Compile Include="ViewModel\Main\MainViewModel.cs" />
     <Compile Include="ViewModel\Settings\SettingsViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
-    <Compile Include="View\Account\AccountSetupView.xaml.cs">
+    <Compile Include="View\Accounts\AccountSelectView.xaml.cs">
+      <DependentUpon>AccountSelectView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Accounts\AccountSetupView.xaml.cs">
       <DependentUpon>AccountSetupView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Flyouts\CommonErrorView.xaml.cs">
       <DependentUpon>CommonErrorView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Main\MainPageView.xaml.cs">
-      <DependentUpon>MainPageView.xaml</DependentUpon>
+    <Compile Include="View\Flyouts\SmtpSetupView.xaml.cs">
+      <DependentUpon>SmtpSetupView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Main\MailView.xaml.cs">
+      <DependentUpon>MailView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Settings\AboutView.xaml.cs">
       <DependentUpon>AboutView.xaml</DependentUpon>
@@ -202,7 +215,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\Account\AccountSetupView.xaml">
+    <Page Include="View\Accounts\AccountSelectView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Accounts\AccountSetupView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -210,7 +227,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Main\MainPageView.xaml">
+    <Page Include="View\Flyouts\SmtpSetupView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Main\MailView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

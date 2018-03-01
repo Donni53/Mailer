@@ -1,18 +1,28 @@
-﻿<UserControl x:Class="Mailer.View.Account.AccountSetupView"
+﻿<controls:PageBase x:Class="Mailer.View.Accounts.AccountSetupView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Mailer.View.Account"
+             xmlns:local="clr-namespace:Mailer.View.Accounts"
              xmlns:localization="clr-namespace:Mailer.Resources.Localization"
+             xmlns:controls="clr-namespace:Mailer.Controls"
              mc:Ignorable="d" 
-             d:DesignHeight="400" d:DesignWidth="400"
+             d:DesignHeight="700" d:DesignWidth="400"
              Focusable="True" FocusManager.IsFocusScope="True"
              Background="{DynamicResource MainBackgroundBrush}"
              VerticalAlignment="Center">
-    <Grid HorizontalAlignment="Center" Width="320" Height="400">
-        <StackPanel Margin="0,20,0,20" Visibility="{Binding IsWorking, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=True}">
-            <TextBlock Text="{x:Static localization:MainResources.AccountSetup}" Foreground="{DynamicResource AccentBrush}" FontSize="24" FontWeight="Light"/>
+    <Page.RenderTransform>
+        <TranslateTransform />
+    </Page.RenderTransform>
+
+    <Page.Triggers>
+        <EventTrigger RoutedEvent="Page.Loaded">
+            <BeginStoryboard Storyboard="{StaticResource PageLoadAnim}" />
+        </EventTrigger>
+    </Page.Triggers>
+    <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Width="320" Height="700">
+        <StackPanel VerticalAlignment="Center" Margin="0,20,0,20" Visibility="{Binding IsWorking, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=True}">
+            <TextBlock HorizontalAlignment="Center" Text="{x:Static localization:MainResources.AccountSetup}" Foreground="{DynamicResource ForegroundBrush}" FontSize="24" FontWeight="Light"/>
             <TextBlock Text="{x:Static localization:MainResources.AccountLogin}" FontSize="12" Margin="0,20,0,0" Foreground="{DynamicResource ForegroundBrush}"/>
             <TextBox x:Name="LoginTextBox" Margin="0,3,0,0" Text="{Binding Login, Mode=TwoWay}" Style="{StaticResource CommonTextBoxStyle}" Foreground="{DynamicResource ForegroundBrush}" />
             <TextBlock Text="{x:Static localization:MainResources.AccountPassword}" FontSize="12" Margin="0,20,0,0" Foreground="{DynamicResource ForegroundBrush}"/>
@@ -25,9 +35,13 @@
             <TextBlock Foreground="Red" Text="{Binding Error}" Margin="0,3,0,0" Visibility="{Binding IsError, Converter={StaticResource NullToVisibilityConverter}}" TextWrapping="Wrap"/>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
                 <Button Content="{x:Static localization:MainResources.AccountSave}" Padding="23,3" Margin="0,0,10,0" Style="{StaticResource HighlightedButtonStyle}" Command="{Binding SaveCommand}"/>
-                <Button Content="{x:Static localization:MainResources.CloseButton}" Padding="23,3" Style="{StaticResource CommonButtonStyle}" Command="{Binding CloseCommand}"/>
+                <Button Content="{x:Static localization:MainResources.BackButton}" Padding="23,3" Style="{StaticResource CommonButtonStyle}"  Visibility="{Binding CanGoBack, Converter={StaticResource BoolToVisibilityConverter}}" Command="{Binding CloseCommand}"/>
             </StackPanel>
         </StackPanel>
-        <ProgressBar Style="{StaticResource CommonProgressBarStyle}" IsIndeterminate="{Binding IsWorking}" Visibility="{Binding IsWorking, Converter={StaticResource BoolToVisibilityConverter}}" VerticalAlignment="Center"/>
+        <StackPanel Visibility="{Binding IsWorking, Converter={StaticResource BoolToVisibilityConverter}}" VerticalAlignment="Center" Margin="0,50,0,0" >
+            <TextBlock Text="{x:Static localization:MainResources.WaitMessage}" FontSize="22" HorizontalAlignment="Center" Opacity="0.4" FontWeight="Light" Foreground="{DynamicResource ForegroundBrush}"/>
+            <ProgressBar Style="{StaticResource CommonProgressBarStyle}" IsIndeterminate="{Binding IsWorking}"/>
+        </StackPanel>
     </Grid>
-</UserControl>
+</controls:PageBase>
+

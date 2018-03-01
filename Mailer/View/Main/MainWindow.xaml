@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Mailer"
         xmlns:localization="clr-namespace:Mailer.Resources.Localization"
         mc:Ignorable="d"
-        Height="800" Width="1024"
+        Height="700" Width="1024"
         AllowsTransparency="True"
         ResizeMode="CanResize"
         WindowStyle="None"
@@ -17,9 +17,15 @@
         Loaded="MainPage_OnLoaded"
         DataContext="{Binding Path=MainViewModel, Source={StaticResource Locator}}"
         ContentRendered="MainPage_OnContentRendered">
-    <WindowChrome.WindowChrome>
-        <WindowChrome CaptionHeight="0" ResizeBorderThickness="5" />
-    </WindowChrome.WindowChrome>
+    <Window.Style>
+        <Style TargetType="Window">
+            <Setter Property="WindowChrome.WindowChrome">
+                <Setter.Value>
+                    <WindowChrome NonClientFrameEdges="None" GlassFrameThickness="0,0,0,1" ResizeBorderThickness="7" CaptionHeight="0" CornerRadius="0"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Style>
     <Grid>
         <Grid ClipToBounds="True" Opacity="0.4"
               Visibility="Visible">
@@ -33,8 +39,11 @@
             <Image Stretch="UniformToFill" x:Name="BackgroundArtControl" Margin="0,0,0,0"/>
         </Grid>
         <Grid>
-            <Frame x:Name="MainFrame" Background="Transparent" NavigationUIVisibility="Hidden"/>
+            <Frame x:Name="RootFrame" Background="Transparent" NavigationUIVisibility="Hidden"/>
             <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,5,5,0">
+                <Button x:Name="MailerButton" HorizontalAlignment="Left" Margin="0,0,10,0"
+                        Foreground="{DynamicResource SidebarForegroundBrush}"
+                        Command="{Binding GoToSettingsCommand}" ToolTip="{x:Static localization:MainResources.Settings}" Content="{x:Static localization:MainResources.Settings}"/>
                 <Button Style="{StaticResource MinimizeButtonStyle}" Command="{Binding MinimizeWindowCommand}"/>
                 <ToggleButton x:Name="MaximizeButton" Style="{StaticResource MaximizeButtonStyle}" IsChecked="{Binding IsWindowMaximized, Mode=OneWay}" Command="{Binding MaximizeWindowCommand}"/>
                 <Button Style="{StaticResource CloseButtonStyle}" Command="{Binding CloseWindowCommand}"/>

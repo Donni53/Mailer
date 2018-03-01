@@ -273,4 +273,40 @@
   <data name="CloseButton" xml:space="preserve">
     <value>Close</value>
   </data>
+  <data name="AccountSelect" xml:space="preserve">
+    <value>Select an account or add new</value>
+  </data>
+  <data name="LoadingMessage" xml:space="preserve">
+    <value>Loading all the necessary information...</value>
+  </data>
+  <data name="Ok" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="WaitMessage" xml:space="preserve">
+    <value>Please, wait...</value>
+  </data>
+  <data name="OmsSetup" xml:space="preserve">
+    <value>OMS</value>
+  </data>
+  <data name="SmtpAddressTitle" xml:space="preserve">
+    <value>SMTP address</value>
+  </data>
+  <data name="SmtpEmailTitle" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="SmtpNeedAuth" xml:space="preserve">
+    <value>SMTP auth needed</value>
+  </data>
+  <data name="SmtpPasswordTitle" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="SmtpSetupTitle" xml:space="preserve">
+    <value>SMTP Setup</value>
+  </data>
+  <data name="SmtpUseSslTitle" xml:space="preserve">
+    <value>Use SSL for SMTP</value>
+  </data>
+  <data name="ShowNotifications" xml:space="preserve">
+    <value>Show notifications about new messages</value>
+  </data>
 </root>

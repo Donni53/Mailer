@@ -12,21 +12,22 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Mailer.ViewModel.Account;
+using Mailer.Controls;
+using Mailer.ViewModel.Main;
 
-namespace Mailer.View.Account
+namespace Mailer.View.Main
 {
     /// <summary>
-    /// Логика взаимодействия для AccountSettingsView.xaml
+    /// Логика взаимодействия для MailView.xaml
     /// </summary>
-    public partial class AccountSetupView : UserControl
+    public partial class MailView : PageBase
     {
-        private AccountSetupViewModel _accountSettingsViewModel;
-        public AccountSetupView()
+        private MailViewModel _viewModel;
+        public MailView()
         {
             InitializeComponent();
-            _accountSettingsViewModel = new AccountSetupViewModel();
-            DataContext = _accountSettingsViewModel;
+            _viewModel = new MailViewModel();
+            DataContext = _viewModel;
         }
     }
 }

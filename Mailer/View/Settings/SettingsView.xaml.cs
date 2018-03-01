@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Mailer.Controls;
 using Mailer.ViewModel;
 
 namespace Mailer.View.Settings
@@ -19,7 +20,7 @@ namespace Mailer.View.Settings
     /// <summary>
     /// Логика взаимодействия для SettingsView.xaml
     /// </summary>
-    public partial class SettingsView : Page
+    public partial class SettingsView : PageBase
     {
         public SettingsView()
         {
@@ -32,6 +33,11 @@ namespace Mailer.View.Settings
             if (content == null)
                 return;
             content.DataContext = ViewModelLocator.SettingsViewModel;
+        }
+
+        private void SettingsView_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            ViewModelLocator.SettingsViewModel.Activate();
         }
     }
 }

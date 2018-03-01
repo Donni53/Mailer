@@ -3,7 +3,8 @@
              Startup="App_OnStartup" DispatcherUnhandledException="App_OnDispatcherUnhandledException"
              Exit="App_OnExit"
              StartupUri="View/Main/MainWindow.xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             d1p1:Ignorable="d" xmlns:d1p1="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             d1p1:Ignorable="d" 
+             xmlns:d1p1="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:converters="clr-namespace:Mailer.UI.Converters">
     <Application.Resources>
         <ResourceDictionary>
