@@ -39,7 +39,7 @@ namespace Mailer.View.Main
 
         public void InitializeControls()
         {
-            BackgroundImage.Effect = new BlurEffect() { RenderingBias = RenderingBias.Quality, Radius = 35 };
+            //BackgroundImage.Effect = new BlurEffect() { RenderingBias = RenderingBias.Quality, Radius = 35 };
         }
 
         private void MainPage_OnLoaded(object sender, RoutedEventArgs e)

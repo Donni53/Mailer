@@ -49,7 +49,9 @@
     <Reference Include="GongSolutions.Wpf.DragDrop, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\gong-wpf-dragdrop.1.1.0\lib\net46\GongSolutions.Wpf.DragDrop.dll</HintPath>
     </Reference>
-    <Reference Include="MailBee.NET, Version=11.2.0.590, Culture=neutral, PublicKeyToken=cd85b70fb26f9fc1, processorArchitecture=MSIL" />
+    <Reference Include="MailBee.NET, Version=11.2.0.590, Culture=neutral, PublicKeyToken=cd85b70fb26f9fc1, processorArchitecture=MSIL">
+      <HintPath>..\packages\MailBee.NET.11.2.0\lib\net45\MailBee.NET.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Expression.Interactions, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Unofficial.Blend.Interactivity.1.0.0\lib\net45\Microsoft.Expression.Interactions.dll</HintPath>
     </Reference>
@@ -57,7 +59,7 @@
       <HintPath>..\packages\Newtonsoft.Json.11.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
-      <HintPath>..\packages\NLog.4.4.12\lib\net45\NLog.dll</HintPath>
+      <HintPath>..\packages\NLog.4.4.13\lib\net45\NLog.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -91,6 +93,7 @@
     <Compile Include="Controls\FlyoutControl.xaml.cs" />
     <Compile Include="Controls\PageBase.cs" />
     <Compile Include="Controls\TextBoxWithHint.cs" />
+    <Compile Include="Converters\MainMenuGroupStyleSelector.cs" />
     <Compile Include="Domain\Settings.cs" />
     <Compile Include="Helpers\DateTimeConverter.cs" />
     <Compile Include="Helpers\ImageAsyncHelper.cs" />
@@ -361,7 +364,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Converters\" />
     <Folder Include="Resources\Images\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

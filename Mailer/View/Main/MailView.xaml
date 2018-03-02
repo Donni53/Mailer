@@ -6,12 +6,95 @@
       xmlns:local="clr-namespace:Mailer.View.Main"
       xmlns:controls="clr-namespace:Mailer.Controls"
       xmlns:localization="clr-namespace:Mailer.Resources.Localization"
+      xmlns:behaviours="clr-namespace:Mailer.Behaviours"
+      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+      xmlns:converters="clr-namespace:Mailer.UI.Converters"
+      xmlns:converters1="clr-namespace:Mailer.Converters"
       mc:Ignorable="d" 
       d:DesignHeight="700" d:DesignWidth="1024"
       Title="MailView">
+    <Page.Resources>
+        <converters:BooleanToObjectConverter x:Key="WindowMarginConverter" TrueObject="6,6,6,0" FalseObject="0"/>
+
+        <CollectionViewSource x:Key="MainMenuGroups" Source="{Binding MainMenuItems}">
+            <CollectionViewSource.GroupDescriptions>
+                <PropertyGroupDescription PropertyName="Group"/>
+            </CollectionViewSource.GroupDescriptions>
+        </CollectionViewSource>
+
+        <Style x:Key="NormalGroupStyle" TargetType="{x:Type GroupItem}">
+            <Setter Property="Margin" Value="0,0,0,0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type GroupItem}">
+                        <Grid Margin="0,0,0,20">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <Path Data="{Binding Items[0].GroupIcon}" Stretch="Uniform" Fill="{DynamicResource SidebarForegroundBrush}" Height="8" Margin="17,1,-10,0" Opacity="0.4" VerticalAlignment="Center"
+                                  Visibility="{Binding Items[0].GroupIcon, Converter={StaticResource NullToVisibilityConverter}}"/>
+                            <TextBlock Grid.Column="1" FontWeight="SemiBold" Text="{Binding Path=Name}" Margin="17,0,0,0" FontSize="12" Foreground="{DynamicResource SidebarGroupForegroundBrush}"/>
+                            <ItemsPresenter Grid.Row="1" Grid.ColumnSpan="2" Margin="0,5,0,0"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="EmptyHeaderGroupStyle" TargetType="{x:Type GroupItem}">
+            <Setter Property="Margin" Value="0,0,0,0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type GroupItem}">
+                        <Grid Margin="0,0,0,20">
+                            <ItemsPresenter Margin="0,0,0,0"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <converters1:MainMenuGroupStyleSelector x:Key="MainMenuGroupStyleSelector" NormalGroupStyle="{StaticResource NormalGroupStyle}" EmptyHeaderGroupStyle="{StaticResource EmptyHeaderGroupStyle}"/>
+    </Page.Resources>
 
     <Grid>
-
+        <Grid Visibility="{Binding IsWorking, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=True}" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Orientation="Vertical" Grid.Column="0">
+                <Button Style="{StaticResource HighlightedButtonStyle}" Content="{x:Static localization:MainResources.OmsSetup}" Command="{Binding NewMailCommand}"/>
+                <ListBox Padding="0,0,0,10" Margin="0,12,0,0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
+                         ItemsSource="{Binding Source={StaticResource MainMenuGroups}}"
+                         Foreground="White" Style="{StaticResource CommonListBoxStyle}" ItemContainerStyle="{StaticResource MainMenuListBoxItemStyle}"
+                         HorizontalContentAlignment="Stretch"
+                         SelectedItem="{Binding SelectedMainMenuItem}" SelectedIndex="{Binding SelectedMainMenuItemIndex, Mode=TwoWay}">
+                    <i:Interaction.Behaviors>
+                        <behaviours:TransitionBehaviour Transition="{StaticResource MainMenuLoadAnim}" TransitionDelay="40"/>
+                    </i:Interaction.Behaviors>
+                    <ListBox.GroupStyle>
+                        <GroupStyle ContainerStyleSelector="{StaticResource MainMenuGroupStyleSelector}" />
+                    </ListBox.GroupStyle>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="{Binding Title}" FontWeight="Regular" FontSize="14"/>
+                                <Path Grid.Column="1"  Data="{Binding Icon}" Fill="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ListBoxItem}, Path=Foreground}" Width="12" Stretch="Uniform" Margin="0,0,12,0" SnapsToDevicePixels="False"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </StackPanel>
+        </Grid>
         <StackPanel Visibility="{Binding IsWorking, Converter={StaticResource BoolToVisibilityConverter}}" VerticalAlignment="Center" Margin="0,50,0,0" >
             <TextBlock Text="{x:Static localization:MainResources.LoadingMessage}" FontSize="22" HorizontalAlignment="Center" Opacity="0.4" FontWeight="Light" Foreground="{DynamicResource ForegroundBrush}"/>
             <ProgressBar Style="{StaticResource CommonProgressBarStyle}" IsIndeterminate="{Binding IsWorking}"/>

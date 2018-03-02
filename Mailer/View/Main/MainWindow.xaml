@@ -41,7 +41,7 @@
         <Grid>
             <Frame x:Name="RootFrame" Background="Transparent" NavigationUIVisibility="Hidden"/>
             <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,5,5,0">
-                <Button x:Name="MailerButton" HorizontalAlignment="Left" Margin="0,0,10,0" Visibility="Hidden"
+                <Button x:Name="MailerButton" HorizontalAlignment="Left" Margin="0,0,10,0"
                         Foreground="{DynamicResource SidebarForegroundBrush}"
                         Command="{Binding GoToSettingsCommand}" ToolTip="{x:Static localization:MainResources.Settings}" Content="{x:Static localization:MainResources.Settings}"/>
                 <Button Style="{StaticResource MinimizeButtonStyle}" Command="{Binding MinimizeWindowCommand}"/>
