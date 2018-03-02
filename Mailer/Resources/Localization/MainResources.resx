@@ -286,7 +286,7 @@
     <value>Please, wait...</value>
   </data>
   <data name="OmsSetup" xml:space="preserve">
-    <value>OMS</value>
+    <value>SMTP Setup</value>
   </data>
   <data name="SmtpAddressTitle" xml:space="preserve">
     <value>SMTP address</value>

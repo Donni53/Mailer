@@ -14,54 +14,59 @@
       Loaded="SettingsView_OnLoaded"
       Background="Transparent"
       Title="SettingsView">
-
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="25*" />
-            <ColumnDefinition Width="103*" />
-        </Grid.ColumnDefinitions>
-        <Grid>
-            <StackPanel>
-                <Button x:Name="MeridianButton" HorizontalAlignment="Left" Margin="0,5,0,0"
+        <Grid Visibility="{Binding IsWorking, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=True}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="25*" />
+                <ColumnDefinition Width="103*" />
+            </Grid.ColumnDefinitions>
+            <Grid>
+                <StackPanel>
+                    <Button x:Name="MeridianButton" HorizontalAlignment="Left" Margin="0,5,0,0"
                         Command="{Binding CloseSettingsCommand}" ToolTip="{x:Static localization:MainResources.BackButton}">
-                    <Button.Template>
-                        <ControlTemplate TargetType="{x:Type Button}">
-                            <StackPanel x:Name="rootPanel" Opacity="0.7" Orientation="Horizontal" Background="Transparent">
-                                <Path Data="{StaticResource BackIcon}" Fill="{DynamicResource SidebarForegroundBrush}" Stretch="Uniform" Width="5" Margin="18,3,0,0"/>
-                                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="{DynamicResource SidebarForegroundBrush}" Opacity="1" FontSize="13" Margin="6,1,0,0" 
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <StackPanel x:Name="rootPanel" Opacity="0.7" Orientation="Horizontal" Background="Transparent">
+                                    <Path Data="{StaticResource BackIcon}" Fill="{DynamicResource SidebarForegroundBrush}" Stretch="Uniform" Width="5" Margin="18,3,0,0"/>
+                                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="{DynamicResource SidebarForegroundBrush}" Opacity="1" FontSize="13" Margin="6,1,0,0" 
                                            Text="{x:Static localization:MainResources.Settings}" FontWeight="Regular" TextOptions.TextFormattingMode="Display"/>
-                            </StackPanel>
-                            <ControlTemplate.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Opacity" Value="1" TargetName="rootPanel"/>
-                                </Trigger>
-                                <Trigger Property="IsPressed" Value="True">
-                                    <Setter Property="Opacity" Value="0.6" TargetName="rootPanel"/>
-                                </Trigger>
-                            </ControlTemplate.Triggers>
-                        </ControlTemplate>
-                    </Button.Template>
-                </Button>
-                <ListBox x:Name="MenuListBox" Margin="5,0,0,0" Padding="0,10,0,10"
+                                </StackPanel>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Opacity" Value="1" TargetName="rootPanel"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter Property="Opacity" Value="0.6" TargetName="rootPanel"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                    <ListBox x:Name="MenuListBox" Margin="5,0,0,0" Padding="0,10,0,10"
                      ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
                      ItemsSource="{Binding MenuItems}"
                      Foreground="White" 
                      Style="{StaticResource CommonListBoxStyle}"
                      ItemContainerStyle="{StaticResource MainMenuListBoxItemStyle}"
                      SelectedIndex="0">
-                    <i:Interaction.Behaviors>
-                        <behaviours:TransitionBehaviour Transition="{StaticResource MainMenuLoadAnim}" TransitionDelay="40" />
-                    </i:Interaction.Behaviors>
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding Key}" FontFamily="Segoe UI SemiLight" />
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
-            </StackPanel>
-        </Grid>
-        <Frame x:Name="SettingsFrame" Grid.Column="1" Background="Transparent"
+                        <i:Interaction.Behaviors>
+                            <behaviours:TransitionBehaviour Transition="{StaticResource MainMenuLoadAnim}" TransitionDelay="40" />
+                        </i:Interaction.Behaviors>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Key}" FontFamily="Segoe UI SemiLight" />
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </StackPanel>
+            </Grid>
+            <Frame x:Name="SettingsFrame" Grid.Column="1" Background="Transparent"
            Source="{Binding SelectedItem.Value, ElementName=MenuListBox}" NavigationUIVisibility="Hidden"
            Navigated="SettingsFrame_Navigated" JournalOwnership="OwnsJournal"/>
+        </Grid>
+        <StackPanel Visibility="{Binding IsWorking, Converter={StaticResource BoolToVisibilityConverter}}" VerticalAlignment="Center" Margin="0,50,0,0" >
+            <TextBlock Text="{x:Static localization:MainResources.WaitMessage}" FontSize="22" HorizontalAlignment="Center" Opacity="0.4" FontWeight="Light" Foreground="{DynamicResource ForegroundBrush}"/>
+            <ProgressBar Style="{StaticResource CommonProgressBarStyle}" IsIndeterminate="{Binding IsWorking}"/>
+        </StackPanel>
     </Grid>
 </controls:PageBase>

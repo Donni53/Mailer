@@ -80,6 +80,9 @@ namespace Mailer.ViewModel.Settings
         private int _selectedAccount;
         private bool _customBackground;
         private string _customBackgroundPath;
+        private bool _isError;
+        private string _error;
+        private bool _selectedAccountChanged;
 
         public RelayCommand CloseSettingsCommand { get; private set; }
         public RelayCommand SaveCommand { get; private set; }
@@ -163,6 +166,12 @@ namespace Mailer.ViewModel.Settings
             }
         }
 
+        public bool SelectedAccountChanged
+        {
+            get => _selectedAccountChanged;
+            set => Set(ref _selectedAccountChanged, value);
+        }
+
         public bool RestartRequired
         {
             get => _restartRequired;
@@ -243,13 +252,28 @@ namespace Mailer.ViewModel.Settings
             set => Set(ref _cacheSize, value);
         }
 
+        public bool IsError
+        {
+            get => _isError;
+            set => Set(ref _isError, value);
+        }
+
+        public string Error
+        {
+            get => _error;
+            set => Set(ref _error, value);
+        }
+
         public int SelectedAccount
         {
             get => _selectedAccount;
             set
             {
                 if (Set(ref _selectedAccount, value))
+                {
+                    SelectedAccountChanged = true;
                     CanSave = true;
+                }
                 RaisePropertyChanged("AutoReplie");
                 RaisePropertyChanged("AutoReplieText");
             }
@@ -449,7 +473,7 @@ namespace Mailer.ViewModel.Settings
             flyout.Show();
         }
 
-        private void SaveSettings()
+        private async void SaveSettings()
         {
             switch (SelectedTheme)
             {
@@ -497,10 +521,33 @@ namespace Mailer.ViewModel.Settings
             Domain.Settings.Instance.EnableTrayIcon = EnableTrayIcon;
             Domain.Settings.Instance.InstallDevUpdates = InstallDevUpdates;
             Domain.Settings.Instance.Language = SelectedLanguage.LanguageCode;
-            Domain.Settings.Instance.SelectedAccount = SelectedAccount;
             Domain.Settings.Instance.CustomBackground = CustomBackground;
             Domain.Settings.Instance.CustomBackgroundPath = CustomBackgroundPath;
 
+            if (SelectedAccountChanged && Domain.Settings.Instance.SelectedAccount != SelectedAccount)
+            {
+                IsWorking = true;
+                IsError = false;
+                try
+                {
+                    await AccountManager.ImapAuth(
+                        Domain.Settings.Instance.Accounts[SelectedAccount].UserName,
+                        Domain.Settings.Instance.Accounts[SelectedAccount].ImapData,
+                        false, -1);
+                    Messenger.Default.Send(new NavigateToPageMessage()
+                    {
+                        Page = "/Main.MailView"
+                    });
+                }
+                catch (Exception ex)
+                {
+                    Error = ex.Message;
+                    IsError = true;
+                    LoggingService.Log(ex);
+                }
+                IsWorking = false;
+            }
+            Domain.Settings.Instance.SelectedAccount = SelectedAccount;
             Domain.Settings.Instance.Save();
 
         }

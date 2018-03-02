@@ -241,7 +241,7 @@ namespace Mailer.Resources.Localization {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на OMS.
+        ///   Ищет локализованную строку, похожую на SMTP Setup.
         /// </summary>
         public static string OmsSetup {
             get {

@@ -43,11 +43,11 @@
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                         </ComboBox>
-                    <Button Style="{StaticResource HighlightedButtonStyle}" Content="{x:Static localization:MainResources.Apply}" Command="{Binding ApplyCommand}"  Margin="15,0,0,0"/>
                     <Button Style="{StaticResource HighlightedButtonStyle}" Content="{x:Static localization:MainResources.OmsSetup}" Command="{Binding OmsSetupCommand}"  Margin="15,0,0,0"/>
                     <Button Style="{StaticResource HighlightedButtonStyle}" Content="{x:Static localization:MainResources.SettingsAccountEdit}" Command="{Binding EditAccountCommand}"  Margin="15,0,0,0"/>
                     <Button Style="{StaticResource CommonButtonStyle}" Content="{x:Static localization:MainResources.SettingsAccountDelete}" Margin="15,0,0,0" Command="{Binding DeleteAccountCommand}"/>
                 </StackPanel>
+                <TextBlock Foreground="Red" Text="{Binding Error}" Margin="0,3,0,0" Visibility="{Binding IsError, Converter={StaticResource NullToVisibilityConverter}}" TextWrapping="Wrap"/>
                 <TextBlock Text="{x:Static localization:MainResources.SettingsAutomaticReplies}" FontSize="12" Opacity="0.7" Margin="0,15,0,0" Foreground="{DynamicResource ForegroundBrush}"/>
                 <CheckBox IsChecked="{Binding AutoReplie}" Content="{x:Static localization:MainResources.SettingsEnableAutoReplies}" FontSize="12" Opacity="0.7" Margin="0,3,0,0" Foreground="{DynamicResource ForegroundBrush}"/>
                 <StackPanel Margin="0,20,0,0" Visibility="{Binding AutoReplie, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=False}">
