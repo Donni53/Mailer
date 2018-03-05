@@ -13,15 +13,18 @@
       mc:Ignorable="d" 
       d:DesignHeight="700" d:DesignWidth="1024"
       Title="MailView">
+    <Page.RenderTransform>
+        <TranslateTransform />
+    </Page.RenderTransform>
+
+    <Page.Triggers>
+        <EventTrigger RoutedEvent="Page.Loaded">
+            <BeginStoryboard Storyboard="{StaticResource PageLoadAnim}" />
+        </EventTrigger>
+    </Page.Triggers>
     <Page.Resources>
         <converters:BooleanToObjectConverter x:Key="WindowMarginConverter" TrueObject="6,6,6,0" FalseObject="0"/>
-
-        <CollectionViewSource x:Key="MainMenuGroups" Source="{Binding MainMenuItems}">
-            <CollectionViewSource.GroupDescriptions>
-                <PropertyGroupDescription PropertyName="Group"/>
-            </CollectionViewSource.GroupDescriptions>
-        </CollectionViewSource>
-
+        <CollectionViewSource x:Key="MailFolders" Source="{Binding Folders}"/>
         <Style x:Key="NormalGroupStyle" TargetType="{x:Type GroupItem}">
             <Setter Property="Margin" Value="0,0,0,0"/>
             <Setter Property="Template">
@@ -62,38 +65,64 @@
     </Page.Resources>
 
     <Grid>
-        <Grid Visibility="{Binding IsWorking, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=True}" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Grid Visibility="{Binding IsWorking, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=True}" HorizontalAlignment="Left" VerticalAlignment="Top">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <StackPanel Orientation="Vertical" Grid.Column="0">
-                <Button Style="{StaticResource HighlightedButtonStyle}" Content="{x:Static localization:MainResources.OmsSetup}" Command="{Binding NewMailCommand}"/>
-                <ListBox Padding="0,0,0,10" Margin="0,12,0,0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
-                         ItemsSource="{Binding Source={StaticResource MainMenuGroups}}"
-                         Foreground="White" Style="{StaticResource CommonListBoxStyle}" ItemContainerStyle="{StaticResource MainMenuListBoxItemStyle}"
-                         HorizontalContentAlignment="Stretch"
-                         SelectedItem="{Binding SelectedMainMenuItem}" SelectedIndex="{Binding SelectedMainMenuItemIndex, Mode=TwoWay}">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid Width="220" Grid.RowSpan="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition />
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <StackPanel>
+                    <Button x:Name="MailerButton" HorizontalAlignment="Left" Margin="0,5,0,0"
+                        Foreground="{DynamicResource ForegroundBrush}"
+                        Command="{Binding GoToSettingsCommand}" ToolTip="{x:Static localization:MainResources.Settings}">
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <StackPanel x:Name="rootPanel" Opacity="0.7" Orientation="Horizontal" Background="Transparent">
+                                    <TextBlock x:Name="Title" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="{TemplateBinding Foreground}" Opacity="1" FontSize="13" Margin="25,1,0,0" Text="Mailer" FontWeight="Regular" TextOptions.TextFormattingMode="Display"/>
+                                    <Path x:Name="Icon" Data="{StaticResource SettingsIcon}" Fill="{TemplateBinding Foreground}" Stretch="Uniform" Width="12" Margin="8,3,0,0"/>
+                                </StackPanel>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Opacity" Value="1" TargetName="rootPanel"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter Property="Opacity" Value="0.6" TargetName="rootPanel"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                    <Button Content="New Mail" Padding="23,3" Margin="25,5,5,0" FontSize="14" Command="{Binding NewMailCommand}" Style="{StaticResource HighlightedButtonStyle}"/>
+                </StackPanel>
+
+                <ListBox Grid.Row="1" x:Name="MenuListBox" Padding="0,0,0,10" Margin="25,12,5,0" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                         ItemsSource="{Binding Source={StaticResource MailFolders}}"
+                         Foreground="White" 
+                         Style="{StaticResource CommonListBoxStyle}"
+                         ItemContainerStyle="{StaticResource MainMenuListBoxItemStyle}"
+                         SelectedIndex="0">
                     <i:Interaction.Behaviors>
-                        <behaviours:TransitionBehaviour Transition="{StaticResource MainMenuLoadAnim}" TransitionDelay="40"/>
+                        <behaviours:TransitionBehaviour Transition="{StaticResource MainMenuLoadAnim}" TransitionDelay="40" />
                     </i:Interaction.Behaviors>
-                    <ListBox.GroupStyle>
-                        <GroupStyle ContainerStyleSelector="{StaticResource MainMenuGroupStyleSelector}" />
-                    </ListBox.GroupStyle>
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition />
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Text="{Binding Title}" FontWeight="Regular" FontSize="14"/>
-                                <Path Grid.Column="1"  Data="{Binding Icon}" Fill="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ListBoxItem}, Path=Foreground}" Width="12" Stretch="Uniform" Margin="0,0,12,0" SnapsToDevicePixels="False"/>
-                            </Grid>
+                            <TextBlock Text="{Binding Name}" FontFamily="Segoe UI SemiLight" />
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
-            </StackPanel>
+                <StackPanel Orientation="Vertical" Grid.Row="2" VerticalAlignment="Bottom" Margin="25,12,5,0">
+                    <TextBlock Text="Last refresh: 5 mins ago" FontSize="14" Foreground="{DynamicResource ForegroundBrush}"/>
+                </StackPanel>
+            </Grid>
         </Grid>
         <StackPanel Visibility="{Binding IsWorking, Converter={StaticResource BoolToVisibilityConverter}}" VerticalAlignment="Center" Margin="0,50,0,0" >
             <TextBlock Text="{x:Static localization:MainResources.LoadingMessage}" FontSize="22" HorizontalAlignment="Center" Opacity="0.4" FontWeight="Light" Foreground="{DynamicResource ForegroundBrush}"/>
