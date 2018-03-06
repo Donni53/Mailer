@@ -8,6 +8,7 @@ using GalaSoft.MvvmLight.Messaging;
 using MailBee.ImapMail;
 using MailBee.Mime;
 using Mailer.Messages;
+using Mailer.Model;
 using Mailer.Services;
 
 namespace Mailer.ViewModel.Main
@@ -15,10 +16,12 @@ namespace Mailer.ViewModel.Main
     public class MailViewModel : ViewModelBase
     {
         private FolderCollection _folders;
+        private List<FolderExtended> _foldersExtended;
         public RelayCommand GoToSettingsCommand { get; private set; }
 
         public MailViewModel()
         {
+            IsWorking = true;
             InitializeCommands();
             LoadInfo();
         }
@@ -37,6 +40,8 @@ namespace Mailer.ViewModel.Main
         private async void LoadInfo()
         {
             await LoadFolders();
+            await LoadMessages();
+            IsWorking = false;
         }
 
         public FolderCollection Folders
@@ -45,19 +50,22 @@ namespace Mailer.ViewModel.Main
             set => Set(ref _folders, value);
         }
 
-        public async Task LoadFolders()
+        public List<FolderExtended> FoldersExtended
+        {
+            get => _foldersExtended;
+            set => Set(ref _foldersExtended, value);
+        }
+
+        public MailMessageCollection MailMessageCollection => FoldersExtended[0].MailMessageCollection;
+
+        public async Task LoadMessages()
         {
             try
             {
-                Folders = await ViewModelLocator.ImapClient.DownloadFoldersAsync();
-                var fldr = Folders[0];
-                await ViewModelLocator.ImapClient.SelectFolderAsync(Folders[0].Name);
-                //var msgs = ViewModelLocator.ImapClient
-                var tst =
-                    (ViewModelLocator.ImapClient.MessageCount - 9).ToString() + ":*";
-                //var msgs = ViewModelLocator.ImapClient.DownloadEntireMessages(tst, false);
-                //var msgs = ViewModelLocator.ImapClient
-
+                await ViewModelLocator.ImapClient.SelectFolderAsync(FoldersExtended[0].Name);
+                FoldersExtended[0].MailMessageCollection = await ViewModelLocator.ImapClient.DownloadMessageHeadersAsync(ViewModelLocator.ImapClient.MessageCount - 24 + ":*", false);
+                //FoldersExtended[0].MailMessageCollection[0].DateReceived
+                RaisePropertyChanged("MailMessageCollection");
             }
             catch (Exception e)
             {
@@ -65,5 +73,31 @@ namespace Mailer.ViewModel.Main
             }
         }
 
+        public async Task LoadFolders()
+        {
+            try
+            {
+                Folders = await ViewModelLocator.ImapClient.DownloadFoldersAsync();
+                var tmpFldrs = new List<FolderExtended>();
+                foreach (Folder item in Folders)
+                {
+                    var folderInfo = await ViewModelLocator.ImapClient.GetFolderStatusAsync(item.Name);
+                    var folderExtended = new FolderExtended(item.Name, item.ShortName, folderInfo.MessageCount, folderInfo.UnseenCount);
+                    tmpFldrs.Add(folderExtended);
+                }
+                FoldersExtended = tmpFldrs;
+                
+            }
+            catch (Exception e)
+            {
+                LoggingService.Log(e);
+            }
+        }
+
+
+        public async Task LoadFoldersInfo()
+        {
+            
+        }
     }
 }

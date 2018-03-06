@@ -1,4 +1,111 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    
+    <DataTemplate x:Key="ListBoxItemTemplate">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Text="{Binding Name}" FontFamily="Segoe UI SemiLight" HorizontalAlignment="Left"/>
+            <TextBlock Grid.Column="1" Text="{Binding UnreadedMessagesCount}"  Foreground="{DynamicResource ForegroundBrush}" TextTrimming="CharacterEllipsis" FontFamily="Segoe UI SemiLight" HorizontalAlignment="Right"/>
+        </Grid>
+    </DataTemplate>
+
+    <DataTemplate x:Key="MessageItemTemplate">
+        <Button x:Name="RootElement" Style="{StaticResource SimpleButtonStyle}"
+                Padding="0,5,0,5" Height="32">
+            <Button.RenderTransform>
+                <TranslateTransform />
+            </Button.RenderTransform>
+            <Button.Triggers>
+                <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+                    <BeginStoryboard Storyboard="{StaticResource AudioLoadAnim}" />
+                </EventTrigger>
+            </Button.Triggers>
+            <Grid Background="Transparent" Name="RootGrid" VerticalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="10"/>
+                    <ColumnDefinition Width="200"/>
+                    <ColumnDefinition Width="330"/>
+                    <ColumnDefinition Width="150"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="1" ToolTipService.ShowDuration="12000" Text="{Binding From.DisplayName}" Foreground="{DynamicResource ForegroundBrush}" FontSize="13" TextTrimming="CharacterEllipsis"
+                           ToolTip="{Binding From.DisplayName}"/>
+                <TextBlock Grid.Column="2" ToolTipService.ShowDuration="12000" Text="{Binding Subject}" Foreground="{DynamicResource ForegroundBrush}" FontSize="13" TextTrimming="CharacterEllipsis"
+                           ToolTip="{Binding Subject}"/>
+                <TextBlock Grid.Column="3" ToolTipService.ShowDuration="12000" Text="{Binding DateReceived}" Foreground="{DynamicResource ForegroundBrush}" FontSize="13" TextTrimming="CharacterEllipsis"
+                           ToolTip="{Binding DateReceived}"/>
+            </Grid>
+        </Button>
+    </DataTemplate>
+
+    <DataTemplate x:Key="AccountItemTemplate">
+        <Button x:Name="RootElement" Style="{StaticResource SimpleButtonStyle}"
+                Padding="0,5,0,5" Height="32">
+            <Button.InputBindings>
+                <MouseBinding Gesture="LeftDoubleClick" Command="{Binding DataContext.OpenCommand, RelativeSource={RelativeSource AncestorType=Page}}" CommandParameter="{Binding}"/>
+            </Button.InputBindings>
+            <Button.RenderTransform>
+                <TranslateTransform />
+            </Button.RenderTransform>
+            <Button.Triggers>
+                <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+                    <BeginStoryboard Storyboard="{StaticResource AudioLoadAnim}" />
+                </EventTrigger>
+            </Button.Triggers>
+            <Button.ContextMenu>
+                <ContextMenu Style="{StaticResource CommonContextMenuStyle}" Focusable="False">
+                    <MenuItem Header="Копировать почту и пароль" Command="{Binding WarGamingViewModel.CopyCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}"/>
+                </ContextMenu>
+            </Button.ContextMenu>
+            <Grid Background="Transparent" Name="RootGrid" VerticalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="10"/>
+                    <ColumnDefinition Width="0.3*"/>
+                    <ColumnDefinition Width="0.13*"/>
+                    <ColumnDefinition Width="0.10*"/>
+                    <ColumnDefinition Width="0.11*"/>
+                    <ColumnDefinition Width="0.1*"/>
+                    <ColumnDefinition Width="0.1*"/>
+                    <ColumnDefinition Width="20"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="1" ToolTipService.ShowDuration="12000" x:Name="LoginAndPassword" Text="{Binding LoginAndPassword}" Foreground="{DynamicResource ForegroundBrush}" FontSize="13" TextTrimming="CharacterEllipsis"
+                           ToolTip="{Binding LoginAndPassword}"/>
+                <TextBlock Grid.Column="2" ToolTipService.ShowDuration="12000" x:Name="AccountName" Text="{Binding AccountName}" Foreground="{DynamicResource ForegroundBrush}" FontSize="13" TextTrimming="CharacterEllipsis"
+                           ToolTip="{Binding LoginFullInfo}"/>
+                <TextBlock Grid.Column="3" ToolTipService.ShowDuration="12000" x:Name="BattlesCount" Text="{Binding Battles}" Foreground="{DynamicResource ForegroundBrush}" FontSize="13" TextTrimming="CharacterEllipsis"
+                           ToolTip="{Binding BattlesFullInfo}"/>
+                <StackPanel Grid.Column="4" ToolTipService.ShowDuration="12000" Orientation="Horizontal">
+                    <TextBlock x:Name="AllVehicles" ToolTipService.ShowDuration="12000" Text="{Binding VehiclesCount}" Foreground="{DynamicResource ForegroundBrush}" FontSize="13" TextTrimming="CharacterEllipsis"
+                           ToolTip="{Binding Vehicles}"/>
+                    <TextBlock Text="/" ToolTipService.ShowDuration="12000" Foreground="{DynamicResource ForegroundBrush}" FontSize="13" TextTrimming="CharacterEllipsis"/>
+                    <TextBlock x:Name="PremiumVehicles" ToolTipService.ShowDuration="12000" Text="{Binding PremiumVehiclesCount}" Foreground="Goldenrod" FontSize="13" TextTrimming="CharacterEllipsis"
+                           ToolTip="{Binding PremiumVehicles}"/>
+                    <TextBlock Text="/" ToolTipService.ShowDuration="12000" Foreground="{DynamicResource ForegroundBrush}" FontSize="13" TextTrimming="CharacterEllipsis"/>
+                    <TextBlock ToolTipService.ShowDuration="12000" x:Name="MaxVehicleLevel" Text="{Binding MaxVehicleLevel}" Foreground="Lime" FontSize="13" TextTrimming="CharacterEllipsis"
+                           ToolTip="Максимальный уровень техники"/>
+                </StackPanel>
+                <TextBlock Grid.Column="5" ToolTipService.ShowDuration="12000" x:Name="GlobalRating" Text="{Binding GlobalRating}" Foreground="{DynamicResource ForegroundBrush}" FontSize="13" TextTrimming="CharacterEllipsis"
+                           ToolTip="Глобальный рейтинг"/>
+                <StackPanel Grid.Column="6" Orientation="Horizontal">
+                    <TextBlock Text="{Binding EmailPhoneStatusString}" ToolTipService.ShowDuration="12000" Foreground="{DynamicResource ForegroundBrush}" FontSize="13" TextTrimming="CharacterEllipsis"
+                           ToolTip="Телефон на почте"/>
+                    <TextBlock Text="/" ToolTipService.ShowDuration="12000" Foreground="{DynamicResource ForegroundBrush}" FontSize="13" TextTrimming="CharacterEllipsis"/>
+                    <TextBlock Text="{Binding WgPhoneStatusString}" ToolTipService.ShowDuration="12000" Foreground="{DynamicResource ForegroundBrush}" FontSize="13" TextTrimming="CharacterEllipsis"
+                           ToolTip="Телефон в WG"/>
+                </StackPanel>
+                <StackPanel x:Name="ToolbarPanel" Grid.Column="7" HorizontalAlignment="Right" Margin="0,0,2,0" Opacity="0" Orientation="Horizontal" VerticalAlignment="Center">
+                    <Button x:Name="EnableDisableButton" Style="{StaticResource LyricsButtonStyle}" Width="22" Height="20" Padding="4" Margin="5,0,0,0"
+                            ToolTip="Показать полную информацию" SnapsToDevicePixels="False"
+                            Command="{Binding DataContext.ShowFullLogCommand, RelativeSource={RelativeSource AncestorType=Page}}" CommandParameter="{Binding}"/>
+                </StackPanel>
+            </Grid>
+        </Button>
+        <DataTemplate.Triggers>
+            <DataTrigger Binding="{Binding ElementName=RootElement, Path=IsMouseOver}" Value="True">
+                <Setter TargetName="ToolbarPanel" Property="Opacity" Value="1" />
+            </DataTrigger>
+        </DataTemplate.Triggers>
+    </DataTemplate>
 </ResourceDictionary>

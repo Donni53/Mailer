@@ -27,8 +27,8 @@
                 <ResourceDictionary Source="/Resources/Styles/MainControlStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/SliderStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/ContextMenuStyles.xaml" />
-                <ResourceDictionary Source="/Resources/Styles/TabControlStyles.xaml" />
-                <ResourceDictionary Source="/Resources/Styles/Styles.xaml" />-->
+                <ResourceDictionary Source="/Resources/Styles/TabControlStyles.xaml" />-->
+                <ResourceDictionary Source="/Resources/Styles/Styles.xaml" />
                 <ResourceDictionary>
                     <converters:BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
                     <converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
