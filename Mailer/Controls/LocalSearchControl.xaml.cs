@@ -1,16 +1,23 @@
-﻿using System;
+﻿using Mailer.UI.Extensions;
+using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Threading;
-using Neptune.UI.Extensions;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
 
-namespace Meridian.Controls
+namespace Mailer.Controls
 {
     /// <summary>
-    /// Interaction logic for LocalSearchControl.xaml
+    /// Логика взаимодействия для LocalSearchControl.xaml
     /// </summary>
     public partial class LocalSearchControl : UserControl
     {
@@ -81,7 +88,6 @@ namespace Meridian.Controls
         #endregion
 
         public bool IsFiltering { get; set; }
-
         public LocalSearchControl()
         {
             InitializeComponent();
@@ -133,8 +139,9 @@ namespace Meridian.Controls
             if ((bool)e.NewValue)
             {
                 //майкрософт, убей себя пожалуйста об стену
-                Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(() => LocalSearchBox.Focus()));
+                Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.ContextIdle, new Action(() => LocalSearchBox.Focus()));
             }
         }
     }
+
 }

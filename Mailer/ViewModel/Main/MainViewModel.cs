@@ -92,9 +92,9 @@ namespace Mailer.ViewModel.Main
             if (frame == null)
                 return;
 
-            if (typeof(Layout.PageBase).IsAssignableFrom(type))
+            if (typeof(PageBase).IsAssignableFrom(type))
             {
-                var page = (Layout.PageBase)Activator.CreateInstance(type);
+                var page = (PageBase)Activator.CreateInstance(type);
                 page.NavigationContext.Parameters = message.Parameters;
                 frame.Navigate(page);
             }

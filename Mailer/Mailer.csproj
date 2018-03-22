@@ -89,8 +89,12 @@
     <Compile Include="Behaviours\TransitionBehaviour.cs" />
     <Compile Include="Behaviours\VisibilityTransitionBehaviour.cs" />
     <Compile Include="Controls\BindablePasswordBox.cs" />
+    <Compile Include="Controls\BusyIndicator.cs" />
     <Compile Include="Controls\FlyoutContent.cs" />
     <Compile Include="Controls\FlyoutControl.xaml.cs" />
+    <Compile Include="Controls\LocalSearchControl.xaml.cs">
+      <DependentUpon>LocalSearchControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\PageBase.cs" />
     <Compile Include="Controls\TextBoxWithHint.cs" />
     <Compile Include="Converters\MainMenuGroupStyleSelector.cs" />
@@ -102,7 +106,9 @@
     <Compile Include="Helpers\NativeMethods.cs" />
     <Compile Include="Helpers\NetworkHelper.cs" />
     <Compile Include="Helpers\StringHelper.cs" />
+    <Compile Include="Layout\LayoutBase.cs" />
     <Compile Include="Layout\PageBase.cs" />
+    <Compile Include="Layout\TwoColumnPageLayout.cs" />
     <Compile Include="Messages\ChangeBackgroundMessage.cs" />
     <Compile Include="Messages\NavigateToPageMessage.cs" />
     <Compile Include="Model\Account.cs" />
@@ -173,6 +179,14 @@
       <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
     <Page Include="Controls\FlyoutControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\LocalSearchControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Layout\Templates\TwoColumnPageLayoutTemplate.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -369,6 +383,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Layout\Controls\" />
     <Folder Include="Resources\Images\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

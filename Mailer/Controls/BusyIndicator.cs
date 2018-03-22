@@ -4,7 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
 
-namespace Meridian.Controls
+namespace Mailer.Controls
 {
     /// <summary>
     /// A control to provide a visual indicator when an application is busy.

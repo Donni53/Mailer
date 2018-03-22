@@ -29,5 +29,10 @@ namespace Mailer.View.Main
             _viewModel = new MailViewModel();
             DataContext = _viewModel;
         }
+
+        private void LocalSearchBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
     }
 }
