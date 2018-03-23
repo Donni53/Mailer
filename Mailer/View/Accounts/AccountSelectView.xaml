@@ -45,7 +45,7 @@
             </StackPanel>
         </StackPanel>
         <StackPanel Visibility="{Binding IsWorking, Converter={StaticResource BoolToVisibilityConverter}}" VerticalAlignment="Center" Margin="0,0,0,0" >
-            <TextBlock Text="{x:Static localization:MainResources.WaitMessage}" FontSize="22" HorizontalAlignment="Center" Opacity="0.4" FontWeight="Light" Foreground="{DynamicResource ForegroundBrush}"/>
+            <TextBlock Text="{x:Static localization:MainResources.WaitMessage}" FontSize="22" HorizontalAlignment="Center" FontWeight="Light" Foreground="{DynamicResource ForegroundBrush}"/>
             <ProgressBar Style="{StaticResource CommonProgressBarStyle}" IsIndeterminate="{Binding IsWorking}"/>
         </StackPanel>
     </Grid>
