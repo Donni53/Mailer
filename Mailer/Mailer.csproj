@@ -89,6 +89,7 @@
     <Compile Include="Behaviours\TransitionBehaviour.cs" />
     <Compile Include="Behaviours\VisibilityTransitionBehaviour.cs" />
     <Compile Include="Controls\BindablePasswordBox.cs" />
+    <Compile Include="Controls\BindableRichTextBox.cs" />
     <Compile Include="Controls\BusyIndicator.cs" />
     <Compile Include="Controls\FlyoutContent.cs" />
     <Compile Include="Controls\FlyoutControl.xaml.cs" />
@@ -142,6 +143,7 @@
     <Compile Include="ViewModel\Flyouts\SmtpSetupViewModel.cs" />
     <Compile Include="ViewModel\Main\MailViewModel.cs" />
     <Compile Include="ViewModel\Main\MainViewModel.cs" />
+    <Compile Include="ViewModel\Main\TextEditorViewModel.cs" />
     <Compile Include="ViewModel\Settings\SettingsViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
@@ -159,6 +161,9 @@
     </Compile>
     <Compile Include="View\Main\MailView.xaml.cs">
       <DependentUpon>MailView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Main\TextEditor.xaml.cs">
+      <DependentUpon>TextEditor.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Settings\AboutView.xaml.cs">
       <DependentUpon>AboutView.xaml</DependentUpon>
@@ -321,6 +326,10 @@
     <Page Include="Resources\Themes\Light.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Main\TextEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Settings\AboutView.xaml">
       <SubType>Designer</SubType>

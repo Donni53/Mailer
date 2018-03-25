@@ -18,6 +18,7 @@ namespace Mailer.ViewModel.Accounts
         public RelayCommand OkCommand { get; private set; }
         public RelayCommand AddNewCommand { get; private set; }
         public RelayCommand EditCommand { get; private set; }
+        public RelayCommand TextEditorCommand { get; private set; }
 
         public AccountSelectViewModel()
         {
@@ -30,6 +31,15 @@ namespace Mailer.ViewModel.Accounts
             OkCommand = new RelayCommand(Ok);
             AddNewCommand = new RelayCommand(AddNew);
             EditCommand = new RelayCommand(Edit);
+            TextEditorCommand = new RelayCommand(TextEditor);
+        }
+
+        private void TextEditor()
+        {
+            Messenger.Default.Send(new NavigateToPageMessage()
+            {
+                Page = "/Main.TextEditor"
+            });
         }
 
         public int SelectedAccount
