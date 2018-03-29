@@ -70,7 +70,7 @@
                 <ToggleButton Command="EditingCommands.ToggleUnderline" IsChecked="{Binding Underline}">U</ToggleButton>
             </ToolBar>
         </StackPanel>
-        <controls:BindableRichTextBox Grid.Row="2" Margin="0,5,0,0" Document="{Binding Document}" Background="Transparent" Foreground="{DynamicResource ForegroundBrush}" TextChanged="BindableRichTextBox_TextChanged"/>
+        <controls:BindableRichTextBox x:Name="Rtb" AllowDrop="True" Grid.Row="2" Margin="0,5,0,0" Document="{Binding Document}" Background="Transparent" Foreground="{DynamicResource ForegroundBrush}" TextChanged="BindableRichTextBox_TextChanged"/>
         <StackPanel Orientation="Horizontal" Grid.Row="3">
             <TextBlock Text="SymbolsCount: " FontSize="12" Opacity="0.7" Foreground="{DynamicResource ForegroundBrush}"/>
             <TextBlock Text="{Binding SymbolsCount}" FontSize="12" Opacity="0.7" Foreground="{DynamicResource ForegroundBrush}"/>

@@ -25,6 +25,8 @@ namespace Mailer.View.Main
         public TextEditor()
         {
             InitializeComponent();
+            Rtb.AddHandler(DragOverEvent, new DragEventHandler(BindableRichTextBox_DragOver), true);
+            Rtb.AddHandler(DropEvent, new DragEventHandler(BindableRichTextBox_Drop), true);
             _viewModel = new TextEditorViewModel();
             DataContext = _viewModel;
         }
@@ -37,6 +39,17 @@ namespace Mailer.View.Main
         private void Selector_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             _viewModel.UpdateStyle();
+        }
+
+        private void BindableRichTextBox_DragOver(object sender, DragEventArgs e)
+        {
+            e.Effects = e.Data.GetDataPresent(DataFormats.FileDrop) ? DragDropEffects.All : DragDropEffects.None;
+            e.Handled = false;
+        }
+
+        private void BindableRichTextBox_Drop(object sender, DragEventArgs e)
+        {
+            _viewModel.HandleDrop(e);
         }
     }
 }

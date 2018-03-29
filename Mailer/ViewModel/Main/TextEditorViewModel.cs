@@ -76,6 +76,34 @@ namespace Mailer.ViewModel.Main
             Document.FontFamily = new FontFamily(FontList[SelectedFont]);
         }
 
+        public void HandleDrop(DragEventArgs e)
+        {
+            if (!e.Data.GetDataPresent(DataFormats.FileDrop)) return;
+            string[] docPath = (string[])e.Data.GetData(DataFormats.FileDrop);
+
+            var dataFormat = DataFormats.Rtf;
+
+            if (e.KeyStates == DragDropKeyStates.ShiftKey)
+            {
+                dataFormat = DataFormats.Text;
+            }
+
+            TextRange range;
+            FileStream fStream;
+            if (!File.Exists(docPath[0])) return;
+            try
+            {
+                range = new TextRange(Document.ContentStart, Document.ContentEnd);
+                fStream = new FileStream(docPath[0], FileMode.OpenOrCreate);
+                range.Load(fStream, dataFormat);
+                fStream.Close();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("File could not be opened. Make sure the file is a text file.");
+            }
+        }
+
         private void New()
         {
             Document = new FlowDocument();

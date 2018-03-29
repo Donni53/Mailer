@@ -25,15 +25,21 @@
             <Grid Background="Transparent" Name="RootGrid" VerticalAlignment="Center">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="10"/>
+                    <ColumnDefinition Width="20"/>
+                    <ColumnDefinition Width="20"/>
                     <ColumnDefinition Width="200"/>
-                    <ColumnDefinition Width="330"/>
+                    <ColumnDefinition MinWidth="330"/>
                     <ColumnDefinition Width="150"/>
                 </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="1" ToolTipService.ShowDuration="12000" Text="{Binding From.DisplayName}" Foreground="{DynamicResource ForegroundBrush}" FontSize="13" TextTrimming="CharacterEllipsis"
+                <CheckBox Grid.Column="1" IsChecked="{Binding EnableNotifications}" FontSize="12" Opacity="0.7" Foreground="{DynamicResource ForegroundBrush}"/>
+                <CheckBox Grid.Column="2" IsChecked="{Binding EnableNotifications}" FontSize="12" Opacity="0.7" Foreground="{DynamicResource ForegroundBrush}"/>
+                <!--<ToggleButton Grid.Column="2" x:Name="ImportantButton" Style="{StaticResource ImportantButtonStyle}" Width="22" Height="20" Padding="4" Margin="5,0,0,0"
+                              IsChecked="{Binding IsMarked, Mode=TwoWay}" ToolTip="Отметить" SnapsToDevicePixels="False"/>-->
+                <TextBlock Grid.Column="3" ToolTipService.ShowDuration="12000" Text="{Binding From.DisplayName}" Foreground="{DynamicResource ForegroundBrush}" FontSize="13" TextTrimming="CharacterEllipsis"
                            ToolTip="{Binding From.DisplayName}"/>
-                <TextBlock Grid.Column="2" ToolTipService.ShowDuration="12000" Text="{Binding Subject}" Foreground="{DynamicResource ForegroundBrush}" FontSize="13" TextTrimming="CharacterEllipsis"
+                <TextBlock Grid.Column="4" ToolTipService.ShowDuration="12000" Text="{Binding Subject}" Foreground="{DynamicResource ForegroundBrush}" FontSize="13" TextTrimming="CharacterEllipsis"
                            ToolTip="{Binding Subject}"/>
-                <TextBlock Grid.Column="3" ToolTipService.ShowDuration="12000" Text="{Binding DateReceived}" Foreground="{DynamicResource ForegroundBrush}" FontSize="13" TextTrimming="CharacterEllipsis"
+                <TextBlock Grid.Column="5" ToolTipService.ShowDuration="12000" Text="{Binding DateReceived}" Foreground="{DynamicResource ForegroundBrush}" FontSize="13" TextTrimming="CharacterEllipsis"
                            ToolTip="{Binding DateReceived}"/>
             </Grid>
         </Button>

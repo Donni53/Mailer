@@ -128,7 +128,7 @@
                          ItemContainerStyle="{StaticResource MainMenuListBoxItemStyle}"
                          ItemTemplate="{StaticResource ListBoxItemTemplate}"
                          HorizontalContentAlignment="Stretch"
-                         SelectedIndex="0">
+                         SelectedIndex="{Binding SelectedFolder}">
                 <i:Interaction.Behaviors>
                     <behaviours:TransitionBehaviour Transition="{StaticResource MainMenuLoadAnim}" TransitionDelay="40" />
                 </i:Interaction.Behaviors>
@@ -149,7 +149,7 @@
                 <Button Style="{StaticResource HighlightedButtonStyle}" Content="Test" Command="{Binding OkCommand}"  Margin="0,0,10,0" Width="150"/>
                 <controls:TextBoxWithHint x:Name="LocalSearchBox" Style="{StaticResource LocalSearchBoxStyle}" Padding="0,0,0,0" Hint="Start typing" Height="30" Width="150" Margin="0,0,20,0"
                                       HintStyle="{StaticResource TextBoxHintStyle}"
-                                      TextChanged="LocalSearchBox_TextChanged"/>
+                                      TextChanged="LocalSearchBox_TextChanged" FontSize="12"/>
             </StackPanel>
             <ListBox Grid.Row="1" Margin="0,0,5,0" x:Name="MessagesListBox"
                      ItemsSource="{Binding Source={StaticResource MessagesCollection}}"

@@ -17,6 +17,8 @@ namespace Mailer.ViewModel.Main
     {
         private FolderCollection _folders;
         private List<FolderExtended> _foldersExtended;
+        private int _selectedFolder;
+
         public RelayCommand GoToSettingsCommand { get; private set; }
 
         public MailViewModel()
@@ -40,8 +42,22 @@ namespace Mailer.ViewModel.Main
         private async void LoadInfo()
         {
             await LoadFolders();
-            await LoadMessages();
             IsWorking = false;
+        }
+
+        private async void LoadFolderMessages()
+        {
+            await LoadMessages(_selectedFolder);
+        }
+
+        public int SelectedFolder
+        {
+            get => _selectedFolder;
+            set
+            {
+                _selectedFolder = value;
+                LoadFolderMessages();
+            }
         }
 
         public FolderCollection Folders
@@ -58,13 +74,13 @@ namespace Mailer.ViewModel.Main
 
         public MailMessageCollection MailMessageCollection => FoldersExtended[0].MailMessageCollection;
 
-        public async Task LoadMessages()
+        public async Task LoadMessages(int folderIndex)
         {
             try
             {
-                await ViewModelLocator.ImapClient.SelectFolderAsync(FoldersExtended[0].Name);
-                FoldersExtended[0].MailMessageCollection = await ViewModelLocator.ImapClient.DownloadMessageHeadersAsync(ViewModelLocator.ImapClient.MessageCount - 24 + ":*", false);
-                //FoldersExtended[0].MailMessageCollection[0].DateReceived
+                await ViewModelLocator.ImapClient.SelectFolderAsync(FoldersExtended[folderIndex].Name);
+                FoldersExtended[folderIndex].MailMessageCollection = await ViewModelLocator.ImapClient.DownloadMessageHeadersAsync(ViewModelLocator.ImapClient.MessageCount - 24 + ":*", false);
+                //var test = FoldersExtended[0].MailMessageCollection[0];
                 RaisePropertyChanged("MailMessageCollection");
             }
             catch (Exception e)
