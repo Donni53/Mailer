@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using MailBee.ImapMail;
@@ -42,6 +43,7 @@ namespace Mailer.ViewModel.Main
         private async void LoadInfo()
         {
             await LoadFolders();
+            //await LoadFolderMessages();
             IsWorking = false;
         }
 
@@ -72,14 +74,14 @@ namespace Mailer.ViewModel.Main
             set => Set(ref _foldersExtended, value);
         }
 
-        public MailMessageCollection MailMessageCollection => FoldersExtended[0].MailMessageCollection;
+        public MailMessageCollection MailMessageCollection => FoldersExtended[SelectedFolder].MailMessageCollection;
 
         public async Task LoadMessages(int folderIndex)
         {
             try
             {
                 await ViewModelLocator.ImapClient.SelectFolderAsync(FoldersExtended[folderIndex].Name);
-                FoldersExtended[folderIndex].MailMessageCollection = await ViewModelLocator.ImapClient.DownloadMessageHeadersAsync(ViewModelLocator.ImapClient.MessageCount - 24 + ":*", false);
+                FoldersExtended[folderIndex].MailMessageCollection = await ViewModelLocator.ImapClient.DownloadMessageHeadersAsync(ViewModelLocator.ImapClient.MessageCount - 19 + ":*", false);
                 //var test = FoldersExtended[0].MailMessageCollection[0];
                 RaisePropertyChanged("MailMessageCollection");
             }
@@ -108,12 +110,6 @@ namespace Mailer.ViewModel.Main
             {
                 LoggingService.Log(e);
             }
-        }
-
-
-        public async Task LoadFoldersInfo()
-        {
-            
         }
     }
 }

@@ -11,6 +11,7 @@
       xmlns:converters="clr-namespace:Mailer.UI.Converters"
       xmlns:converters1="clr-namespace:Mailer.Converters"
                    xmlns:layout="clr-namespace:Mailer.Layout"
+                   xmlns:dd="urn:gong-wpf-dragdrop"
                    mc:Ignorable="d" 
       d:DesignHeight="700" d:DesignWidth="1024"
       Title="MailView">
@@ -27,7 +28,7 @@
         <converters:BooleanToObjectConverter x:Key="WindowMarginConverter" TrueObject="6,6,6,0" FalseObject="0"/>
         <CollectionViewSource x:Key="MailFolders" Source="{Binding FoldersExtended}"/>
         <CollectionViewSource x:Key="MessagesCollection" Source="{Binding MailMessageCollection}"/>
-        <CollectionViewSource x:Key="TracksCollection" Source="{Binding Tracks}" />
+
         <Style x:Key="NormalGroupStyle" TargetType="{x:Type GroupItem}">
             <Setter Property="Margin" Value="0,0,0,0"/>
             <Setter Property="Template">
@@ -65,6 +66,7 @@
             </Setter>
         </Style>
         <converters1:MainMenuGroupStyleSelector x:Key="MainMenuGroupStyleSelector" NormalGroupStyle="{StaticResource NormalGroupStyle}" EmptyHeaderGroupStyle="{StaticResource EmptyHeaderGroupStyle}"/>
+
         <Storyboard x:Key="TransitionIn">
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="Opacity">
                 <DiscreteDoubleKeyFrame KeyTime="0" Value="0" />
@@ -121,37 +123,42 @@
                     </ControlTemplate>
                 </Button.Template>
             </Button>
-            <ListBox x:Name="MenuListBox" Padding="0,0,0,10" Margin="10,12,10,0" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                         ItemsSource="{Binding Source={StaticResource MailFolders}}"
-                         Foreground="White" 
-                         Style="{StaticResource CommonListBoxStyle}"
-                         ItemContainerStyle="{StaticResource MainMenuListBoxItemStyle}"
-                         ItemTemplate="{StaticResource ListBoxItemTemplate}"
-                         HorizontalContentAlignment="Stretch"
-                         SelectedIndex="{Binding SelectedFolder}">
+            <StackPanel Orientation="Horizontal" Margin="10,10,0,0">
+                <TextBlock Text="Folders" FontSize="11" Opacity="0.7" Foreground="{DynamicResource ForegroundBrush}" FontWeight="SemiBold"/>
+                <Button Style="{StaticResource AddButtonStyle}" VerticalAlignment="Top" Margin="3,0,0,0" Command="{Binding AddAlbumCommand}"
+                        ToolTip="Add new folder"/>
+            </StackPanel>
+            <ListBox x:Name="MenuListBox" Padding="0,0,0,10" Margin="0,12,0,0" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                     ItemsSource="{Binding Source={StaticResource MailFolders}}"
+                     Foreground="{DynamicResource ForegroundBrush}"
+                     Style="{StaticResource CommonListBoxStyle}"
+                     ItemContainerStyle="{StaticResource MainMenuListBoxItemStyle}"
+                     ItemTemplate="{StaticResource ListBoxItemTemplate}"
+                     HorizontalContentAlignment="Stretch"
+                     SelectedIndex="{Binding SelectedFolder}">
                 <i:Interaction.Behaviors>
                     <behaviours:TransitionBehaviour Transition="{StaticResource MainMenuLoadAnim}" TransitionDelay="40" />
                 </i:Interaction.Behaviors>
             </ListBox>
-            <StackPanel Orientation="Vertical" VerticalAlignment="Bottom" Margin="25,12,5,0">
+            <!--<StackPanel Orientation="Vertical" VerticalAlignment="Bottom" Margin="10,12,5,0">
                 <TextBlock Text="Last refresh: 5 mins ago" FontSize="14" Foreground="{DynamicResource ForegroundBrush}"/>
-            </StackPanel>
+            </StackPanel>-->
         </StackPanel>
         <Grid Grid.Column="1" Margin="0,35,0,0">
             <Grid.RowDefinitions>
-                <RowDefinition Height="30"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <!--Эту пизду сделать в гриде что бы растягивалось нормально-->
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button Style="{StaticResource HighlightedButtonStyle}" Content="Test" Command="{Binding OkCommand}"  Margin="0,0,10,0" Width="150"/>
-                <Button Style="{StaticResource HighlightedButtonStyle}" Content="Test" Command="{Binding OkCommand}"  Margin="0,0,10,0" Width="150"/>
-                <Button Style="{StaticResource HighlightedButtonStyle}" Content="Test" Command="{Binding OkCommand}"  Margin="0,0,10,0" Width="150"/>
-                <controls:TextBoxWithHint x:Name="LocalSearchBox" Style="{StaticResource LocalSearchBoxStyle}" Padding="0,0,0,0" Hint="Start typing" Height="30" Width="150" Margin="0,0,20,0"
+            <!--<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Style="{StaticResource HighlightedButtonStyle}" Content="Test" Command="{Binding OkCommand}"  Margin="0,0,10,0" Width="150" Height="20"/>
+                <Button Style="{StaticResource HighlightedButtonStyle}" Content="Test" Command="{Binding OkCommand}"  Margin="0,0,10,0" Width="150" Height="20"/>
+                <Button Style="{StaticResource HighlightedButtonStyle}" Content="Test" Command="{Binding OkCommand}"  Margin="0,0,10,0" Width="150" Height="20"/>
+                <controls:TextBoxWithHint x:Name="LocalSearchBox" Style="{StaticResource LocalSearchBoxStyle}" Padding="0,0,0,0" Hint="Start typing" Height="20" Width="150" Margin="0,0,20,0"
                                       HintStyle="{StaticResource TextBoxHintStyle}"
                                       TextChanged="LocalSearchBox_TextChanged" FontSize="12"/>
-            </StackPanel>
-            <ListBox Grid.Row="1" Margin="0,0,5,0" x:Name="MessagesListBox"
+            </StackPanel>-->
+            <ListBox Grid.Row="1" x:Name="MessagesListBox"
                      ItemsSource="{Binding Source={StaticResource MessagesCollection}}"
                      Style="{StaticResource CommonListBoxStyle}"
                      Foreground="{DynamicResource ForegroundBrush}"

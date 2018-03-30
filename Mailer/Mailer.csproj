@@ -91,6 +91,7 @@
     <Compile Include="Controls\BindablePasswordBox.cs" />
     <Compile Include="Controls\BindableRichTextBox.cs" />
     <Compile Include="Controls\BusyIndicator.cs" />
+    <Compile Include="Controls\ExtendedListBox.cs" />
     <Compile Include="Controls\FlyoutContent.cs" />
     <Compile Include="Controls\FlyoutControl.xaml.cs" />
     <Compile Include="Controls\LocalSearchControl.xaml.cs">
@@ -129,6 +130,7 @@
       <DependentUpon>MainResources.resx</DependentUpon>
     </Compile>
     <Compile Include="Services\AccountManager.cs" />
+    <Compile Include="Services\DataService.cs" />
     <Compile Include="Services\LoggingService.cs" />
     <Compile Include="UI\Converters\BooleanToObjectConverter.cs" />
     <Compile Include="UI\Converters\BooleanToVisibilityConverter.cs" />
