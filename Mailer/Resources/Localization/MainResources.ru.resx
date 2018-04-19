@@ -1,0 +1,318 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="BackButton" xml:space="preserve">
+    <value>Back</value>
+  </data>
+  <data name="CancelButton" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="CommonErrorViewContent" xml:space="preserve">
+    <value>We are sorry but something goes wrong. We will try to fix this as soon as possible.</value>
+  </data>
+  <data name="CommonErrorViewRestart" xml:space="preserve">
+    <value>Restart</value>
+  </data>
+  <data name="CommonErrorViewTitle" xml:space="preserve">
+    <value>Oh... something happened :(</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="SettingsAbout" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="SettingsAccountAdd" xml:space="preserve">
+    <value>Добавить</value>
+  </data>
+  <data name="SettingsAccountDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="SettingsAccountEdit" xml:space="preserve">
+    <value>Изменить</value>
+  </data>
+  <data name="SettingsAccounts" xml:space="preserve">
+    <value>Accounts</value>
+  </data>
+  <data name="SettingsAccountSelectAccount" xml:space="preserve">
+    <value>Select an account to edit or use</value>
+  </data>
+  <data name="SettingsAutomaticReplies" xml:space="preserve">
+    <value>Automatic replies settings</value>
+  </data>
+  <data name="SettingsAutoResponses" xml:space="preserve">
+    <value>Automatic Responses</value>
+  </data>
+  <data name="SettingsEnableAutoReplies" xml:space="preserve">
+    <value>Enable automatic replies for this account</value>
+  </data>
+  <data name="SettingsEnterText" xml:space="preserve">
+    <value>Enter your message here</value>
+  </data>
+  <data name="SettingsMenuGeneral" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <data name="SettingsNotifications" xml:space="preserve">
+    <value>Notifications</value>
+  </data>
+  <data name="SettingsPersonalization" xml:space="preserve">
+    <value>Personalization</value>
+  </data>
+  <data name="SettingsRestartMessage" xml:space="preserve">
+    <value>Some changes will be applied after restart.</value>
+  </data>
+  <data name="SettingsSave" xml:space="preserve">
+    <value>Save changes</value>
+  </data>
+  <data name="SettingsSaveRestart" xml:space="preserve">
+    <value>Save &amp; Restart</value>
+  </data>
+  <data name="SettingsSecurity" xml:space="preserve">
+    <value>Security</value>
+  </data>
+  <data name="SettingsSecurityPasswordReminder" xml:space="preserve">
+    <value>Password Reminder</value>
+  </data>
+  <data name="SettingsSecurityUsePassword" xml:space="preserve">
+    <value>Use a password to access the application</value>
+  </data>
+  <data name="SettingsUIAccentColor" xml:space="preserve">
+    <value>Accent color</value>
+  </data>
+  <data name="SettingsUIBackgroundColor" xml:space="preserve">
+    <value>Background color</value>
+  </data>
+  <data name="SettingsUICacheSize" xml:space="preserve">
+    <value>Cache size:</value>
+  </data>
+  <data name="SettingsUIClearCache" xml:space="preserve">
+    <value>Clear</value>
+  </data>
+  <data name="SettingsUIEnabledBlur" xml:space="preserve">
+    <value>Blur background (reduces performance)</value>
+  </data>
+  <data name="SettingsUILanguage" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="SettingsUINotifications" xml:space="preserve">
+    <value>Show notification when track changes</value>
+  </data>
+  <data name="SettingsUINotificationsTitle" xml:space="preserve">
+    <value>Notifications</value>
+  </data>
+  <data name="SettingsUIShowTrayIcon" xml:space="preserve">
+    <value>Show icon in the tray instead of taskbar</value>
+  </data>
+  <data name="SettingsUITaskBarTitle" xml:space="preserve">
+    <value>Taskbar</value>
+  </data>
+  <data name="SettingsUpdatesCheck" xml:space="preserve">
+    <value>Check now</value>
+  </data>
+  <data name="SettingsUpdatesCheckForUpdates" xml:space="preserve">
+    <value>Automatically check and install updates on start</value>
+  </data>
+  <data name="SettingsUpdatesDevUpdatesDescription" xml:space="preserve">
+    <value>Test updates may contain new features and can be released more often but also can be unstable.</value>
+  </data>
+  <data name="SettingsUpdatesInstallDevUpdates" xml:space="preserve">
+    <value>Install test updates</value>
+  </data>
+  <data name="SettingsUpdatesRestart" xml:space="preserve">
+    <value>Restart</value>
+  </data>
+  <data name="SettingsUpdatesUpdated" xml:space="preserve">
+    <value>Mailer was updated. Restart to apply changes.</value>
+  </data>
+  <data name="AccountImapAddr" xml:space="preserve">
+    <value>IMAP address</value>
+  </data>
+  <data name="AccountImapSsl" xml:space="preserve">
+    <value>Use SSL for IMAP</value>
+  </data>
+  <data name="AccountLogin" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="AccountMessagesName" xml:space="preserve">
+    <value>Name in messages</value>
+  </data>
+  <data name="AccountPassword" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="AccountSave" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="AccountSetup" xml:space="preserve">
+    <value>Account setup</value>
+  </data>
+  <data name="AccountSmtpAddr" xml:space="preserve">
+    <value>SMTP address</value>
+  </data>
+  <data name="AccountSmtpSsl" xml:space="preserve">
+    <value>Use SSL for SMTP</value>
+  </data>
+  <data name="AccountUsername" xml:space="preserve">
+    <value>Username</value>
+  </data>
+  <data name="CloseButton" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="AccountSelect" xml:space="preserve">
+    <value>Select an account or add new</value>
+  </data>
+  <data name="LoadingMessage" xml:space="preserve">
+    <value>Loading all the necessary information...</value>
+  </data>
+  <data name="Ok" xml:space="preserve">
+    <value>Ок</value>
+  </data>
+  <data name="WaitMessage" xml:space="preserve">
+    <value>Please, wait...</value>
+  </data>
+  <data name="OmsSetup" xml:space="preserve">
+    <value>SMTP Setup</value>
+  </data>
+  <data name="SmtpAddressTitle" xml:space="preserve">
+    <value>SMTP address</value>
+  </data>
+  <data name="SmtpEmailTitle" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="SmtpNeedAuth" xml:space="preserve">
+    <value>SMTP auth needed</value>
+  </data>
+  <data name="SmtpPasswordTitle" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="SmtpSetupTitle" xml:space="preserve">
+    <value>SMTP Setup</value>
+  </data>
+  <data name="SmtpUseSslTitle" xml:space="preserve">
+    <value>Use SSL for SMTP</value>
+  </data>
+  <data name="ShowNotifications" xml:space="preserve">
+    <value>Show notifications about new messages</value>
+  </data>
+  <data name="Apply" xml:space="preserve">
+    <value>Apply</value>
+  </data>
+  <data name="UseImageAsBg" xml:space="preserve">
+    <value>Use image as custom background</value>
+  </data>
+</root>
