@@ -38,5 +38,16 @@ namespace Mailer.Model
             UnreadedMessagesCount = unreadedMessagesCount;
             Range = new MessagesRange();
         }
+
+        public MailMessageCollection MailMessageCollectionReversed
+        {
+            get
+            {
+                var tmp = MailMessageCollection;
+                tmp.Reverse();
+                return tmp;
+            }
+        }
+
     }
 }

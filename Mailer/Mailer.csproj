@@ -147,6 +147,7 @@
     <Compile Include="UI\Extensions\VisualTreeHelperExtensions.cs" />
     <Compile Include="ViewModel\Accounts\AccountSelectViewModel.cs" />
     <Compile Include="ViewModel\Accounts\AccountSetupViewModel.cs" />
+    <Compile Include="ViewModel\Flyouts\CreateFolderViewModel.cs" />
     <Compile Include="ViewModel\Flyouts\SmtpSetupViewModel.cs" />
     <Compile Include="ViewModel\Main\MailViewModel.cs" />
     <Compile Include="ViewModel\Main\MainViewModel.cs" />
@@ -162,6 +163,9 @@
     </Compile>
     <Compile Include="View\Flyouts\CommonErrorView.xaml.cs">
       <DependentUpon>CommonErrorView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Flyouts\CreateFolderView.xaml.cs">
+      <DependentUpon>CreateFolderView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Flyouts\SmtpSetupView.xaml.cs">
       <DependentUpon>SmtpSetupView.xaml</DependentUpon>
@@ -259,6 +263,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Flyouts\CommonErrorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Flyouts\CreateFolderView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

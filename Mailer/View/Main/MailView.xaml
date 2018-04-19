@@ -96,39 +96,41 @@
         </Storyboard>
     </Page.Resources>
 
+
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="250"/>
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
-        <Rectangle Grid.Column="0" Fill="{DynamicResource MainBackgroundBrush}" Margin="0,0,0,0" Opacity="0.4"/>
-        <StackPanel Grid.Column="0">
-            <Button x:Name="MailerButton" HorizontalAlignment="Left" Margin="0,5,0,0"
+        <Grid Visibility="{Binding IsWorking, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=True}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="250"/>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Rectangle Grid.Column="0" Fill="{DynamicResource MainBackgroundBrush}" Margin="0,0,0,0" Opacity="0.4"/>
+            <StackPanel Grid.Column="0">
+                <Button x:Name="MailerButton" HorizontalAlignment="Left" Margin="0,5,0,0"
                         Foreground="{DynamicResource ForegroundBrush}"
                         Command="{Binding GoToSettingsCommand}" ToolTip="{x:Static localization:MainResources.Settings}">
-                <Button.Template>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <StackPanel x:Name="rootPanel" Opacity="0.7" Orientation="Horizontal" Background="Transparent">
-                            <TextBlock x:Name="Title" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="{TemplateBinding Foreground}" Opacity="1" FontSize="13" Margin="10,1,0,0" Text="Mailer" FontWeight="Regular" TextOptions.TextFormattingMode="Display"/>
-                            <Path x:Name="Icon" Data="{StaticResource SettingsIcon}" Fill="{TemplateBinding Foreground}" Stretch="Uniform" Width="12" Margin="8,3,0,0"/>
-                        </StackPanel>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Opacity" Value="1" TargetName="rootPanel"/>
-                            </Trigger>
-                            <Trigger Property="IsPressed" Value="True">
-                                <Setter Property="Opacity" Value="0.6" TargetName="rootPanel"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Button.Template>
-            </Button>
-            <StackPanel Orientation="Horizontal" Margin="10,10,0,0">
-                <TextBlock Text="Folders" FontSize="11" Opacity="0.7" Foreground="{DynamicResource ForegroundBrush}" FontWeight="SemiBold"/>
-                <Button Style="{StaticResource AddButtonStyle}" VerticalAlignment="Top" Margin="3,0,0,0" Command="{Binding AddFolderCommand}"
+                    <Button.Template>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <StackPanel x:Name="rootPanel" Opacity="0.7" Orientation="Horizontal" Background="Transparent">
+                                <TextBlock x:Name="Title" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="{TemplateBinding Foreground}" Opacity="1" FontSize="13" Margin="10,1,0,0" Text="Mailer" FontWeight="Regular" TextOptions.TextFormattingMode="Display"/>
+                                <Path x:Name="Icon" Data="{StaticResource SettingsIcon}" Fill="{TemplateBinding Foreground}" Stretch="Uniform" Width="12" Margin="8,3,0,0"/>
+                            </StackPanel>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Opacity" Value="1" TargetName="rootPanel"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter Property="Opacity" Value="0.6" TargetName="rootPanel"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+                <StackPanel Orientation="Horizontal" Margin="10,10,0,0">
+                    <TextBlock Text="Folders" FontSize="11" Opacity="0.7" Foreground="{DynamicResource ForegroundBrush}" FontWeight="SemiBold"/>
+                    <Button Style="{StaticResource AddButtonStyle}" VerticalAlignment="Top" Margin="3,0,0,0" Command="{Binding AddFolderCommand}"
                         ToolTip="Add new folder"/>
-            </StackPanel>
-            <ListBox x:Name="MenuListBox" Padding="0,0,0,10" Margin="0,12,0,0" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                </StackPanel>
+                <ListBox x:Name="MenuListBox" Padding="0,0,0,10" Margin="0,12,0,0" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                      ItemsSource="{Binding Source={StaticResource MailFolders}}"
                      Foreground="{DynamicResource ForegroundBrush}"
                      Style="{StaticResource CommonListBoxStyle}"
@@ -136,21 +138,21 @@
                      ItemTemplate="{StaticResource ListBoxItemTemplate}"
                      HorizontalContentAlignment="Stretch"
                      SelectedIndex="{Binding SelectedFolder}">
-                <i:Interaction.Behaviors>
-                    <behaviours:TransitionBehaviour Transition="{StaticResource MainMenuLoadAnim}" TransitionDelay="40" />
-                </i:Interaction.Behaviors>
-            </ListBox>
-            <!--<StackPanel Orientation="Vertical" VerticalAlignment="Bottom" Margin="10,12,5,0">
+                    <i:Interaction.Behaviors>
+                        <behaviours:TransitionBehaviour Transition="{StaticResource MainMenuLoadAnim}" TransitionDelay="40" />
+                    </i:Interaction.Behaviors>
+                </ListBox>
+                <!--<StackPanel Orientation="Vertical" VerticalAlignment="Bottom" Margin="10,12,5,0">
                 <TextBlock Text="Last refresh: 5 mins ago" FontSize="14" Foreground="{DynamicResource ForegroundBrush}"/>
             </StackPanel>-->
-        </StackPanel>
-        <Grid Grid.Column="1" Margin="0,35,0,0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
-            <!--Эту пизду сделать в гриде что бы растягивалось нормально-->
-            <!--<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+            </StackPanel>
+            <Grid Grid.Column="1" Margin="0,35,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <!--Эту пизду сделать в гриде что бы растягивалось нормально-->
+                <!--<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                 <Button Style="{StaticResource HighlightedButtonStyle}" Content="Test" Command="{Binding OkCommand}"  Margin="0,0,10,0" Width="150" Height="20"/>
                 <Button Style="{StaticResource HighlightedButtonStyle}" Content="Test" Command="{Binding OkCommand}"  Margin="0,0,10,0" Width="150" Height="20"/>
                 <Button Style="{StaticResource HighlightedButtonStyle}" Content="Test" Command="{Binding OkCommand}"  Margin="0,0,10,0" Width="150" Height="20"/>
@@ -158,22 +160,32 @@
                                       HintStyle="{StaticResource TextBoxHintStyle}"
                                       TextChanged="LocalSearchBox_TextChanged" FontSize="12"/>
             </StackPanel>-->
-            <ListBox Grid.Row="1" x:Name="MessagesListBox"
+                <ListBox Grid.Row="1" x:Name="MessagesListBox"
+                     Visibility="{Binding IsMessagesLoading, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=True}"
                      ItemsSource="{Binding Source={StaticResource MessagesCollection}}"
                      Style="{StaticResource CommonListBoxStyle}"
                      Foreground="{DynamicResource ForegroundBrush}"
                      ItemContainerStyle="{StaticResource AudioListBoxItemStyle}"
                      ItemTemplate="{StaticResource MessageItemTemplate}"
                      VirtualizingStackPanel.ScrollUnit="Pixel" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-                <ListBox.RenderTransform>
-                    <TranslateTransform />
-                </ListBox.RenderTransform>
-                <i:Interaction.Behaviors>
-                    <behaviours:TransitionBehaviour Transition="{StaticResource AudioLoadAnim}" TransitionDelay="40" />
-                </i:Interaction.Behaviors>
-            </ListBox>
+                    <ListBox.RenderTransform>
+                        <TranslateTransform />
+                    </ListBox.RenderTransform>
+                    <i:Interaction.Behaviors>
+                        <behaviours:TransitionBehaviour Transition="{StaticResource AudioLoadAnim}" TransitionDelay="40" />
+                    </i:Interaction.Behaviors>
+                </ListBox>
+                <StackPanel Grid.Row="1" Visibility="{Binding IsMessagesLoading, Converter={StaticResource BoolToVisibilityConverter}}" VerticalAlignment="Center" Margin="0,0,0,0" >
+                    <TextBlock Text="{x:Static localization:MainResources.WaitMessage}" FontSize="22" HorizontalAlignment="Center" FontWeight="Light" Foreground="{DynamicResource ForegroundBrush}"/>
+                    <ProgressBar Style="{StaticResource CommonProgressBarStyle}" IsIndeterminate="{Binding IsMessagesLoading}"/>
+                </StackPanel>
+            </Grid>
+            <Rectangle Width="1" Grid.Column="1" HorizontalAlignment="Left" Fill="{DynamicResource MainBackgroundSplitterBrush}" SnapsToDevicePixels="True" Margin="-1,0,0,0"/>
         </Grid>
-        <Rectangle Width="1" Grid.Column="1" HorizontalAlignment="Left" Fill="{DynamicResource MainBackgroundSplitterBrush}" SnapsToDevicePixels="True" Margin="-1,0,0,0"/>
+        <StackPanel Visibility="{Binding IsWorking, Converter={StaticResource BoolToVisibilityConverter}}" VerticalAlignment="Center" Margin="0,0,0,0" >
+            <TextBlock Text="{x:Static localization:MainResources.WaitMessage}" FontSize="22" HorizontalAlignment="Center" FontWeight="Light" Foreground="{DynamicResource ForegroundBrush}"/>
+            <ProgressBar Style="{StaticResource CommonProgressBarStyle}" IsIndeterminate="{Binding IsWorking}"/>
+        </StackPanel>
     </Grid>
 </controls:PageBase>
 

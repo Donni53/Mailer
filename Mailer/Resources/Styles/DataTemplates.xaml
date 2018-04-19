@@ -8,11 +8,14 @@
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Column="0" Text="{Binding Name}" FontFamily="Segoe UI SemiLight" HorizontalAlignment="Left"/>
             <TextBlock Grid.Column="1" x:Name="TextBlockUnreadedMessagesCount" Text="{Binding UnreadedMessagesCount}"  Foreground="{DynamicResource ForegroundBrush}" TextTrimming="CharacterEllipsis" FontFamily="Segoe UI SemiLight" HorizontalAlignment="Right"/>
+            <Button Grid.Column="1" x:Name="DeleteButton" Style="{StaticResource CloseButtonStyle}" Visibility="Hidden" HorizontalAlignment="Right"
+                    Command="{Binding DataContext.DeleteFolderCommand, RelativeSource={RelativeSource AncestorType=Page}}" CommandParameter="{Binding}"/>
         </Grid>
         <DataTemplate.Triggers>
-            <DataTrigger Binding="{Binding Name, Mode=OneWay}" Value="Корзина">
-                <Setter TargetName="TextBlockUnreadedMessagesCount" Property="Opacity" Value="0.5"/>
-            </DataTrigger>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter TargetName="TextBlockUnreadedMessagesCount" Property="Visibility" Value="Hidden" />
+                <Setter TargetName="DeleteButton" Property="Visibility" Value="Visible" />
+            </Trigger>
         </DataTemplate.Triggers>
     </DataTemplate>
 
