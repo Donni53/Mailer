@@ -25,35 +25,28 @@ namespace Mailer.UI.Converters
 #endif
         {
             var invert = false;
-            if (parameter != null)
-            {
-                Boolean.TryParse(parameter.ToString(), out invert);
-            }
+            if (parameter != null) bool.TryParse(parameter.ToString(), out invert);
             if (value == null) return invert ? Visibility.Visible : Visibility.Collapsed;
 
             if (value is string)
-                return string.IsNullOrWhiteSpace((string)value) || invert ? Visibility.Collapsed : Visibility.Visible;
+                return string.IsNullOrWhiteSpace((string) value) || invert ? Visibility.Collapsed : Visibility.Visible;
 
             if (value is IList)
             {
-                bool empty = ((IList)value).Count == 0;
+                bool empty = ((IList) value).Count == 0;
                 if (invert)
                     empty = !empty;
                 if (empty)
                     return Visibility.Collapsed;
-                else
-                    return Visibility.Visible;
+                return Visibility.Visible;
             }
 
             decimal number;
-            if (Decimal.TryParse(value.ToString(), out number))
-            {
+            if (decimal.TryParse(value.ToString(), out number))
                 if (!invert)
                     return number > 0 ? Visibility.Visible : Visibility.Collapsed;
                 else
                     return number > 0 ? Visibility.Collapsed : Visibility.Visible;
-
-            }
 
             return Visibility.Visible;
         }

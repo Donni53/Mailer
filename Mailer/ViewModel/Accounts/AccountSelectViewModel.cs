@@ -3,22 +3,16 @@ using System.Collections.Generic;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using Mailer.Messages;
+using Mailer.Model;
 using Mailer.Services;
 
 namespace Mailer.ViewModel.Accounts
 {
     public class AccountSelectViewModel : ViewModelBase
     {
-        private int _selectedAccount;
-        private bool _isError;
         private string _error;
-        public List<Model.Account> Accounts => Domain.Settings.Instance.Accounts;
-        public bool WrongFormat { get; set; }
-        public bool WrongCredentials { get; set; }
-        public RelayCommand OkCommand { get; private set; }
-        public RelayCommand AddNewCommand { get; private set; }
-        public RelayCommand EditCommand { get; private set; }
-        public RelayCommand TextEditorCommand { get; private set; }
+        private bool _isError;
+        private int _selectedAccount;
 
         public AccountSelectViewModel()
         {
@@ -26,21 +20,13 @@ namespace Mailer.ViewModel.Accounts
             InitiailizeCommands();
         }
 
-        private void InitiailizeCommands()
-        {
-            OkCommand = new RelayCommand(Ok);
-            AddNewCommand = new RelayCommand(AddNew);
-            EditCommand = new RelayCommand(Edit);
-            TextEditorCommand = new RelayCommand(TextEditor);
-        }
-
-        private void TextEditor()
-        {
-            Messenger.Default.Send(new NavigateToPageMessage()
-            {
-                Page = "/Main.TextEditor"
-            });
-        }
+        public List<Account> Accounts => Domain.Settings.Instance.Accounts;
+        public bool WrongFormat { get; set; }
+        public bool WrongCredentials { get; set; }
+        public RelayCommand OkCommand { get; private set; }
+        public RelayCommand AddNewCommand { get; private set; }
+        public RelayCommand EditCommand { get; private set; }
+        public RelayCommand TextEditorCommand { get; private set; }
 
         public int SelectedAccount
         {
@@ -60,6 +46,22 @@ namespace Mailer.ViewModel.Accounts
             set => Set(ref _error, value);
         }
 
+        private void InitiailizeCommands()
+        {
+            OkCommand = new RelayCommand(Ok);
+            AddNewCommand = new RelayCommand(AddNew);
+            EditCommand = new RelayCommand(Edit);
+            TextEditorCommand = new RelayCommand(TextEditor);
+        }
+
+        private void TextEditor()
+        {
+            Messenger.Default.Send(new NavigateToPageMessage
+            {
+                Page = "/Main.TextEditor"
+            });
+        }
+
         private async void Ok()
         {
             IsWorking = true;
@@ -72,7 +74,7 @@ namespace Mailer.ViewModel.Accounts
                     false, -1);
                 Domain.Settings.Instance.SelectedAccount = SelectedAccount;
                 Domain.Settings.Instance.Save();
-                Messenger.Default.Send(new NavigateToPageMessage()
+                Messenger.Default.Send(new NavigateToPageMessage
                 {
                     Page = "/Main.MailView"
                 });
@@ -83,6 +85,7 @@ namespace Mailer.ViewModel.Accounts
                 IsError = true;
                 LoggingService.Log(ex);
             }
+
             IsWorking = false;
         }
 
@@ -95,7 +98,7 @@ namespace Mailer.ViewModel.Accounts
             ViewModelLocator.AccountSetupViewModel.ImapSsl = false;
             ViewModelLocator.AccountSetupViewModel.NewAccount = true;
             ViewModelLocator.AccountSetupViewModel.Id = -1;
-            Messenger.Default.Send(new NavigateToPageMessage()
+            Messenger.Default.Send(new NavigateToPageMessage
             {
                 Page = "/Accounts.AccountSetupView"
             });
@@ -116,7 +119,7 @@ namespace Mailer.ViewModel.Accounts
                 Domain.Settings.Instance.Accounts[SelectedAccount].ImapData.UseSsl;
             ViewModelLocator.AccountSetupViewModel.NewAccount = false;
             ViewModelLocator.AccountSetupViewModel.Id = SelectedAccount;
-            Messenger.Default.Send(new NavigateToPageMessage()
+            Messenger.Default.Send(new NavigateToPageMessage
             {
                 Page = "/Accounts.AccountSetupView"
             });

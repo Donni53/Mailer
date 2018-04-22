@@ -24,20 +24,15 @@ namespace Mailer.UI.Converters
         {
             var invert = false;
 
-            if (parameter != null)
-            {
-                Boolean.TryParse(parameter.ToString(), out invert);
-            }
+            if (parameter != null) bool.TryParse(parameter.ToString(), out invert);
 
             if (value == null) return invert;
 
             if (value is string)
-            {
-                if (!string.IsNullOrWhiteSpace((string)value))
+                if (!string.IsNullOrWhiteSpace((string) value))
                     return invert;
                 else
                     return !invert;
-            }
 
             return true;
         }

@@ -25,7 +25,7 @@ namespace Mailer.UI.Converters
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 #endif
         {
-            bool flag = value is bool ? (bool)value : (value != null && !string.IsNullOrWhiteSpace(value.ToString()));
+            bool flag = value is bool ? (bool) value : value != null && !string.IsNullOrWhiteSpace(value.ToString());
 
             return flag ? TrueObject : FalseObject;
         }

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using GalaSoft.MvvmLight.Messaging;
 using MailBee.ImapMail;
 using Mailer.Domain;
@@ -15,12 +10,6 @@ namespace Mailer.Services
 {
     public static class AccountManager
     {
-        static AccountManager()
-        {
-
-        }
-
-
         public static async Task ImapAuth(string userName, ImapData imapData, bool newAccount, int id)
         {
             var imapClient = new Imap();
@@ -40,6 +29,7 @@ namespace Mailer.Services
                     Settings.Instance.SelectedAccount = id;
                 }
             }
+
             Settings.Instance.Save();
         }
 
@@ -50,19 +40,15 @@ namespace Mailer.Services
             Settings.Instance.Accounts.RemoveAt(id);
             Settings.Instance.SelectedAccount = Settings.Instance.Accounts.Count - 1;
             if (Settings.Instance.Accounts.Count == 0)
-            {
-                Messenger.Default.Send(new NavigateToPageMessage()
+                Messenger.Default.Send(new NavigateToPageMessage
                 {
                     Page = "/Account.AccountSetupView"
                 });
-            }
             else
-            {
-                Messenger.Default.Send(new NavigateToPageMessage()
+                Messenger.Default.Send(new NavigateToPageMessage
                 {
                     Page = "/Account.AccountSelectView"
                 });
-            }
         }
     }
 }

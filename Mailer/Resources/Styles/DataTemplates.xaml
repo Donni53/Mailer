@@ -3,13 +3,17 @@
     <DataTemplate x:Key="ListBoxItemTemplate">
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
+                <ColumnDefinition />
+                <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="0" Text="{Binding Name}" FontFamily="Segoe UI SemiLight" HorizontalAlignment="Left"/>
-            <TextBlock Grid.Column="1" x:Name="TextBlockUnreadedMessagesCount" Text="{Binding UnreadedMessagesCount}"  Foreground="{DynamicResource ForegroundBrush}" TextTrimming="CharacterEllipsis" FontFamily="Segoe UI SemiLight" HorizontalAlignment="Right"/>
-            <Button Grid.Column="1" x:Name="DeleteButton" Style="{StaticResource CloseButtonStyle}" Visibility="Hidden" HorizontalAlignment="Right"
-                    Command="{Binding DataContext.DeleteFolderCommand, RelativeSource={RelativeSource AncestorType=Page}}" CommandParameter="{Binding}"/>
+            <TextBlock Grid.Column="0" Text="{Binding Name}" FontFamily="Segoe UI SemiLight" HorizontalAlignment="Left" />
+            <TextBlock Grid.Column="1" x:Name="TextBlockUnreadedMessagesCount" Text="{Binding UnreadedMessagesCount}"
+                       Foreground="{DynamicResource ForegroundBrush}" TextTrimming="CharacterEllipsis"
+                       FontFamily="Segoe UI SemiLight" HorizontalAlignment="Right" />
+            <Button Grid.Column="1" x:Name="DeleteButton" Style="{StaticResource CloseButtonStyle}" Visibility="Hidden"
+                    HorizontalAlignment="Right"
+                    Command="{Binding DataContext.DeleteFolderCommand, RelativeSource={RelativeSource AncestorType=Page}}"
+                    CommandParameter="{Binding}" />
         </Grid>
         <DataTemplate.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
@@ -31,27 +35,37 @@
                 </EventTrigger>
             </Button.Triggers>
             <Button.InputBindings>
-                <MouseBinding Gesture="LeftClick"  Command="{Binding DataContext.ReadEmailCommand, RelativeSource={RelativeSource AncestorType=Page}}" CommandParameter="{Binding}"/>
+                <MouseBinding Gesture="LeftClick"
+                              Command="{Binding DataContext.ReadEmailCommand, RelativeSource={RelativeSource AncestorType=Page}}"
+                              CommandParameter="{Binding}" />
             </Button.InputBindings>
             <Grid Background="Transparent" Name="RootGrid" VerticalAlignment="Center">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="10"/>
-                    <ColumnDefinition Width="20"/>
-                    <ColumnDefinition Width="20"/>
-                    <ColumnDefinition Width="200"/>
-                    <ColumnDefinition MinWidth="330"/>
-                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="20" />
+                    <ColumnDefinition Width="20" />
+                    <ColumnDefinition Width="200" />
+                    <ColumnDefinition MinWidth="330" />
+                    <ColumnDefinition Width="150" />
                 </Grid.ColumnDefinitions>
-                <CheckBox Grid.Column="1" IsChecked="{Binding EnableNotifications}" FontSize="12" Opacity="0.7" Foreground="{DynamicResource ForegroundBrush}"/>
-                <CheckBox Grid.Column="2" IsChecked="{Binding EnableNotifications}" FontSize="12" Opacity="0.7" Foreground="{DynamicResource ForegroundBrush}"/>
+                <CheckBox Grid.Column="1" IsChecked="{Binding EnableNotifications}" FontSize="12" Opacity="0.7"
+                          Foreground="{DynamicResource ForegroundBrush}" />
+                <CheckBox Grid.Column="2" IsChecked="{Binding EnableNotifications}" FontSize="12" Opacity="0.7"
+                          Foreground="{DynamicResource ForegroundBrush}" />
                 <!--<ToggleButton Grid.Column="2" x:Name="ImportantButton" Style="{StaticResource ImportantButtonStyle}" Width="22" Height="20" Padding="4" Margin="5,0,0,0"
                               IsChecked="{Binding IsMarked, Mode=TwoWay}" ToolTip="Отметить" SnapsToDevicePixels="False"/>-->
-                <TextBlock Grid.Column="3" ToolTipService.ShowDuration="12000" Text="{Binding From.DisplayName}" Foreground="{DynamicResource ForegroundBrush}" FontSize="13" TextTrimming="CharacterEllipsis"
-                           ToolTip="{Binding From.DisplayName}"/>
-                <TextBlock Grid.Column="4" ToolTipService.ShowDuration="12000" Text="{Binding Subject}" Foreground="{DynamicResource ForegroundBrush}" FontSize="13" TextTrimming="CharacterEllipsis"
-                           ToolTip="{Binding Subject}"/>
-                <TextBlock Grid.Column="5" ToolTipService.ShowDuration="12000" Text="{Binding DateReceived}" Foreground="{DynamicResource ForegroundBrush}" FontSize="13" TextTrimming="CharacterEllipsis"
-                           ToolTip="{Binding DateReceived}"/>
+                <TextBlock Grid.Column="3" ToolTipService.ShowDuration="12000" Text="{Binding From.DisplayName}"
+                           Foreground="{DynamicResource ForegroundBrush}" FontSize="13"
+                           TextTrimming="CharacterEllipsis"
+                           ToolTip="{Binding From.DisplayName}" />
+                <TextBlock Grid.Column="4" ToolTipService.ShowDuration="12000" Text="{Binding Subject}"
+                           Foreground="{DynamicResource ForegroundBrush}" FontSize="13"
+                           TextTrimming="CharacterEllipsis"
+                           ToolTip="{Binding Subject}" />
+                <TextBlock Grid.Column="5" ToolTipService.ShowDuration="12000" Text="{Binding DateReceived}"
+                           Foreground="{DynamicResource ForegroundBrush}" FontSize="13"
+                           TextTrimming="CharacterEllipsis"
+                           ToolTip="{Binding DateReceived}" />
             </Grid>
         </Button>
     </DataTemplate>

@@ -5,12 +5,12 @@ namespace Mailer.Helpers
 {
     public class LongRunningOperation : INotifyPropertyChanged
     {
-        private bool _isWorking;
         private string _error;
+        private bool _isWorking;
 
         public bool IsWorking
         {
-            get { return _isWorking; }
+            get => _isWorking;
             set
             {
                 if (_isWorking == value)
@@ -23,7 +23,7 @@ namespace Mailer.Helpers
 
         public string Error
         {
-            get { return _error; }
+            get => _error;
             set
             {
                 if (_error == value)

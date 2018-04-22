@@ -8,53 +8,48 @@ namespace Mailer.Controls
     {
         private readonly Dictionary<string, object> _parameters;
 
+        public NavigationContext()
+        {
+            _parameters = new Dictionary<string, object>();
+        }
+
         public Dictionary<string, object> Parameters
         {
-            get { return _parameters; }
+            get => _parameters;
             set
             {
                 if (value == null)
                     return;
 
-                foreach (var kp in value)
-                {
-                    _parameters.Add(kp.Key, kp.Value);
-                }
+                foreach (var kp in value) _parameters.Add(kp.Key, kp.Value);
             }
-        }
-
-        public NavigationContext()
-        {
-            _parameters = new Dictionary<string, object>();
         }
     }
 
     public class PageBase : Page
     {
-        public NavigationContext NavigationContext { get; set; }
-
         public PageBase()
         {
             NavigationContext = new NavigationContext();
 
-            this.Loaded += PageBase_Loaded;
-            this.Unloaded += PageBase_Unloaded;
+            Loaded += PageBase_Loaded;
+            Unloaded += PageBase_Unloaded;
         }
+
+        public NavigationContext NavigationContext { get; set; }
 
         public virtual void OnNavigatedTo()
         {
-
         }
 
         public virtual void OnNavigatedFrom()
         {
-
         }
 
         private void PageBase_Unloaded(object sender, RoutedEventArgs e)
         {
-            this.Loaded -= PageBase_Loaded;
-            this.Unloaded -= PageBase_Unloaded;
+            Loaded -= PageBase_Loaded;
+            Unloaded -= PageBase_Unloaded;
 
             OnNavigatedFrom();
         }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Globalization;
-using System.Windows;
 using System.Windows.Data;
 
 #if DESKTOP
@@ -24,10 +23,7 @@ namespace Mailer.UI.Converters
         public object Convert(object value, Type targetType, object parameter, string language)
 #endif
         {
-            if (value is bool)
-            {
-                return !(bool)value;
-            }
+            if (value is bool) return !(bool) value;
             return false;
         }
 
@@ -37,12 +33,10 @@ namespace Mailer.UI.Converters
         public object ConvertBack(object value, Type targetType, object parameter, string language)
 #endif
         {
-            if (value is bool)
-            {
-                return !(bool)value;
-            }
+            if (value is bool) return !(bool) value;
             return false;
         }
+
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();

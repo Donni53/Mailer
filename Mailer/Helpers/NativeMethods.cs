@@ -9,7 +9,7 @@ namespace Mailer.Helpers
         public const int WM_HOTKEY = 0x0312;
 
         [DllImport("user32.dll")]
-        static extern IntPtr SendMessage(IntPtr hWnd, UInt32 msg, UInt32 wParam, IntPtr lParam);
+        private static extern IntPtr SendMessage(IntPtr hWnd, uint msg, uint wParam, IntPtr lParam);
 
         [DllImport("user32.dll", SetLastError = true)]
         public static extern bool RegisterHotKey(IntPtr hWnd, int id, ModifierKeys fsModifiers, int vk);

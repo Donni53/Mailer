@@ -15,11 +15,11 @@ namespace Mailer.Controls
         public delegate void ClosedEventHandler(object result);
 
         public static readonly DependencyProperty FlyoutContentProperty =
-            DependencyProperty.Register("FlyoutContent", typeof (object), typeof (FlyoutControl),
+            DependencyProperty.Register("FlyoutContent", typeof(object), typeof(FlyoutControl),
                 new PropertyMetadata(default(object)));
 
         public static readonly DependencyProperty FlyoutContentTemplateProperty =
-            DependencyProperty.Register("FlyoutContentTemplate", typeof (DataTemplate), typeof (FlyoutControl),
+            DependencyProperty.Register("FlyoutContentTemplate", typeof(DataTemplate), typeof(FlyoutControl),
                 new PropertyMetadata(default(DataTemplate)));
 
         private object _result;
@@ -31,14 +31,14 @@ namespace Mailer.Controls
 
         public object FlyoutContent
         {
-            get { return GetValue(FlyoutContentProperty); }
-            set { SetValue(FlyoutContentProperty, value); }
+            get => GetValue(FlyoutContentProperty);
+            set => SetValue(FlyoutContentProperty, value);
         }
 
         public DataTemplate FlyoutContentTemplate
         {
-            get { return (DataTemplate) GetValue(FlyoutContentTemplateProperty); }
-            set { SetValue(FlyoutContentTemplateProperty, value); }
+            get => (DataTemplate) GetValue(FlyoutContentTemplateProperty);
+            set => SetValue(FlyoutContentTemplateProperty, value);
         }
 
         public event ClosedEventHandler Closed;
@@ -50,10 +50,7 @@ namespace Mailer.Controls
                 return;
 
             var panel = mainWindow.GetVisualDescendent<Panel>(); //mainWindow.Content as Panel;
-            if (panel == null)
-            {
-                return;
-            }
+            if (panel == null) return;
 
             panel.Children.Add(this);
         }
@@ -95,10 +92,7 @@ namespace Mailer.Controls
                 return;
 
             var panel = mainWindow.GetVisualDescendent<Panel>(); //mainWindow.Content as Panel;
-            if (panel == null)
-            {
-                return;
-            }
+            if (panel == null) return;
 
             panel.Children.Remove(this);
 

@@ -12,7 +12,7 @@ namespace Mailer.Helpers
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value == null || string.IsNullOrEmpty(((Uri)value).OriginalString))
+            if (value == null || string.IsNullOrEmpty(((Uri) value).OriginalString))
                 return DependencyProperty.UnsetValue;
             return value;
         }
@@ -25,9 +25,12 @@ namespace Mailer.Helpers
 
     public class ImageAsyncHelper : DependencyObject
     {
-        Uri _givenUri;
-
         private static NullImageConverter _converter;
+
+        public static readonly DependencyProperty SourceUriProperty = DependencyProperty.RegisterAttached("SourceUri",
+            typeof(Uri), typeof(ImageAsyncHelper), new PropertyMetadata(SourceUriChanged));
+
+        private Uri _givenUri;
 
         private static NullImageConverter Converter
         {
@@ -38,21 +41,6 @@ namespace Mailer.Helpers
 
                 return _converter;
             }
-        }
-
-        public static Uri GetSourceUri(DependencyObject obj) { return (Uri)obj.GetValue(SourceUriProperty); }
-        public static void SetSourceUri(DependencyObject obj, Uri value) { obj.SetValue(SourceUriProperty, value); }
-        public static readonly DependencyProperty SourceUriProperty = DependencyProperty.RegisterAttached("SourceUri", typeof(Uri), typeof(ImageAsyncHelper), new PropertyMetadata(SourceUriChanged));
-
-        private static void SourceUriChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            ((Image)d).SetBinding(Image.SourceProperty,
-                new Binding("VerifiedUri")
-                {
-                    Source = new ImageAsyncHelper { _givenUri = e.NewValue as Uri },
-                    IsAsync = true,
-                    Converter = Converter
-                });
         }
 
         public Uri VerifiedUri
@@ -71,8 +59,30 @@ namespace Mailer.Helpers
                 {
                     Debug.WriteLine(ex);
                 }
+
                 return _givenUri;
             }
+        }
+
+        public static Uri GetSourceUri(DependencyObject obj)
+        {
+            return (Uri) obj.GetValue(SourceUriProperty);
+        }
+
+        public static void SetSourceUri(DependencyObject obj, Uri value)
+        {
+            obj.SetValue(SourceUriProperty, value);
+        }
+
+        private static void SourceUriChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            ((Image) d).SetBinding(Image.SourceProperty,
+                new Binding("VerifiedUri")
+                {
+                    Source = new ImageAsyncHelper {_givenUri = e.NewValue as Uri},
+                    IsAsync = true,
+                    Converter = Converter
+                });
         }
     }
 }

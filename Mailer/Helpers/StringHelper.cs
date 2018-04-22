@@ -10,9 +10,9 @@ namespace Mailer.Helpers
             const int scale = 1024;
 
             if (orders == null)
-                orders = new[] { "GB", "MB", "KB", "Bytes" };
+                orders = new[] {"GB", "MB", "KB", "Bytes"};
 
-            long max = (long)Math.Pow(scale, orders.Length - 1);
+            long max = (long) Math.Pow(scale, orders.Length - 1);
 
             foreach (string order in orders)
             {
@@ -21,6 +21,7 @@ namespace Mailer.Helpers
 
                 max /= scale;
             }
+
             return "0 Bytes";
         }
 
@@ -29,9 +30,8 @@ namespace Mailer.Helpers
             if (string.IsNullOrEmpty(input))
                 return input;
 
-            return new string(input.ToCharArray().
-                Select(x => ((x + 848) >= 'А' && (x + 848) <= 'ё') ? (char)(x + 848) : x).
-                ToArray());
+            return new string(input.ToCharArray().Select(x => x + 848 >= 'А' && x + 848 <= 'ё' ? (char) (x + 848) : x)
+                .ToArray());
         }
     }
 }

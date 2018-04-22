@@ -6,15 +6,16 @@ namespace Mailer.Controls
     public sealed class BindablePasswordBox : Decorator
     {
         /// <summary>
-        /// The password dependency property.
+        ///     The password dependency property.
         /// </summary>
         public static readonly DependencyProperty PasswordProperty;
 
-        private bool _isPreventCallback;
         private readonly RoutedEventHandler _savedCallback;
 
+        private bool _isPreventCallback;
+
         /// <summary>
-        /// Static constructor to initialize the dependency properties.
+        ///     Static constructor to initialize the dependency properties.
         /// </summary>
         static BindablePasswordBox()
         {
@@ -22,12 +23,13 @@ namespace Mailer.Controls
                 "Password",
                 typeof(string),
                 typeof(BindablePasswordBox),
-                new FrameworkPropertyMetadata("", FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnPasswordPropertyChanged))
+                new FrameworkPropertyMetadata("", FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
+                    OnPasswordPropertyChanged)
             );
         }
 
         /// <summary>
-        /// Saves the password changed callback and sets the child element to the password box.
+        ///     Saves the password changed callback and sets the child element to the password box.
         /// </summary>
         public BindablePasswordBox()
         {
@@ -40,42 +42,39 @@ namespace Mailer.Controls
         }
 
         /// <summary>
-        /// The password dependency property.
+        ///     The password dependency property.
         /// </summary>
         public string Password
         {
-            get { return GetValue(PasswordProperty) as string; }
-            set { SetValue(PasswordProperty, value); }
+            get => GetValue(PasswordProperty) as string;
+            set => SetValue(PasswordProperty, value);
         }
 
         /// <summary>
-        /// Handles changes to the password dependency property.
+        ///     Handles changes to the password dependency property.
         /// </summary>
         /// <param name="d">the dependency object</param>
         /// <param name="eventArgs">the event args</param>
         private static void OnPasswordPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs eventArgs)
         {
-            var bindablePasswordBox = (BindablePasswordBox)d;
-            var passwordBox = (PasswordBox)bindablePasswordBox.Child;
+            var bindablePasswordBox = (BindablePasswordBox) d;
+            var passwordBox = (PasswordBox) bindablePasswordBox.Child;
 
-            if (bindablePasswordBox._isPreventCallback)
-            {
-                return;
-            }
+            if (bindablePasswordBox._isPreventCallback) return;
 
             passwordBox.PasswordChanged -= bindablePasswordBox._savedCallback;
-            passwordBox.Password = (eventArgs.NewValue != null) ? eventArgs.NewValue.ToString() : "";
+            passwordBox.Password = eventArgs.NewValue != null ? eventArgs.NewValue.ToString() : "";
             passwordBox.PasswordChanged += bindablePasswordBox._savedCallback;
         }
 
         /// <summary>
-        /// Handles the password changed event.
+        ///     Handles the password changed event.
         /// </summary>
         /// <param name="sender">the sender</param>
         /// <param name="eventArgs">the event args</param>
         private void HandlePasswordChanged(object sender, RoutedEventArgs eventArgs)
         {
-            var passwordBox = (PasswordBox)sender;
+            var passwordBox = (PasswordBox) sender;
 
             _isPreventCallback = true;
             Password = passwordBox.Password;

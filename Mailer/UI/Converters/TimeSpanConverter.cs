@@ -18,18 +18,18 @@ namespace Mailer.UI.Converters
     {
         public object Convert(object value, Type targetType, object parameter,
 #if !MODERN
- CultureInfo culture)
+            CultureInfo culture)
 #else
  string culture)
 #endif
         {
-            var t = (TimeSpan)value;
-            return t.ToString((string)parameter);
+            var t = (TimeSpan) value;
+            return t.ToString((string) parameter);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter,
 #if !MODERN
- CultureInfo culture)
+            CultureInfo culture)
 #else
  string culture)
 #endif

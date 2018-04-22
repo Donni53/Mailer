@@ -1,106 +1,34 @@
-﻿using Mailer.UI.Extensions;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.Windows.Threading;
+using Mailer.UI.Extensions;
 
 namespace Mailer.Controls
 {
     /// <summary>
-    /// Логика взаимодействия для LocalSearchControl.xaml
+    ///     Логика взаимодействия для LocalSearchControl.xaml
     /// </summary>
     public partial class LocalSearchControl : UserControl
     {
-        #region IsActive property
-
-        public static readonly DependencyProperty IsActiveProperty = DependencyProperty.Register(
-            "IsActive", typeof(bool), typeof(LocalSearchControl), new PropertyMetadata(default(bool), IsActiveChanged));
-
-        private static void IsActiveChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var c = (LocalSearchControl)d;
-            if ((bool)e.NewValue)
-            {
-                //c.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                //c.Visibility = Visibility.Collapsed;
-                c.LocalSearchBox.Text = string.Empty;
-            }
-        }
-
-        public bool IsActive
-        {
-            get { return (bool)GetValue(IsActiveProperty); }
-            set { SetValue(IsActiveProperty, value); }
-        }
-
-        #endregion
-
-        #region Source property
-
-        public static readonly DependencyProperty SourceProperty = DependencyProperty.Register(
-            "Source", typeof(CollectionViewSource), typeof(LocalSearchControl), new PropertyMetadata(default(CollectionViewSource)));
-
-        public CollectionViewSource Source
-        {
-            get { return (CollectionViewSource)GetValue(SourceProperty); }
-            set { SetValue(SourceProperty, value); }
-        }
-
-        #endregion
-
-        #region Filter property
-
-        public static readonly DependencyProperty FilterProperty = DependencyProperty.Register(
-            "Filter", typeof(Predicate<object>), typeof(LocalSearchControl), new PropertyMetadata(default(Predicate<object>)));
-
-        public Predicate<object> Filter
-        {
-            get { return (Predicate<object>)GetValue(FilterProperty); }
-            set { SetValue(FilterProperty, value); }
-        }
-
-        #endregion
-
-        #region Query property
-
-        public static readonly DependencyProperty QueryProperty = DependencyProperty.Register(
-            "Query", typeof(string), typeof(LocalSearchControl), new PropertyMetadata(default(string)));
-
-        public string Query
-        {
-            get { return (string)GetValue(QueryProperty); }
-            set { SetValue(QueryProperty, value); }
-        }
-
-        #endregion
-
-        public bool IsFiltering { get; set; }
         public LocalSearchControl()
         {
             InitializeComponent();
         }
 
+        public bool IsFiltering { get; set; }
+
         public static LocalSearchControl GetForCurrentView()
         {
-            return (Application.Current.MainWindow.GetVisualDescendents().FirstOrDefault(c => c is LocalSearchControl) as LocalSearchControl);
+            return Application.Current.MainWindow.GetVisualDescendents().FirstOrDefault(c => c is LocalSearchControl) as
+                LocalSearchControl;
         }
 
         private void LocalSearchControl_OnLoaded(object sender, RoutedEventArgs e)
         {
-
         }
 
         private void LocalSearchBox_OnTextChanged(object sender, TextChangedEventArgs e)
@@ -136,12 +64,76 @@ namespace Mailer.Controls
 
         private void LocalSearchControl_OnIsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            if ((bool)e.NewValue)
+            if ((bool) e.NewValue)
+                Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(() => LocalSearchBox.Focus()));
+        }
+
+        #region IsActive property
+
+        public static readonly DependencyProperty IsActiveProperty = DependencyProperty.Register(
+            "IsActive", typeof(bool), typeof(LocalSearchControl), new PropertyMetadata(default(bool), IsActiveChanged));
+
+        private static void IsActiveChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var c = (LocalSearchControl) d;
+            if ((bool) e.NewValue)
             {
-                //майкрософт, убей себя пожалуйста об стену
-                Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.ContextIdle, new Action(() => LocalSearchBox.Focus()));
+                //c.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                //c.Visibility = Visibility.Collapsed;
+                c.LocalSearchBox.Text = string.Empty;
             }
         }
-    }
 
+        public bool IsActive
+        {
+            get => (bool) GetValue(IsActiveProperty);
+            set => SetValue(IsActiveProperty, value);
+        }
+
+        #endregion
+
+        #region Source property
+
+        public static readonly DependencyProperty SourceProperty = DependencyProperty.Register(
+            "Source", typeof(CollectionViewSource), typeof(LocalSearchControl),
+            new PropertyMetadata(default(CollectionViewSource)));
+
+        public CollectionViewSource Source
+        {
+            get => (CollectionViewSource) GetValue(SourceProperty);
+            set => SetValue(SourceProperty, value);
+        }
+
+        #endregion
+
+        #region Filter property
+
+        public static readonly DependencyProperty FilterProperty = DependencyProperty.Register(
+            "Filter", typeof(Predicate<object>), typeof(LocalSearchControl),
+            new PropertyMetadata(default(Predicate<object>)));
+
+        public Predicate<object> Filter
+        {
+            get => (Predicate<object>) GetValue(FilterProperty);
+            set => SetValue(FilterProperty, value);
+        }
+
+        #endregion
+
+        #region Query property
+
+        public static readonly DependencyProperty QueryProperty = DependencyProperty.Register(
+            "Query", typeof(string), typeof(LocalSearchControl), new PropertyMetadata(default(string)));
+
+        public string Query
+        {
+            get => (string) GetValue(QueryProperty);
+            set => SetValue(QueryProperty, value);
+        }
+
+        #endregion
+    }
 }

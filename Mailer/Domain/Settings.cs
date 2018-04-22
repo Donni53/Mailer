@@ -3,9 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using Mailer.Controls;
 using Mailer.Model;
@@ -22,9 +19,23 @@ namespace Mailer.Domain
     {
         private const string SettingsFile = "Mailer.settings";
 
-        private static Settings _instance = new Settings();
+        public Settings()
+        {
+            CheckForUpdates = true;
+            AccentColor = "Blue";
+            Theme = "Light";
+            Language = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+            SendStats = true;
+            BlurBackground = false;
+            EnableTrayIcon = false;
+            ShowBackgroundArt = false;
+            Accounts = new List<Account>();
+            SelectedAccount = -1;
+            CustomBackgroundPath = "";
+            CustomBackground = false;
+        }
 
-        public static Settings Instance => _instance;
+        public static Settings Instance { get; private set; } = new Settings();
 
         public bool CheckForUpdates { get; set; }
 
@@ -49,22 +60,6 @@ namespace Mailer.Domain
         public bool CustomBackground { get; set; }
         public string CustomBackgroundPath { get; set; }
 
-        public Settings()
-        {
-            CheckForUpdates = true;
-            AccentColor = "Blue";
-            Theme = "Light";
-            Language = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
-            SendStats = true;
-            BlurBackground = false;
-            EnableTrayIcon = false;
-            ShowBackgroundArt = false;
-            Accounts = new List<Account>();
-            SelectedAccount = -1;
-            CustomBackgroundPath = "";
-            CustomBackground = false;
-        }
-
         public static void Load()
         {
             if (!File.Exists(SettingsFile))
@@ -77,9 +72,9 @@ namespace Mailer.Domain
                     return;
 
                 var serializer = new JsonSerializer();
-                var o = (JObject)JsonConvert.DeserializeObject(json);
+                var o = (JObject) JsonConvert.DeserializeObject(json);
                 var settings = serializer.Deserialize<Settings>(o.CreateReader());
-                _instance = settings;
+                Instance = settings;
             }
             catch (Exception ex)
             {
@@ -91,7 +86,7 @@ namespace Mailer.Domain
         {
             try
             {
-                var settings = new JsonSerializerSettings()
+                var settings = new JsonSerializerSettings
                 {
                     ContractResolver = new CamelCasePropertyNamesContractResolver(),
                     Formatting = Formatting.Indented
@@ -105,11 +100,12 @@ namespace Mailer.Domain
             {
                 var flyout = new FlyoutControl
                 {
-                    FlyoutContent = new CommonErrorView(ErrorResources.AccessDeniedErrorTitle, ErrorResources.AccessDeniedErrorDescription)
+                    FlyoutContent = new CommonErrorView(ErrorResources.AccessDeniedErrorTitle,
+                        ErrorResources.AccessDeniedErrorDescription)
                 };
                 await flyout.ShowAsync().ContinueWith(t =>
                 {
-                    if ((bool)t.Result == true)
+                    if ((bool) t.Result)
                     {
                         var info = new ProcessStartInfo
                         {

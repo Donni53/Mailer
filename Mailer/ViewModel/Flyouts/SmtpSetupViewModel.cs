@@ -1,20 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using GalaSoft.MvvmLight.Command;
 using Mailer.Controls;
 using Mailer.Model;
 using Mailer.Services;
 using Mailer.UI.Extensions;
-using NLog;
 
 namespace Mailer.ViewModel.Flyouts
 {
     public class SmtpSetupViewModel : ViewModelBase
     {
+        public SmtpSetupViewModel()
+        {
+            InitializeCommands();
+        }
+
         public Account Account { get; set; }
         public int Id { get; set; }
         public string SmtpAddress { get; set; }
@@ -23,11 +24,6 @@ namespace Mailer.ViewModel.Flyouts
 
         public RelayCommand SaveCommand { get; private set; }
         public RelayCommand CloseCommand { get; private set; }
-
-        public SmtpSetupViewModel()
-        {
-            InitializeCommands();
-        }
 
         private void InitializeCommands()
         {
@@ -49,12 +45,14 @@ namespace Mailer.ViewModel.Flyouts
             {
                 LoggingService.Log(ex);
             }
+
             Close();
         }
 
         private void Close()
         {
-            if (Application.Current.MainWindow.GetVisualDescendents().FirstOrDefault(c => c is FlyoutControl) is FlyoutControl flyout)
+            if (Application.Current.MainWindow.GetVisualDescendents().FirstOrDefault(c => c is FlyoutControl) is
+                FlyoutControl flyout)
                 flyout.Close();
         }
     }

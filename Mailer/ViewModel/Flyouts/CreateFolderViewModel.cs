@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using GalaSoft.MvvmLight.Command;
 using Mailer.Controls;
@@ -12,16 +9,15 @@ namespace Mailer.ViewModel.Flyouts
 {
     public class CreateFolderViewModel : ViewModelBase
     {
+        public CreateFolderViewModel()
+        {
+            InitializeCommands();
+        }
 
         public string Name { get; set; }
 
         public RelayCommand SaveCommand { get; private set; }
         public RelayCommand CloseCommand { get; private set; }
-
-        public CreateFolderViewModel()
-        {
-            InitializeCommands();
-        }
 
         private void InitializeCommands()
         {
@@ -39,6 +35,7 @@ namespace Mailer.ViewModel.Flyouts
             {
                 Console.WriteLine(e);
             }
+
             Close();
         }
 
@@ -50,6 +47,5 @@ namespace Mailer.ViewModel.Flyouts
                     FlyoutControl;
             flyout?.Close();
         }
-
     }
 }

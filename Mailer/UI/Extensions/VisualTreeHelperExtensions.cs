@@ -7,13 +7,12 @@ namespace Mailer.UI.Extensions
     public static class VisualTreeHelperExtensions
     {
         /// <summary>
-        /// Performs a breadth-first enumeration of all the descendents in the tree
+        ///     Performs a breadth-first enumeration of all the descendents in the tree
         /// </summary>
         /// <param name="root">The root node</param>
         /// <returns>An enumerator of all the children</returns>
         public static IEnumerable<FrameworkElement> GetVisualDescendents(this FrameworkElement root)
         {
-
             var toDo = new Queue<IEnumerable<FrameworkElement>>();
 
             toDo.Enqueue(root.GetVisualChildren());
@@ -26,11 +25,10 @@ namespace Mailer.UI.Extensions
                     toDo.Enqueue(child.GetVisualChildren());
                 }
             }
-
         }
 
         /// <summary>
-        /// Gets all the visual children of the element
+        ///     Gets all the visual children of the element
         /// </summary>
         /// <param name="root">The element to get children of</param>
         /// <returns>An enumerator of the children</returns>
@@ -44,7 +42,7 @@ namespace Mailer.UI.Extensions
         }
 
         /// <summary>
-        /// Gets the ancestors of the element, up to the root
+        ///     Gets the ancestors of the element, up to the root
         /// </summary>
         /// <param name="node">The element to start from</param>
         /// <returns>An enumerator of the ancestors</returns>
@@ -59,7 +57,7 @@ namespace Mailer.UI.Extensions
         }
 
         /// <summary>
-        /// Gets the visual parent of the element
+        ///     Gets the visual parent of the element
         /// </summary>
         /// <param name="node">The element to check</param>
         /// <returns>The visual parent</returns>

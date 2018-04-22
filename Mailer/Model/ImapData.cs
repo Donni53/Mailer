@@ -1,18 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Mailer.Model
+﻿namespace Mailer.Model
 {
     public class ImapData
     {
-        public string Login { get; set; }
-        public string Password { get; set; }
-        public string Address { get; set; }
-        public bool UseSsl { get; set; }
-
         public ImapData(string login, string password, string address, bool useSsl)
         {
             Login = login;
@@ -20,5 +9,10 @@ namespace Mailer.Model
             Address = address;
             UseSsl = useSsl;
         }
+
+        public string Login { get; set; }
+        public string Password { get; set; }
+        public string Address { get; set; }
+        public bool UseSsl { get; set; }
     }
 }

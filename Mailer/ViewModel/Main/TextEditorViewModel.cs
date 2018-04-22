@@ -1,23 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Documents;
+using System.Windows.Media;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using Mailer.Messages;
 using Microsoft.Win32;
-using System.Windows.Controls;
-using System.Windows.Media;
 
 namespace Mailer.ViewModel.Main
 {
     public class TextEditorViewModel : ViewModelBase
     {
-        public List<string> FontList { get; set; } = new List<string>()
+        public TextEditorViewModel()
+        {
+            InitiailizeCommands();
+            Document = new FlowDocument();
+        }
+
+        public List<string> FontList { get; set; } = new List<string>
         {
             "Arial",
             "Times New Roman",
@@ -25,7 +27,7 @@ namespace Mailer.ViewModel.Main
             "Tahoma"
         };
 
-        public List<string> FontSizeList { get; set; } = new List<string>()
+        public List<string> FontSizeList { get; set; } = new List<string>
         {
             "8",
             "12",
@@ -45,17 +47,12 @@ namespace Mailer.ViewModel.Main
         public RelayCommand LoadCommand { get; private set; }
         public RelayCommand SaveCommand { get; private set; }
         public RelayCommand NewCommand { get; private set; }
-        public TextEditorViewModel()
-        {
-            InitiailizeCommands();
-            Document = new FlowDocument();
-        }
 
         private void InitiailizeCommands()
         {
             GoToSettingsCommand = new RelayCommand(() =>
             {
-                Messenger.Default.Send(new NavigateToPageMessage()
+                Messenger.Default.Send(new NavigateToPageMessage
                 {
                     Page = "/Settings.SettingsView"
                 });
@@ -79,14 +76,11 @@ namespace Mailer.ViewModel.Main
         public void HandleDrop(DragEventArgs e)
         {
             if (!e.Data.GetDataPresent(DataFormats.FileDrop)) return;
-            string[] docPath = (string[])e.Data.GetData(DataFormats.FileDrop);
+            string[] docPath = (string[]) e.Data.GetData(DataFormats.FileDrop);
 
             var dataFormat = DataFormats.Rtf;
 
-            if (e.KeyStates == DragDropKeyStates.ShiftKey)
-            {
-                dataFormat = DataFormats.Text;
-            }
+            if (e.KeyStates == DragDropKeyStates.ShiftKey) dataFormat = DataFormats.Text;
 
             TextRange range;
             FileStream fStream;
@@ -126,6 +120,5 @@ namespace Mailer.ViewModel.Main
             TextRange range = new TextRange(Document.ContentStart, Document.ContentEnd);
             range.Save(fileStream, DataFormats.Rtf);
         }
-
     }
 }

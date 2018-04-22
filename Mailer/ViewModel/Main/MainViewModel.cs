@@ -14,13 +14,15 @@ namespace Mailer.ViewModel.Main
     public class MainViewModel : ViewModelBase
     {
         private WindowState _windowState;
-        public string Version { get; set; }
+
         public MainViewModel()
         {
             Version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
             InitiailizeCommands();
             InitializeMessageInterception();
         }
+
+        public string Version { get; set; }
 
         public RelayCommand CloseWindowCommand { get; private set; }
         public RelayCommand MinimizeWindowCommand { get; private set; }
@@ -42,7 +44,7 @@ namespace Mailer.ViewModel.Main
 
         public WindowState WindowState
         {
-            get { return _windowState; }
+            get => _windowState;
             set
             {
                 if (_windowState == value)
@@ -52,18 +54,22 @@ namespace Mailer.ViewModel.Main
             }
         }
 
+        public bool IsWindowMaximized => WindowState == WindowState.Maximized;
+
         private void InitiailizeCommands()
         {
             CloseWindowCommand = new RelayCommand(() => Application.Current.MainWindow.Close());
             MinimizeWindowCommand = new RelayCommand(() => WindowState = WindowState.Minimized);
-            MaximizeWindowCommand = new RelayCommand(() => WindowState = IsWindowMaximized ? WindowState.Normal : WindowState.Maximized);
+            MaximizeWindowCommand = new RelayCommand(() =>
+                WindowState = IsWindowMaximized ? WindowState.Normal : WindowState.Maximized);
             GoToSettingsCommand = new RelayCommand(() =>
             {
-                OnNavigateToPage(new NavigateToPageMessage() { Page = "/Settings.SettingsView" });
+                OnNavigateToPage(new NavigateToPageMessage {Page = "/Settings.SettingsView"});
             });
             GoBackCommand = new RelayCommand(() =>
             {
-                var frame = Application.Current.MainWindow.GetVisualDescendents().OfType<Frame>().FirstOrDefault(f => f.Name == "RootFrame");
+                var frame = Application.Current.MainWindow.GetVisualDescendents().OfType<Frame>()
+                    .FirstOrDefault(f => f.Name == "RootFrame");
                 if (frame == null)
                     return;
                 if (frame.CanGoBack)
@@ -94,13 +100,13 @@ namespace Mailer.ViewModel.Main
 
             if (typeof(PageBase).IsAssignableFrom(type))
             {
-                var page = (PageBase)Activator.CreateInstance(type);
+                var page = (PageBase) Activator.CreateInstance(type);
                 page.NavigationContext.Parameters = message.Parameters;
                 frame.Navigate(page);
             }
             else if (typeof(PageBase).IsAssignableFrom(type))
             {
-                var page = (PageBase)Activator.CreateInstance(type);
+                var page = (PageBase) Activator.CreateInstance(type);
                 page.NavigationContext.Parameters = message.Parameters;
                 frame.Navigate(page);
             }
@@ -116,7 +122,8 @@ namespace Mailer.ViewModel.Main
         {
             RaisePropertyChanged("CanGoBack");
 
-            var frame = Application.Current.MainWindow.GetVisualDescendents().OfType<Frame>().FirstOrDefault(f => f.Name == "RootFrame");
+            var frame = Application.Current.MainWindow.GetVisualDescendents().OfType<Frame>()
+                .FirstOrDefault(f => f.Name == "RootFrame");
             if (frame != null && frame.Content != null)
             {
                 var source = frame.Content.GetType().Name;
@@ -129,14 +136,6 @@ namespace Mailer.ViewModel.Main
         private void Minimize()
         {
             WindowState = WindowState.Minimized;
-        }
-
-        public bool IsWindowMaximized
-        {
-            get
-            {
-                return WindowState == WindowState.Maximized;
-            }
         }
 
         private void Restart()

@@ -5,8 +5,6 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -21,7 +19,6 @@ using Mailer.Model;
 using Mailer.Resources.Localization;
 using Mailer.Services;
 using Mailer.UI.Extensions;
-using Mailer.View.Accounts;
 using Mailer.View.Flyouts;
 using Microsoft.Win32;
 
@@ -29,6 +26,44 @@ namespace Mailer.ViewModel.Settings
 {
     public class SettingsViewModel : ViewModelBase
     {
+        private bool _blurBackground;
+        private string _cacheSize;
+
+        private bool _canSave;
+        private bool _checkForUpdates;
+        private bool _customBackground;
+        private string _customBackgroundPath;
+        private bool _enableNotifications;
+        private bool _enableTrayIcon;
+        private string _error;
+        private bool _isError;
+        private bool _restartRequired;
+        private int _selectedAccount;
+        private bool _selectedAccountChanged;
+        private ColorScheme _selectedColorScheme;
+        private SettingsLanguage _selectedLanguage;
+        private string _selectedTheme;
+        private bool _showBackgroundArt;
+
+        public SettingsViewModel()
+        {
+            Domain.Settings.Load();
+            InitializeCommands();
+            _selectedTheme = Domain.Settings.Instance.Theme;
+            _selectedColorScheme = AccentColors.FirstOrDefault(c => c.Name == Domain.Settings.Instance.AccentColor);
+            _checkForUpdates = Domain.Settings.Instance.CheckForUpdates;
+            _enableTrayIcon = Domain.Settings.Instance.EnableTrayIcon;
+            _showBackgroundArt = Domain.Settings.Instance.ShowBackgroundArt;
+            _blurBackground = Domain.Settings.Instance.BlurBackground;
+            _selectedAccount = Domain.Settings.Instance.SelectedAccount;
+            _customBackground = Domain.Settings.Instance.CustomBackground;
+            _customBackgroundPath = Domain.Settings.Instance.CustomBackgroundPath;
+            var lang = Languages.FirstOrDefault(l => l.LanguageCode == Domain.Settings.Instance.Language);
+            if (lang != null)
+                _selectedLanguage = lang;
+            else
+                _selectedLanguage = Languages.First();
+        }
 
         public Dictionary<string, string> MenuItems { get; } = new Dictionary<string, string>
         {
@@ -60,30 +95,6 @@ namespace Mailer.ViewModel.Settings
             new ColorScheme("Green", "#00896d")
         };
 
-        private readonly List<SettingsLanguage> _languages = new List<SettingsLanguage>()
-        {
-            new SettingsLanguage() {LanguageCode = "en", Title = CultureInfo.GetCultureInfo("en").NativeName},
-            new SettingsLanguage() {LanguageCode = "ru", Title = CultureInfo.GetCultureInfo("ru").NativeName}
-        };
-
-        private bool _canSave;
-        private bool _restartRequired;
-        private ColorScheme _selectedColorScheme;
-        private string _selectedTheme;
-        private bool _checkForUpdates;
-        private bool _enableNotifications;
-        private bool _enableTrayIcon;
-        private bool _showBackgroundArt;
-        private bool _blurBackground;
-        private string _cacheSize;
-        private SettingsLanguage _selectedLanguage;
-        private int _selectedAccount;
-        private bool _customBackground;
-        private string _customBackgroundPath;
-        private bool _isError;
-        private string _error;
-        private bool _selectedAccountChanged;
-
         public RelayCommand CloseSettingsCommand { get; private set; }
         public RelayCommand SaveCommand { get; private set; }
         public RelayCommand SaveRestartCommand { get; private set; }
@@ -94,27 +105,7 @@ namespace Mailer.ViewModel.Settings
         public RelayCommand AddAccountCommand { get; private set; }
         public RelayCommand OmsSetupCommand { get; private set; }
 
-        public SettingsViewModel()
-        {
-            Domain.Settings.Load();
-            InitializeCommands();
-            _selectedTheme = Domain.Settings.Instance.Theme;
-            _selectedColorScheme = AccentColors.FirstOrDefault(c => c.Name == Domain.Settings.Instance.AccentColor);
-            _checkForUpdates = Domain.Settings.Instance.CheckForUpdates;
-            _enableTrayIcon = Domain.Settings.Instance.EnableTrayIcon;
-            _showBackgroundArt = Domain.Settings.Instance.ShowBackgroundArt;
-            _blurBackground = Domain.Settings.Instance.BlurBackground;
-            _selectedAccount = Domain.Settings.Instance.SelectedAccount;
-            _customBackground = Domain.Settings.Instance.CustomBackground;
-            _customBackgroundPath = Domain.Settings.Instance.CustomBackgroundPath;
-            var lang = _languages.FirstOrDefault(l => l.LanguageCode == Domain.Settings.Instance.Language);
-            if (lang != null)
-                _selectedLanguage = lang;
-            else
-                _selectedLanguage = _languages.First();
-        }
-
-        public List<Model.Account> Accounts => Domain.Settings.Instance.Accounts;
+        public List<Account> Accounts => Domain.Settings.Instance.Accounts;
 
         public string Version => Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
@@ -159,10 +150,7 @@ namespace Mailer.ViewModel.Settings
             get => _customBackgroundPath;
             set
             {
-                if (Set(ref _customBackgroundPath, value))
-                {
-                    CanSave = true;
-                }
+                if (Set(ref _customBackgroundPath, value)) CanSave = true;
             }
         }
 
@@ -274,12 +262,17 @@ namespace Mailer.ViewModel.Settings
                     SelectedAccountChanged = true;
                     CanSave = true;
                 }
+
                 RaisePropertyChanged("AutoReplie");
                 RaisePropertyChanged("AutoReplieText");
             }
         }
 
-        public List<SettingsLanguage> Languages => _languages;
+        public List<SettingsLanguage> Languages { get; } = new List<SettingsLanguage>
+        {
+            new SettingsLanguage {LanguageCode = "en", Title = CultureInfo.GetCultureInfo("en").NativeName},
+            new SettingsLanguage {LanguageCode = "ru", Title = CultureInfo.GetCultureInfo("ru").NativeName}
+        };
 
         public SettingsLanguage SelectedLanguage
         {
@@ -357,7 +350,6 @@ namespace Mailer.ViewModel.Settings
                     return;
 
                 foreach (var file in Directory.EnumerateFiles("Cache"))
-                {
                     try
                     {
                         File.Delete(file);
@@ -366,10 +358,8 @@ namespace Mailer.ViewModel.Settings
                     {
                         Debug.WriteLine(ex);
                     }
-                }
 
                 foreach (var dir in Directory.EnumerateDirectories("Cache"))
-                {
                     try
                     {
                         Directory.Delete(dir, true);
@@ -378,7 +368,6 @@ namespace Mailer.ViewModel.Settings
                     {
                         Debug.WriteLine(ex);
                     }
-                }
 
                 var cacheSize = await CalculateFolderSizeAsync("Cache");
                 CacheSize = StringHelper.FormatSize(Math.Round(cacheSize, 1));
@@ -414,7 +403,7 @@ namespace Mailer.ViewModel.Settings
             }
         }
 
-        
+
         private void HideBackgroundImage()
         {
             ImageSource backgroundImageSource = new BitmapImage();
@@ -433,7 +422,7 @@ namespace Mailer.ViewModel.Settings
             ViewModelLocator.AccountSetupViewModel.ImapSsl = false;
             ViewModelLocator.AccountSetupViewModel.NewAccount = true;
             ViewModelLocator.AccountSetupViewModel.Id = -1;
-            Messenger.Default.Send(new NavigateToPageMessage()
+            Messenger.Default.Send(new NavigateToPageMessage
             {
                 Page = "/Accounts.AccountSetupView"
             });
@@ -455,7 +444,7 @@ namespace Mailer.ViewModel.Settings
                 Domain.Settings.Instance.Accounts[SelectedAccount].ImapData.UseSsl;
             ViewModelLocator.AccountSetupViewModel.NewAccount = false;
             ViewModelLocator.AccountSetupViewModel.Id = SelectedAccount;
-            Messenger.Default.Send(new NavigateToPageMessage()
+            Messenger.Default.Send(new NavigateToPageMessage
             {
                 Page = "/Accounts.AccountSetupView"
             });
@@ -534,7 +523,7 @@ namespace Mailer.ViewModel.Settings
                         Domain.Settings.Instance.Accounts[SelectedAccount].UserName,
                         Domain.Settings.Instance.Accounts[SelectedAccount].ImapData,
                         false, -1);
-                    Messenger.Default.Send(new NavigateToPageMessage()
+                    Messenger.Default.Send(new NavigateToPageMessage
                     {
                         Page = "/Main.MailView"
                     });
@@ -545,11 +534,12 @@ namespace Mailer.ViewModel.Settings
                     IsError = true;
                     LoggingService.Log(ex);
                 }
+
                 IsWorking = false;
             }
+
             Domain.Settings.Instance.SelectedAccount = SelectedAccount;
             Domain.Settings.Instance.Save();
-
         }
 
         private static Task<float> CalculateFolderSizeAsync(string folder)
@@ -566,7 +556,11 @@ namespace Mailer.ViewModel.Settings
                     return folderSize;
                 try
                 {
-                    folderSize = (from file in Directory.EnumerateFiles(folder) where File.Exists(file) select new FileInfo(file)).Aggregate(folderSize, (current, finfo) => current + finfo.Length);
+                    folderSize =
+                        (from file in Directory.EnumerateFiles(folder)
+                            where File.Exists(file)
+                            select new FileInfo(file))
+                        .Aggregate(folderSize, (current, finfo) => current + finfo.Length);
 
                     folderSize += Directory.GetDirectories(folder).Sum(dir => CalculateFolderSize(dir));
                 }
@@ -579,6 +573,7 @@ namespace Mailer.ViewModel.Settings
             {
                 LoggingService.Log($"Unable to calculate folder size: {ex.Message}");
             }
+
             return folderSize;
         }
     }

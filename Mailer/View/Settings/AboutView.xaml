@@ -1,10 +1,10 @@
 ﻿<Page x:Class="Mailer.View.Settings.About"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:Mailer.View.Settings"
-      mc:Ignorable="d" 
+      mc:Ignorable="d"
       xmlns:localization="clr-namespace:Mailer.Resources.Localization"
       xmlns:controls="clr-namespace:Mailer.Controls"
       d:DesignHeight="600" d:DesignWidth="600" KeepAlive="False"
@@ -20,27 +20,30 @@
     </Page.Triggers>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <TextBlock Text="{x:Static localization:MainResources.SettingsAbout}" FontSize="28" FontWeight="Thin" Margin="24,10,0,15" Foreground="{DynamicResource ForegroundBrush}"/>
-        <Rectangle Height="1" Grid.ColumnSpan="2" VerticalAlignment="Bottom" Fill="{DynamicResource ForegroundBrush}" SnapsToDevicePixels="True" Margin="0,0,0,0" Opacity="0.15"/>
-        <StackPanel Grid.Row="1" Margin="24,20,0,0" >
-            <TextBlock Text="Mailer" Foreground="{DynamicResource ForegroundBrush}"/>
+        <TextBlock Text="{x:Static localization:MainResources.SettingsAbout}" FontSize="28" FontWeight="Thin"
+                   Margin="24,10,0,15" Foreground="{DynamicResource ForegroundBrush}" />
+        <Rectangle Height="1" Grid.ColumnSpan="2" VerticalAlignment="Bottom" Fill="{DynamicResource ForegroundBrush}"
+                   SnapsToDevicePixels="True" Margin="0,0,0,0" Opacity="0.15" />
+        <StackPanel Grid.Row="1" Margin="24,20,0,0">
+            <TextBlock Text="Mailer" Foreground="{DynamicResource ForegroundBrush}" />
             <TextBlock Foreground="{DynamicResource ForegroundBrush}">
                 <Run Text="Version:" />
                 <Run Text="{Binding Version, Mode=OneWay}" />
                 <!--<Run Text="beta" />-->
             </TextBlock>
-            <TextBlock Text="Copyright © Daniil Novitsky 2018" Foreground="{DynamicResource ForegroundBrush}"/>
-            <TextBlock x:Name="SiteLink" FontWeight="Normal" TextWrapping="Wrap" Text="https://github.com/Donni53/" HorizontalAlignment="Left" FontSize="12">
+            <TextBlock Text="Copyright © Daniil Novitsky 2018" Foreground="{DynamicResource ForegroundBrush}" />
+            <TextBlock x:Name="SiteLink" FontWeight="Normal" TextWrapping="Wrap" Text="https://github.com/Donni53/"
+                       HorizontalAlignment="Left" FontSize="12">
                 <TextBlock.Style>
                     <Style TargetType="{x:Type TextBlock}">
-                        <Setter Property="Cursor" Value="Hand"/>
-                        <Setter Property="Foreground" Value="{DynamicResource AccentBrush}"/>
+                        <Setter Property="Cursor" Value="Hand" />
+                        <Setter Property="Foreground" Value="{DynamicResource AccentBrush}" />
                         <Style.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="TextDecorations" Value="Underline"/>
+                                <Setter Property="TextDecorations" Value="Underline" />
                             </Trigger>
                         </Style.Triggers>
                     </Style>

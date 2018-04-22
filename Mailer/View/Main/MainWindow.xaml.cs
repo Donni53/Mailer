@@ -1,25 +1,23 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using GalaSoft.MvvmLight.Messaging;
-using Mailer.Controls;
 using Mailer.Messages;
 using Mailer.Services;
 using Mailer.View.Accounts;
-using Mailer.View.Flyouts;
 using Mailer.ViewModel;
 
 namespace Mailer.View.Main
 {
     /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
+    ///     Логика взаимодействия для MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
         private bool _clearStack;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -34,6 +32,7 @@ namespace Mailer.View.Main
                 Top = -e.GetPosition(this).Y / 2;
                 WindowState = WindowState.Normal;
             }
+
             DragMove();
         }
 
@@ -48,39 +47,29 @@ namespace Mailer.View.Main
             RootFrame.Navigated += RootFrame_Navigated;
             RootFrame.Navigating += RootFrame_Navigating;
             if (Domain.Settings.Instance.Accounts.Count > 0)
-            {
-                Messenger.Default.Send(new NavigateToPageMessage()
+                Messenger.Default.Send(new NavigateToPageMessage
                 {
                     Page = "/Accounts.AccountSelectView"
                 });
-            }
             else
-            {
-                Messenger.Default.Send(new NavigateToPageMessage()
+                Messenger.Default.Send(new NavigateToPageMessage
                 {
                     Page = "/Accounts.AccountSetupView"
                 });
-            }
         }
 
         private void RootFrame_Navigating(object sender, NavigatingCancelEventArgs e)
         {
-            if (RootFrame.Content is AccountSetupView)
-            {
-                _clearStack = true;
-            }
+            if (RootFrame.Content is AccountSetupView) _clearStack = true;
         }
 
         private void RootFrame_Navigated(object sender, NavigationEventArgs e)
         {
-            if(_clearStack)
+            if (_clearStack)
             {
                 _clearStack = false;
 
-                while (RootFrame.CanGoBack)
-                {
-                    RootFrame.RemoveBackEntry();
-                }
+                while (RootFrame.CanGoBack) RootFrame.RemoveBackEntry();
             }
 
             ViewModelLocator.MainViewModel.UpdateCanGoBack();

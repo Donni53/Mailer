@@ -5,29 +5,31 @@ namespace Mailer.Controls
 {
     public class TextBoxWithHint : TextBox
     {
-        private ContentControl _hintContent;
-
         public static readonly DependencyProperty HintProperty =
-            DependencyProperty.Register("Hint", typeof(object), typeof(TextBoxWithHint), new PropertyMetadata(default(object)));
+            DependencyProperty.Register("Hint", typeof(object), typeof(TextBoxWithHint),
+                new PropertyMetadata(default(object)));
 
         public static readonly DependencyProperty HintStyleProperty =
-            DependencyProperty.Register("HintStyle", typeof(Style), typeof(TextBoxWithHint), new PropertyMetadata(default(Style)));
+            DependencyProperty.Register("HintStyle", typeof(Style), typeof(TextBoxWithHint),
+                new PropertyMetadata(default(Style)));
 
-        public Style HintStyle
-        {
-            get { return (Style)GetValue(HintStyleProperty); }
-            set { SetValue(HintStyleProperty, value); }
-        }
-
-        public object Hint
-        {
-            get { return GetValue(HintProperty); }
-            set { SetValue(HintProperty, value); }
-        }
+        private ContentControl _hintContent;
 
         public TextBoxWithHint()
         {
             DefaultStyleKey = typeof(TextBoxWithHint);
+        }
+
+        public Style HintStyle
+        {
+            get => (Style) GetValue(HintStyleProperty);
+            set => SetValue(HintStyleProperty, value);
+        }
+
+        public object Hint
+        {
+            get => GetValue(HintProperty);
+            set => SetValue(HintProperty, value);
         }
 
         public override void OnApplyTemplate()
@@ -58,17 +60,11 @@ namespace Mailer.Controls
 
         private void DetermineHintVisibility()
         {
-            if(_hintContent != null)
-            {
-                if (string.IsNullOrEmpty(this.Text) && !IsFocused)
-                {
+            if (_hintContent != null)
+                if (string.IsNullOrEmpty(Text) && !IsFocused)
                     _hintContent.Visibility = Visibility.Visible;
-                }
                 else
-                {
                     _hintContent.Visibility = Visibility.Collapsed;
-                }
-            }
         }
     }
 }

@@ -1,28 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using System.Windows.Controls;
 using Mailer.Controls;
 using Mailer.ViewModel.Main;
 
 namespace Mailer.View.Main
 {
     /// <summary>
-    /// Логика взаимодействия для MailView.xaml
+    ///     Логика взаимодействия для MailView.xaml
     /// </summary>
     public partial class MailView : PageBase
     {
-        private MailViewModel _viewModel;
+        private readonly MailViewModel _viewModel;
+
         public MailView()
         {
             InitializeComponent();
@@ -32,7 +20,6 @@ namespace Mailer.View.Main
 
         private void LocalSearchBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-
         }
     }
 }

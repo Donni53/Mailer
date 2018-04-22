@@ -1,15 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using NLog;
 
 namespace Mailer.Services
 {
     public static class LoggingService
     {
-        private static readonly NLog.Logger _logger = NLog.LogManager.GetLogger("logger");
+        private static readonly Logger _logger = LogManager.GetLogger("logger");
 
         public static void Log(string message)
         {

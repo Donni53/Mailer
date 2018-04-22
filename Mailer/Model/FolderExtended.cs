@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MailBee.ImapMail;
-using MailBee.Mime;
+﻿using MailBee.Mime;
 
 namespace Mailer.Model
 {
@@ -24,12 +18,6 @@ namespace Mailer.Model
 
     public class FolderExtended
     {
-        public string Name { get; set; }
-        public string ShortName { get; set; }
-        public int MessagesCount { get; set; }
-        public int UnreadedMessagesCount { get; set; }
-        public MessagesRange Range { get; set; }
-        public MailMessageCollection MailMessageCollection { get; set; }
         public FolderExtended(string name, string shortName, int messagesCount, int unreadedMessagesCount)
         {
             Name = name;
@@ -38,6 +26,13 @@ namespace Mailer.Model
             UnreadedMessagesCount = unreadedMessagesCount;
             Range = new MessagesRange();
         }
+
+        public string Name { get; set; }
+        public string ShortName { get; set; }
+        public int MessagesCount { get; set; }
+        public int UnreadedMessagesCount { get; set; }
+        public MessagesRange Range { get; set; }
+        public MailMessageCollection MailMessageCollection { get; set; }
 
         public MailMessageCollection MailMessageCollectionReversed
         {
@@ -48,6 +43,5 @@ namespace Mailer.Model
                 return tmp;
             }
         }
-
     }
 }

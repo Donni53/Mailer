@@ -13,8 +13,15 @@ namespace Mailer.ViewModel.Accounts
 {
     public class AccountSetupViewModel : ViewModelBase
     {
-        private bool _isError;
         private string _error;
+        private bool _isError;
+
+        public AccountSetupViewModel()
+        {
+            InitializeCommands();
+            NewAccount = true;
+            Id = -1;
+        }
 
         public string Login { get; set; }
         public string Password { get; set; }
@@ -29,20 +36,6 @@ namespace Mailer.ViewModel.Accounts
         public RelayCommand SaveCommand { get; private set; }
         public RelayCommand CloseCommand { get; private set; }
 
-        public AccountSetupViewModel()
-        {
-            InitializeCommands();
-            NewAccount = true;
-            Id = -1;
-        }
-
-        private void InitializeCommands()
-        {
-            CloseCommand = new RelayCommand(Close);
-
-            SaveCommand = new RelayCommand(Save);
-        }
-
         public bool IsError
         {
             get => _isError;
@@ -55,6 +48,24 @@ namespace Mailer.ViewModel.Accounts
             set => Set(ref _error, value);
         }
 
+        public bool CanGoBack
+        {
+            get
+            {
+                var frame = Application.Current.MainWindow.GetVisualDescendents().OfType<Frame>().FirstOrDefault();
+                if (frame == null)
+                    return false;
+                return frame.CanGoBack;
+            }
+        }
+
+        private void InitializeCommands()
+        {
+            CloseCommand = new RelayCommand(Close);
+
+            SaveCommand = new RelayCommand(Save);
+        }
+
         private async void Save()
         {
             IsWorking = true;
@@ -63,7 +74,7 @@ namespace Mailer.ViewModel.Accounts
             {
                 var imapData = new ImapData(Login, Password, ImapServer, true);
                 await AccountManager.ImapAuth(UserName, imapData, NewAccount, Id);
-                Messenger.Default.Send(new NavigateToPageMessage()
+                Messenger.Default.Send(new NavigateToPageMessage
                 {
                     Page = "/Main.MailView"
                 });
@@ -79,17 +90,6 @@ namespace Mailer.ViewModel.Accounts
             //CloseFlyOut();
         }
 
-        public bool CanGoBack
-        {
-            get
-            {
-                var frame = Application.Current.MainWindow.GetVisualDescendents().OfType<Frame>().FirstOrDefault();
-                if (frame == null)
-                    return false;
-                return frame.CanGoBack;
-            }
-        }
-
         private void CloseFlyOut()
         {
             /*if (Application.Current.MainWindow.GetVisualDescendents().FirstOrDefault(c => c is FlyoutControl) is FlyoutControl flyout)
@@ -98,8 +98,7 @@ namespace Mailer.ViewModel.Accounts
 
         private void Close()
         {
-           ViewModelLocator.MainViewModel.GoBackCommand.Execute(null);
+            ViewModelLocator.MainViewModel.GoBackCommand.Execute(null);
         }
-
     }
 }

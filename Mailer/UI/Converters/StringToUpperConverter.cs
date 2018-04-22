@@ -22,7 +22,7 @@ namespace Mailer.UI.Converters
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 #endif
         {
-            return value != null ? ((string)value).ToUpperInvariant() : null;
+            return value != null ? ((string) value).ToUpperInvariant() : null;
         }
 
 #if MODERN

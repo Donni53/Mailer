@@ -7,45 +7,45 @@ namespace Mailer.Behaviours
     public class FocusBehavior : Behavior<Control>
     {
         /// <summary>
-        /// IsFocused dependency property
+        ///     IsFocused dependency property
         /// </summary>
         public static readonly DependencyProperty IsFocusedProperty =
             DependencyProperty.Register(
-            "IsFocused",
-            typeof(bool),
-            typeof(FocusBehavior),
-            new PropertyMetadata(false, (d, e) =>
-            {
-                if ((bool)e.NewValue && ((FocusBehavior)d).AssociatedObject != null)
-                    ((FocusBehavior)d).AssociatedObject.Focus();
-            }));
+                "IsFocused",
+                typeof(bool),
+                typeof(FocusBehavior),
+                new PropertyMetadata(false, (d, e) =>
+                {
+                    if ((bool) e.NewValue && ((FocusBehavior) d).AssociatedObject != null)
+                        ((FocusBehavior) d).AssociatedObject.Focus();
+                }));
 
         /// <summary>
-        /// HasInitialFocus dependency property
+        ///     HasInitialFocus dependency property
         /// </summary>
         public static readonly DependencyProperty HasInitialFocusProperty =
             DependencyProperty.Register(
-            "HasInitialFocus",
-            typeof(bool),
-            typeof(FocusBehavior),
-            new PropertyMetadata(false, null));
+                "HasInitialFocus",
+                typeof(bool),
+                typeof(FocusBehavior),
+                new PropertyMetadata(false, null));
 
         /// <summary>
-        /// Имеет ли контрол фокус
+        ///     Имеет ли контрол фокус
         /// </summary>
         public bool IsFocused
         {
-            get { return (bool)GetValue(IsFocusedProperty); }
-            set { SetValue(IsFocusedProperty, value); }
+            get => (bool) GetValue(IsFocusedProperty);
+            set => SetValue(IsFocusedProperty, value);
         }
 
         /// <summary>
-        /// Имеет ли контрол фокус при инициализации
+        ///     Имеет ли контрол фокус при инициализации
         /// </summary>
         public bool HasInitialFocus
         {
-            get { return (bool)GetValue(HasInitialFocusProperty); }
-            set { SetValue(HasInitialFocusProperty, value); }
+            get => (bool) GetValue(HasInitialFocusProperty);
+            set => SetValue(HasInitialFocusProperty, value);
         }
 
         protected override void OnAttached()

@@ -1,38 +1,33 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Threading;
 using GalaSoft.MvvmLight.Threading;
 using Mailer.Controls;
 using Mailer.Domain;
-using Mailer.Resources.Localization;
 using Mailer.View.Flyouts;
 using Application = System.Windows.Application;
 
 namespace Mailer
 {
     /// <summary>
-    /// Логика взаимодействия для App.xaml
+    ///     Логика взаимодействия для App.xaml
     /// </summary>
     public partial class App : Application
     {
+        public static readonly string Root = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
         private NotifyIcon _trayIcon;
 
-        public static readonly string Root = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
         private void App_OnStartup(object sender, StartupEventArgs e)
         {
             DispatcherHelper.Initialize();
-            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo(Settings.Instance.Language);
-            System.Threading.Thread.CurrentThread.CurrentUICulture = System.Threading.Thread.CurrentThread.CurrentCulture;
+            Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo(Settings.Instance.Language);
+            Thread.CurrentThread.CurrentUICulture = Thread.CurrentThread.CurrentCulture;
 
             switch (Settings.Instance.AccentColor)
             {
@@ -52,7 +47,8 @@ namespace Mailer
                     break;
 
                 default:
-                    Resources.MergedDictionaries[0].Source = new Uri("/Resources/Themes/Accents/Grey.xaml", UriKind.Relative);
+                    Resources.MergedDictionaries[0].Source =
+                        new Uri("/Resources/Themes/Accents/Grey.xaml", UriKind.Relative);
                     break;
             }
 
@@ -78,11 +74,8 @@ namespace Mailer
 
                 var flyout = new FlyoutControl();
                 flyout.FlyoutContent = new CommonErrorView();
-                var restart = (bool)await flyout.ShowAsync();
-                if (restart)
-                {
-                    Process.Start(Application.ResourceAssembly.Location);
-                }
+                var restart = (bool) await flyout.ShowAsync();
+                if (restart) Process.Start(ResourceAssembly.Location);
 
                 Shutdown();
             });

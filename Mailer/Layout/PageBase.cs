@@ -8,83 +8,83 @@ namespace Mailer.Layout
     public class PageBase : Page
     {
         /// <summary>
-        /// Content property
+        ///     Content property
         /// </summary>
         public new static readonly DependencyProperty ContentProperty = DependencyProperty.Register(
             "Content", typeof(List<object>), typeof(PageBase), new PropertyMetadata(new List<object>()));
 
-        public new List<object> Content
-        {
-            get { return (List<object>)GetValue(ContentProperty); }
-            set { SetValue(ContentProperty, value); }
-        }
-
         /// <summary>
-        /// Header property
+        ///     Header property
         /// </summary>
         public static readonly DependencyProperty HeaderProperty = DependencyProperty.Register(
             "Header", typeof(object), typeof(PageBase), new PropertyMetadata(default(object)));
 
-        public object Header
-        {
-            get { return GetValue(HeaderProperty); }
-            set { SetValue(HeaderProperty, value); }
-        }
-
         /// <summary>
-        /// SubHeader property
+        ///     SubHeader property
         /// </summary>
         public static readonly DependencyProperty SubHeaderProperty = DependencyProperty.Register(
-            "SubHeader", typeof (string), typeof (PageBase), new PropertyMetadata(default(string)));
-
-        public string SubHeader
-        {
-            get { return (string) GetValue(SubHeaderProperty); }
-            set { SetValue(SubHeaderProperty, value); }
-        }
+            "SubHeader", typeof(string), typeof(PageBase), new PropertyMetadata(default(string)));
 
         /// <summary>
-        /// Header menu items property
+        ///     Header menu items property
         /// </summary>
         public static readonly DependencyProperty HeaderMenuItemsProperty = DependencyProperty.Register(
             "HeaderMenuItems", typeof(List<MenuItem>), typeof(PageBase), new PropertyMetadata(new List<MenuItem>()));
 
-        public List<MenuItem> HeaderMenuItems
-        {
-            get { return (List<MenuItem>)GetValue(HeaderMenuItemsProperty); }
-            set { SetValue(HeaderMenuItemsProperty, value); }
-        }
-
         /// <summary>
-        /// Selected tab index property
+        ///     Selected tab index property
         /// </summary>
         public static readonly DependencyProperty SelectedTabIndexProperty = DependencyProperty.Register(
-            "SelectedTabIndex", typeof (int), typeof (PageBase), new PropertyMetadata(default(int)));
-
-        public int SelectedTabIndex
-        {
-            get { return (int) GetValue(SelectedTabIndexProperty); }
-            set { SetValue(SelectedTabIndexProperty, value); }
-        }
-
-        /// <summary>
-        /// Navigation context
-        /// </summary>
-        public NavigationContext NavigationContext { get; set; }
+            "SelectedTabIndex", typeof(int), typeof(PageBase), new PropertyMetadata(default(int)));
 
 
         public PageBase()
         {
-            Style = (Style)Application.Current.Resources["PageBaseStyle"];
+            Style = (Style) Application.Current.Resources["PageBaseStyle"];
 
             HeaderMenuItems = new List<MenuItem>();
             Content = new List<object>();
 
             NavigationContext = new NavigationContext();
 
-            this.Loaded += OnLoaded;
-            this.Unloaded += OnUnloaded;
+            Loaded += OnLoaded;
+            Unloaded += OnUnloaded;
         }
+
+        public new List<object> Content
+        {
+            get => (List<object>) GetValue(ContentProperty);
+            set => SetValue(ContentProperty, value);
+        }
+
+        public object Header
+        {
+            get => GetValue(HeaderProperty);
+            set => SetValue(HeaderProperty, value);
+        }
+
+        public string SubHeader
+        {
+            get => (string) GetValue(SubHeaderProperty);
+            set => SetValue(SubHeaderProperty, value);
+        }
+
+        public List<MenuItem> HeaderMenuItems
+        {
+            get => (List<MenuItem>) GetValue(HeaderMenuItemsProperty);
+            set => SetValue(HeaderMenuItemsProperty, value);
+        }
+
+        public int SelectedTabIndex
+        {
+            get => (int) GetValue(SelectedTabIndexProperty);
+            set => SetValue(SelectedTabIndexProperty, value);
+        }
+
+        /// <summary>
+        ///     Navigation context
+        /// </summary>
+        public NavigationContext NavigationContext { get; set; }
 
         private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
         {
@@ -106,12 +106,10 @@ namespace Mailer.Layout
 
         public virtual void OnNavigatedTo()
         {
-
         }
 
         public virtual void OnNavigatedFrom()
         {
-
         }
     }
 
@@ -119,24 +117,21 @@ namespace Mailer.Layout
     {
         private readonly Dictionary<string, object> _parameters;
 
+        public NavigationContext()
+        {
+            _parameters = new Dictionary<string, object>();
+        }
+
         public Dictionary<string, object> Parameters
         {
-            get { return _parameters; }
+            get => _parameters;
             set
             {
                 if (value == null)
                     return;
 
-                foreach (var kp in value)
-                {
-                    _parameters.Add(kp.Key, kp.Value);
-                }
+                foreach (var kp in value) _parameters.Add(kp.Key, kp.Value);
             }
-        }
-
-        public NavigationContext()
-        {
-            _parameters = new Dictionary<string, object>();
         }
     }
 }
