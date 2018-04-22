@@ -15,16 +15,35 @@
                    mc:Ignorable="d" 
       d:DesignHeight="700" d:DesignWidth="1024"
       Title="MailView">
-    <Page.RenderTransform>
-        <TranslateTransform />
-    </Page.RenderTransform>
-
-    <Page.Triggers>
-        <EventTrigger RoutedEvent="Page.Loaded">
-            <BeginStoryboard Storyboard="{StaticResource PageLoadAnim}" />
-        </EventTrigger>
-    </Page.Triggers>
     <Page.Resources>
+
+        <Storyboard x:Key="TransitionIn">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="Opacity">
+                <DiscreteDoubleKeyFrame KeyTime="0" Value="0" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="1">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <ExponentialEase Exponent="6" />
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(RenderTransform).X">
+                <DiscreteDoubleKeyFrame KeyTime="0" Value="30" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <ExponentialEase Exponent="6" />
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="TransitionOut">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="Opacity">
+                <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="0">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <ExponentialEase Exponent="8" />
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
         <converters:BooleanToObjectConverter x:Key="WindowMarginConverter" TrueObject="6,6,6,0" FalseObject="0"/>
         <CollectionViewSource x:Key="MailFolders" Source="{Binding FoldersExtended}"/>
         <CollectionViewSource x:Key="MessagesCollection" Source="{Binding MailMessageCollection}"/>
@@ -66,36 +85,17 @@
             </Setter>
         </Style>
         <converters1:MainMenuGroupStyleSelector x:Key="MainMenuGroupStyleSelector" NormalGroupStyle="{StaticResource NormalGroupStyle}" EmptyHeaderGroupStyle="{StaticResource EmptyHeaderGroupStyle}"/>
-
-        <Storyboard x:Key="TransitionIn">
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="Opacity">
-                <DiscreteDoubleKeyFrame KeyTime="0" Value="0" />
-                <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="1">
-                    <EasingDoubleKeyFrame.EasingFunction>
-                        <ExponentialEase Exponent="6" />
-                    </EasingDoubleKeyFrame.EasingFunction>
-                </EasingDoubleKeyFrame>
-            </DoubleAnimationUsingKeyFrames>
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(RenderTransform).X">
-                <DiscreteDoubleKeyFrame KeyTime="0" Value="30" />
-                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0">
-                    <EasingDoubleKeyFrame.EasingFunction>
-                        <ExponentialEase Exponent="6" />
-                    </EasingDoubleKeyFrame.EasingFunction>
-                </EasingDoubleKeyFrame>
-            </DoubleAnimationUsingKeyFrames>
-        </Storyboard>
-        <Storyboard x:Key="TransitionOut">
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="Opacity">
-                <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="0">
-                    <EasingDoubleKeyFrame.EasingFunction>
-                        <ExponentialEase Exponent="8" />
-                    </EasingDoubleKeyFrame.EasingFunction>
-                </EasingDoubleKeyFrame>
-            </DoubleAnimationUsingKeyFrames>
-        </Storyboard>
     </Page.Resources>
 
+    <Page.RenderTransform>
+        <TranslateTransform />
+    </Page.RenderTransform>
+
+    <Page.Triggers>
+        <EventTrigger RoutedEvent="Page.Loaded">
+            <BeginStoryboard Storyboard="{StaticResource PageLoadAnim}" />
+        </EventTrigger>
+    </Page.Triggers>
 
     <Grid>
         <Grid Visibility="{Binding IsWorking, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=True}">
@@ -151,6 +151,7 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
+                
                 <!--Эту пизду сделать в гриде что бы растягивалось нормально-->
                 <!--<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                 <Button Style="{StaticResource HighlightedButtonStyle}" Content="Test" Command="{Binding OkCommand}"  Margin="0,0,10,0" Width="150" Height="20"/>
@@ -160,25 +161,63 @@
                                       HintStyle="{StaticResource TextBoxHintStyle}"
                                       TextChanged="LocalSearchBox_TextChanged" FontSize="12"/>
             </StackPanel>-->
-                <ListBox Grid.Row="1" x:Name="MessagesListBox"
-                     Visibility="{Binding IsMessagesLoading, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=True}"
-                     ItemsSource="{Binding Source={StaticResource MessagesCollection}}"
-                     Style="{StaticResource CommonListBoxStyle}"
-                     Foreground="{DynamicResource ForegroundBrush}"
-                     ItemContainerStyle="{StaticResource AudioListBoxItemStyle}"
-                     ItemTemplate="{StaticResource MessageItemTemplate}"
-                     VirtualizingStackPanel.ScrollUnit="Pixel" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-                    <ListBox.RenderTransform>
-                        <TranslateTransform />
-                    </ListBox.RenderTransform>
-                    <i:Interaction.Behaviors>
-                        <behaviours:TransitionBehaviour Transition="{StaticResource AudioLoadAnim}" TransitionDelay="40" />
-                    </i:Interaction.Behaviors>
-                </ListBox>
-                <StackPanel Grid.Row="1" Visibility="{Binding IsMessagesLoading, Converter={StaticResource BoolToVisibilityConverter}}" VerticalAlignment="Center" Margin="0,0,0,0" >
-                    <TextBlock Text="{x:Static localization:MainResources.WaitMessage}" FontSize="22" HorizontalAlignment="Center" FontWeight="Light" Foreground="{DynamicResource ForegroundBrush}"/>
-                    <ProgressBar Style="{StaticResource CommonProgressBarStyle}" IsIndeterminate="{Binding IsMessagesLoading}"/>
-                </StackPanel>
+                <Grid Grid.Row="1" Visibility="{Binding IsMessageFormVisible, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=True}">
+                    <ListBox x:Name="MessagesListBox"
+                             Visibility="{Binding IsMessagesLoading, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=True}"
+                             ItemsSource="{Binding Source={StaticResource MessagesCollection}}"
+                             Style="{StaticResource CommonListBoxStyle}"
+                             Foreground="{DynamicResource ForegroundBrush}"
+                             ItemContainerStyle="{StaticResource AudioListBoxItemStyle}"
+                             ItemTemplate="{StaticResource MessageItemTemplate}"
+                             VirtualizingStackPanel.ScrollUnit="Pixel" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                        <ListBox.RenderTransform>
+                            <TranslateTransform />
+                        </ListBox.RenderTransform>
+                        <i:Interaction.Behaviors>
+                            <behaviours:TransitionBehaviour Transition="{StaticResource AudioLoadAnim}" TransitionDelay="40" />
+                        </i:Interaction.Behaviors>
+                    </ListBox>
+                    <StackPanel Visibility="{Binding IsMessagesLoading, Converter={StaticResource BoolToVisibilityConverter}}" VerticalAlignment="Center" Margin="0,0,0,0" >
+                        <TextBlock Text="{x:Static localization:MainResources.WaitMessage}" FontSize="22" HorizontalAlignment="Center" FontWeight="Light" Foreground="{DynamicResource ForegroundBrush}"/>
+                        <ProgressBar Style="{StaticResource CommonProgressBarStyle}" IsIndeterminate="{Binding IsMessagesLoading}"/>
+                    </StackPanel>
+                </Grid>
+
+                <Grid Grid.Row="1" Visibility="{Binding IsMessageFormVisible, Converter={StaticResource BoolToVisibilityConverter}}">
+                    <!--<i:Interaction.Behaviors>
+                        <behaviours:VisibilityTransitionBehaviour
+                            Value="{Binding IsMessageFormVisible, Converter={StaticResource BoolToVisibilityConverter}}"
+                            AnimationIn="{StaticResource TransitionIn}" AnimationOut="{StaticResource TransitionOut}" />
+                    </i:Interaction.Behaviors>-->
+                    <Grid Margin="10,0,10,10" Visibility="{Binding IsMessageLoading, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=True}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="25"/>
+                            <RowDefinition Height="25"/>
+                            <RowDefinition Height="25"/>
+                            <RowDefinition/>
+                            <RowDefinition Height="30"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" Text="{Binding Message.Subject}" FontSize="22" HorizontalAlignment="Left" FontWeight="Light" Foreground="{DynamicResource ForegroundBrush}"/>
+                        <TextBlock Grid.Row="1" Text="{Binding Message.From}" FontSize="18" HorizontalAlignment="Left" FontWeight="Light" Foreground="{DynamicResource ForegroundBrush}"/>
+                        <TextBlock Grid.Row="2" Text="{Binding Message.To.AsString}" FontSize="18" HorizontalAlignment="Left" FontWeight="Light" Foreground="{DynamicResource ForegroundBrush}"/>
+                        <TextBlock Grid.Row="3" Text="{Binding Message.DateReceived}" FontSize="18" HorizontalAlignment="Left" FontWeight="Light" Foreground="{DynamicResource ForegroundBrush}"/>
+                        <TextBox Grid.Row="4" Text="{Binding Message.BodyPlainText}" Foreground="{DynamicResource ForegroundBrush}"
+                                 ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                                 ScrollViewer.VerticalScrollBarVisibility="Auto" 
+                                 Style="{StaticResource CommonTextBoxStyle}" />
+                        <StackPanel Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,5,0,0">
+                            <Button Content="Ответить" Padding="23,3" Margin="0,0,10,0"
+                                    Style="{StaticResource HighlightedButtonStyle}" Command="{Binding CopyCommand}" />
+                            <Button Content="Закрыть" Padding="23,3" Style="{StaticResource CommonButtonStyle}"
+                                    Command="{Binding CloseMessageCommand}" />
+                        </StackPanel>
+                    </Grid>
+                    <StackPanel Visibility="{Binding IsMessageLoading, Converter={StaticResource BoolToVisibilityConverter}}" VerticalAlignment="Center" Margin="0,0,0,0" >
+                        <TextBlock Text="{x:Static localization:MainResources.WaitMessage}" FontSize="22" HorizontalAlignment="Center" FontWeight="Light" Foreground="{DynamicResource ForegroundBrush}"/>
+                        <ProgressBar Style="{StaticResource CommonProgressBarStyle}" IsIndeterminate="{Binding IsMessageLoading}"/>
+                    </StackPanel>
+                </Grid>
             </Grid>
             <Rectangle Width="1" Grid.Column="1" HorizontalAlignment="Left" Fill="{DynamicResource MainBackgroundSplitterBrush}" SnapsToDevicePixels="True" Margin="-1,0,0,0"/>
         </Grid>

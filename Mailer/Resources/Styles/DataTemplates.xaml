@@ -30,6 +30,9 @@
                     <BeginStoryboard Storyboard="{StaticResource AudioLoadAnim}" />
                 </EventTrigger>
             </Button.Triggers>
+            <Button.InputBindings>
+                <MouseBinding Gesture="LeftClick"  Command="{Binding DataContext.ReadEmailCommand, RelativeSource={RelativeSource AncestorType=Page}}" CommandParameter="{Binding}"/>
+            </Button.InputBindings>
             <Grid Background="Transparent" Name="RootGrid" VerticalAlignment="Center">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="10"/>
