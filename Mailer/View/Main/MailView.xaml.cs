@@ -1,5 +1,9 @@
-﻿using System.Windows.Controls;
+﻿using System;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
 using Mailer.Controls;
+using Mailer.UI.Extensions;
 using Mailer.ViewModel.Main;
 
 namespace Mailer.View.Main
@@ -10,6 +14,7 @@ namespace Mailer.View.Main
     public partial class MailView : PageBase
     {
         private readonly MailViewModel _viewModel;
+        private bool needScrollToEnd = true;
 
         public MailView()
         {
@@ -18,8 +23,21 @@ namespace Mailer.View.Main
             DataContext = _viewModel;
         }
 
-        private void LocalSearchBox_TextChanged(object sender, TextChangedEventArgs e)
+
+        private void MessagesListBox_OnScrollChanged(object sender, ScrollChangedEventArgs e)
         {
+            var scrollViewer = VisualTreeHelperExtensions.GetDescendantByType((ListBox)sender, typeof(ScrollViewer)) as ScrollViewer;
+            if (scrollViewer.VerticalOffset == scrollViewer.ScrollableHeight)
+            {
+                _viewModel.IsLoadMoreButtonVisible = true;
+                scrollViewer.PageDown();
+            }
+            else
+            {
+                if (_viewModel.IsLoadMoreButtonVisible)
+                    scrollViewer.ScrollToVerticalOffset(scrollViewer.VerticalOffset - 50);
+                _viewModel.IsLoadMoreButtonVisible = false;
+            }
         }
     }
 }

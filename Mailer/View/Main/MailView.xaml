@@ -163,7 +163,7 @@
                 <TextBlock Text="Last refresh: 5 mins ago" FontSize="14" Foreground="{DynamicResource ForegroundBrush}"/>
             </StackPanel>-->
             </StackPanel>
-            <Grid Grid.Column="1" Margin="0,35,0,0">
+            <Grid Grid.Column="1" Margin="0,35,10,0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition />
@@ -180,7 +180,12 @@
             </StackPanel>-->
                 <Grid Grid.Row="1"
                       Visibility="{Binding IsMessageFormVisible, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=True}">
-                    <ListBox x:Name="MessagesListBox"
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <ListBox Grid.Row="0" x:Name="MessagesListBox"
                              Visibility="{Binding IsMessagesLoading, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=True}"
                              ItemsSource="{Binding Source={StaticResource MessagesCollection}}"
                              Style="{StaticResource CommonListBoxStyle}"
@@ -188,33 +193,32 @@
                              ItemContainerStyle="{StaticResource AudioListBoxItemStyle}"
                              ItemTemplate="{StaticResource MessageItemTemplate}"
                              VirtualizingStackPanel.ScrollUnit="Pixel"
+                             ScrollViewer.ScrollChanged="MessagesListBox_OnScrollChanged"
                              ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-                        <ListBox.RenderTransform>
-                            <TranslateTransform />
-                        </ListBox.RenderTransform>
-                        <i:Interaction.Behaviors>
-                            <behaviours:TransitionBehaviour Transition="{StaticResource AudioLoadAnim}"
+                            <ListBox.RenderTransform>
+                                <TranslateTransform />
+                            </ListBox.RenderTransform>
+                            <i:Interaction.Behaviors>
+                                <behaviours:TransitionBehaviour Transition="{StaticResource AudioLoadAnim}"
                                                             TransitionDelay="40" />
-                        </i:Interaction.Behaviors>
-                    </ListBox>
-                    <StackPanel
+                            </i:Interaction.Behaviors>
+                        </ListBox>
+                        <StackPanel Grid.Row="0"
                         Visibility="{Binding IsMessagesLoading, Converter={StaticResource BoolToVisibilityConverter}}"
                         VerticalAlignment="Center" Margin="0,0,0,0">
-                        <TextBlock Text="{x:Static localization:MainResources.WaitMessage}" FontSize="22"
+                            <TextBlock Text="{x:Static localization:MainResources.WaitMessage}" FontSize="22"
                                    HorizontalAlignment="Center" FontWeight="Light"
                                    Foreground="{DynamicResource ForegroundBrush}" />
-                        <ProgressBar Style="{StaticResource CommonProgressBarStyle}"
+                            <ProgressBar Style="{StaticResource CommonProgressBarStyle}"
                                      IsIndeterminate="{Binding IsMessagesLoading}" />
-                    </StackPanel>
+                        </StackPanel>
+                        <Button Grid.Row="1" Style="{StaticResource HighlightedButtonStyle}" Visibility="{Binding IsLoadMoreButtonVisible, Converter={StaticResource BoolToVisibilityConverter}}" Content="Load more" 
+                            Command="{Binding LoadMoreCommand}"  Margin="0,10,0,10" Width="150" Height="25" VerticalAlignment="Bottom"/>
+                    </Grid>
                 </Grid>
 
                 <Grid Grid.Row="1"
                       Visibility="{Binding IsMessageFormVisible, Converter={StaticResource BoolToVisibilityConverter}}">
-                    <!--<i:Interaction.Behaviors>
-                        <behaviours:VisibilityTransitionBehaviour
-                            Value="{Binding IsMessageFormVisible, Converter={StaticResource BoolToVisibilityConverter}}"
-                            AnimationIn="{StaticResource TransitionIn}" AnimationOut="{StaticResource TransitionOut}" />
-                    </i:Interaction.Behaviors>-->
                     <Grid Margin="10,0,10,10"
                           Visibility="{Binding IsMessageLoading, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=True}">
                         <Grid.RowDefinitions>

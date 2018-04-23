@@ -23,6 +23,7 @@ namespace Mailer.ViewModel.Main
         private bool _isMessagesLoading;
         private MailMessage _message;
         private int _selectedFolder;
+        private bool _isLoadMoreButtonVisible;
 
         public MailViewModel()
         {
@@ -37,7 +38,6 @@ namespace Mailer.ViewModel.Main
         public RelayCommand<FolderExtended> DeleteFolderCommand { get; private set; }
         public RelayCommand<MailMessage> ReadEmailCommand { get; private set; }
         public RelayCommand CloseMessageCommand { get; private set; }
-
         public int SelectedFolder
         {
             get => _selectedFolder;
@@ -82,6 +82,12 @@ namespace Mailer.ViewModel.Main
         {
             get => _message;
             set => Set(ref _message, value);
+        }
+
+        public bool IsLoadMoreButtonVisible
+        {
+            get => _isLoadMoreButtonVisible;
+            set => Set(ref _isLoadMoreButtonVisible, value);
         }
 
         public MailMessageCollection MailMessageCollection => _foldersExtended == null
