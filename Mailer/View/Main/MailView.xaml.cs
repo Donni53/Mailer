@@ -14,7 +14,6 @@ namespace Mailer.View.Main
     public partial class MailView : PageBase
     {
         private readonly MailViewModel _viewModel;
-        private bool needScrollToEnd = true;
 
         public MailView()
         {

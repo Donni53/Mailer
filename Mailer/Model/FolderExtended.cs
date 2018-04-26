@@ -1,4 +1,5 @@
-﻿using MailBee.Mime;
+﻿using MailBee.ImapMail;
+using MailBee.Mime;
 
 namespace Mailer.Model
 {
@@ -32,13 +33,13 @@ namespace Mailer.Model
         public int MessagesCount { get; set; }
         public int UnreadedMessagesCount { get; set; }
         public MessagesRange Range { get; set; }
-        public MailMessageCollection MailMessageCollection { get; set; }
+        public EnvelopeCollection EnvelopeCollection { get; set; }
 
-        public MailMessageCollection MailMessageCollectionReversed
+        public EnvelopeCollection EnvelopeCollectionReversed
         {
             get
             {
-                var tmp = MailMessageCollection;
+                var tmp = EnvelopeCollection;
                 tmp.Reverse();
                 return tmp;
             }

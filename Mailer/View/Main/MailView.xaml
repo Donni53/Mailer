@@ -46,7 +46,7 @@
         </Storyboard>
         <converters:BooleanToObjectConverter x:Key="WindowMarginConverter" TrueObject="6,6,6,0" FalseObject="0" />
         <CollectionViewSource x:Key="MailFolders" Source="{Binding FoldersExtended}" />
-        <CollectionViewSource x:Key="MessagesCollection" Source="{Binding MailMessageCollection}" />
+        <CollectionViewSource x:Key="EnvelopeCollection" Source="{Binding MailEnvelopeCollection}" />
 
         <Style x:Key="NormalGroupStyle" TargetType="{x:Type GroupItem}">
             <Setter Property="Margin" Value="0,0,0,0" />
@@ -187,7 +187,7 @@
                         </Grid.RowDefinitions>
                         <ListBox Grid.Row="0" x:Name="MessagesListBox"
                              Visibility="{Binding IsMessagesLoading, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=True}"
-                             ItemsSource="{Binding Source={StaticResource MessagesCollection}}"
+                             ItemsSource="{Binding Source={StaticResource EnvelopeCollection}}"
                              Style="{StaticResource CommonListBoxStyle}"
                              Foreground="{DynamicResource ForegroundBrush}"
                              ItemContainerStyle="{StaticResource AudioListBoxItemStyle}"

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.SQLite;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
@@ -22,6 +23,7 @@ namespace Mailer
     {
         public static readonly string Root = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
         private NotifyIcon _trayIcon;
+        
 
         private void App_OnStartup(object sender, StartupEventArgs e)
         {

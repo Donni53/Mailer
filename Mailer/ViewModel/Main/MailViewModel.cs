@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Common;
+using System.Data.SQLite;
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
 using GalaSoft.MvvmLight.Command;
@@ -36,7 +39,7 @@ namespace Mailer.ViewModel.Main
         public RelayCommand GoToSettingsCommand { get; private set; }
         public RelayCommand AddFolderCommand { get; private set; }
         public RelayCommand<FolderExtended> DeleteFolderCommand { get; private set; }
-        public RelayCommand<MailMessage> ReadEmailCommand { get; private set; }
+        public RelayCommand<Envelope> ReadEmailCommand { get; private set; }
         public RelayCommand CloseMessageCommand { get; private set; }
         public int SelectedFolder
         {
@@ -90,9 +93,9 @@ namespace Mailer.ViewModel.Main
             set => Set(ref _isLoadMoreButtonVisible, value);
         }
 
-        public MailMessageCollection MailMessageCollection => _foldersExtended == null
+        public EnvelopeCollection MailEnvelopeCollection => _foldersExtended == null
             ? null
-            : FoldersExtended[SelectedFolder].MailMessageCollectionReversed;
+            : FoldersExtended[SelectedFolder].EnvelopeCollectionReversed;
 
         private void InitializeCommands()
         {
@@ -105,7 +108,7 @@ namespace Mailer.ViewModel.Main
             });
             AddFolderCommand = new RelayCommand(CreateFolder);
             DeleteFolderCommand = new RelayCommand<FolderExtended>(DeleteFolder);
-            ReadEmailCommand = new RelayCommand<MailMessage>(ReadEmail);
+            ReadEmailCommand = new RelayCommand<Envelope>(ReadEmail);
             CloseMessageCommand = new RelayCommand(CloseMessage);
         }
 
@@ -133,11 +136,12 @@ namespace Mailer.ViewModel.Main
                     : ViewModelLocator.ImapClient.MessageCount;
                 int firstIndex = ViewModelLocator.ImapClient.MessageCount - msgCount + 1;
                 int lastIndex = ViewModelLocator.ImapClient.MessageCount;
-                FoldersExtended[folderIndex].MailMessageCollection =
-                    await ViewModelLocator.ImapClient.DownloadMessageHeadersAsync(firstIndex + ":" + lastIndex, false);
-                //FoldersExtended[folderIndex].MailMessageCollection = await ViewModelLocator.ImapClient.DownloadMessageHeadersAsync(Imap.AllMessages, false);
-                //var test = FoldersExtended[0].;
-                RaisePropertyChanged("MailMessageCollection");
+                FoldersExtended[folderIndex].EnvelopeCollection =
+                    await ViewModelLocator.ImapClient.DownloadEnvelopesAsync(firstIndex + ":" + lastIndex, false,
+                        EnvelopeParts.BodyStructure | EnvelopeParts.MessagePreview | EnvelopeParts.InternalDate | EnvelopeParts.Flags | EnvelopeParts.Uid,
+                        1000);
+
+                RaisePropertyChanged("MailEnvelopeCollection");
             }
             catch (Exception e)
             {
@@ -185,17 +189,49 @@ namespace Mailer.ViewModel.Main
             LoadInfo();
         }
 
-        public async void ReadEmail(MailMessage message)
+        public async void ReadEmail(Envelope envelope)
         {
-            IsMessageLoading = true;
-            IsMessageFormVisible = true;
-            var fullMessage =
-                await ViewModelLocator.ImapClient.DownloadEntireMessageAsync(Convert.ToInt64(message.UidOnServer),
-                    true);
-            if (fullMessage.BodyPlainText == "")
-                fullMessage.MakePlainBodyFromHtmlBody();
-            Message = fullMessage;
-            IsMessageLoading = false;
+            try
+            {
+                string account = Domain.Settings.Instance.Accounts[Domain.Settings.Instance.SelectedAccount].ImapData.Login;
+                bool recordExists = false;
+                if (!File.Exists(ViewModelLocator.databaseName))
+                {
+                    SQLiteConnection.CreateFile(ViewModelLocator.databaseName);
+                }
+                var connection = new SQLiteConnection($"Data Source={ViewModelLocator.databaseName};");
+                connection.Open();
+                var command = new SQLiteCommand("SELECT name FROM sqlite_master WHERE type='table' ORDER BY name;", connection);
+                var reader = command.ExecuteReader();
+                foreach (DbDataRecord record in reader)
+                    if (account == (string) record["name"])
+                    {
+                        recordExists = true;
+                        break;
+                    }
+
+                if (!recordExists)
+                {
+                    command = new SQLiteCommand($"CREATE TABLE {account} (id INTEGER PRIMARY KEY, value TEXT);", connection);
+                    command.ExecuteNonQuery();
+                }
+                connection.Close();
+
+
+                IsMessageLoading = true;
+                IsMessageFormVisible = true;
+                var fullMessage =
+                    await ViewModelLocator.ImapClient.DownloadEntireMessageAsync(Convert.ToInt64(envelope.Uid),
+                        true);
+                if (fullMessage.BodyPlainText == "")
+                    fullMessage.MakePlainBodyFromHtmlBody();
+                Message = fullMessage;
+                IsMessageLoading = false;
+            }
+            catch (Exception e)
+            {
+                LoggingService.Log(e);
+            }
         }
 
         public void CloseMessage()
