@@ -136,7 +136,7 @@ namespace Mailer.ViewModel.Main
                 FoldersExtended[folderIndex].MailMessageCollection =
                     await ViewModelLocator.ImapClient.DownloadMessageHeadersAsync(firstIndex + ":" + lastIndex, false);
                 //FoldersExtended[folderIndex].MailMessageCollection = await ViewModelLocator.ImapClient.DownloadMessageHeadersAsync(Imap.AllMessages, false);
-                //var test = FoldersExtended[0].MailMessageCollection[0];
+                //var test = FoldersExtended[0].;
                 RaisePropertyChanged("MailMessageCollection");
             }
             catch (Exception e)
