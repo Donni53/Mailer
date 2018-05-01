@@ -48,11 +48,11 @@
                     <ColumnDefinition MinWidth="330" />
                     <ColumnDefinition Width="150" />
                 </Grid.ColumnDefinitions>
-                <!--<CheckBox Grid.Column="1" IsChecked="{Binding EnableNotifications}" FontSize="12" Opacity="0.7"
+                <CheckBox Grid.Column="1" FontSize="12" Opacity="0.7"
                           Foreground="{DynamicResource ForegroundBrush}" />
-                <CheckBox Grid.Column="2" IsChecked="{Binding EnableNotifications}" FontSize="12" Opacity="0.7"
+                <CheckBox Grid.Column="2" FontSize="12" Opacity="0.7"
                           Foreground="{DynamicResource ForegroundBrush}" />
-                <ToggleButton Grid.Column="2" x:Name="ImportantButton" Style="{StaticResource ImportantButtonStyle}" Width="22" Height="20" Padding="4" Margin="5,0,0,0"
+                <!--<ToggleButton Grid.Column="2" x:Name="ImportantButton" Style="{StaticResource ImportantButtonStyle}" Width="22" Height="20" Padding="4" Margin="5,0,0,0"
                               IsChecked="{Binding IsMarked, Mode=TwoWay}" ToolTip="Отметить" SnapsToDevicePixels="False"/>-->
                 <TextBlock Grid.Column="3" ToolTipService.ShowDuration="12000" Text="{Binding MessagePreview.From.DisplayName}"
                            Foreground="{DynamicResource ForegroundBrush}" FontSize="13"
@@ -68,5 +68,10 @@
                            ToolTip="{Binding MessagePreview.DateReceived}" />
             </Grid>
         </Button>
+        <DataTemplate.Triggers>
+            <DataTrigger Binding="{Binding Flags.AllFlags[0], Mode=OneWay}" Value="/Seen">
+                <Setter Property="Opacity" Value="0.5" TargetName="RootElement"/>
+            </DataTrigger>
+        </DataTemplate.Triggers>
     </DataTemplate>
 </ResourceDictionary>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Common;
 using System.Data.SQLite;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using GalaSoft.MvvmLight.Command;
@@ -208,7 +209,8 @@ namespace Mailer.ViewModel.Main
             {
                 var message = await LoadEmail(envelope);
                 Message = message;
-                
+                //envelope.Flags.AllFlags[0];
+                //envelope.Flags.AllFlags.Contains()
                 /*var account = Md5Helper.Md5(Domain.Settings.Instance.Accounts[Domain.Settings.Instance.SelectedAccount].ImapData.Login);
 
                 if (DatabaseService.DatabaseExists(ViewModelLocator.databaseName))

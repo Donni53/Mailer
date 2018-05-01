@@ -138,6 +138,7 @@
     <Compile Include="Messages\NavigateToPageMessage.cs" />
     <Compile Include="Model\Account.cs" />
     <Compile Include="Model\ColorScheme.cs" />
+    <Compile Include="Model\EnvelopeWrapper.cs" />
     <Compile Include="Model\FolderExtended.cs" />
     <Compile Include="Model\ImapData.cs" />
     <Compile Include="Model\SettingsLanguage.cs" />
@@ -162,6 +163,7 @@
     <Compile Include="Services\LoggingService.cs" />
     <Compile Include="UI\Converters\BooleanToObjectConverter.cs" />
     <Compile Include="UI\Converters\BooleanToVisibilityConverter.cs" />
+    <Compile Include="UI\Converters\FlagsToBooleanConverter.cs" />
     <Compile Include="UI\Converters\InvertBooleanConverter.cs" />
     <Compile Include="UI\Converters\NullToBooleanConverter.cs" />
     <Compile Include="UI\Converters\NullToVisibilityConverter.cs" />
