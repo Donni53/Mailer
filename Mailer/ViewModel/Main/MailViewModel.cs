@@ -10,6 +10,7 @@ using GalaSoft.MvvmLight.Messaging;
 using MailBee.ImapMail;
 using MailBee.Mime;
 using Mailer.Controls;
+using Mailer.Helpers;
 using Mailer.Messages;
 using Mailer.Model;
 using Mailer.Services;
@@ -189,49 +190,54 @@ namespace Mailer.ViewModel.Main
             LoadInfo();
         }
 
+        public async Task<MailMessage> LoadEmail(Envelope envelope)
+        {
+            var fullMessage =
+                await ViewModelLocator.ImapClient.DownloadEntireMessageAsync(Convert.ToInt64(envelope.Uid),
+                    true);
+            if (fullMessage.BodyPlainText == "")
+                fullMessage.MakePlainBodyFromHtmlBody();
+            return fullMessage;
+        }
+
         public async void ReadEmail(Envelope envelope)
         {
+            IsMessageLoading = true;
+            IsMessageFormVisible = true;
             try
             {
-                string account = Domain.Settings.Instance.Accounts[Domain.Settings.Instance.SelectedAccount].ImapData.Login;
-                bool recordExists = false;
-                if (!File.Exists(ViewModelLocator.databaseName))
+                var message = await LoadEmail(envelope);
+                Message = message;
+                
+                /*var account = Md5Helper.Md5(Domain.Settings.Instance.Accounts[Domain.Settings.Instance.SelectedAccount].ImapData.Login);
+
+                if (DatabaseService.DatabaseExists(ViewModelLocator.databaseName))
                 {
-                    SQLiteConnection.CreateFile(ViewModelLocator.databaseName);
-                }
-                var connection = new SQLiteConnection($"Data Source={ViewModelLocator.databaseName};");
-                connection.Open();
-                var command = new SQLiteCommand("SELECT name FROM sqlite_master WHERE type='table' ORDER BY name;", connection);
-                var reader = command.ExecuteReader();
-                foreach (DbDataRecord record in reader)
-                    if (account == (string) record["name"])
+                    if (DatabaseService.TableExists(ViewModelLocator.databaseName, account))
                     {
-                        recordExists = true;
-                        break;
+                        //Пробуем найти запись
+                        //Нашли - кастуем к MailMessage, устанавливаем
+                        //Не нашли - качаем, устанавливаем, сохраняем в БД
+                        //var message = await LoadEmail(envelope);
+                        //Message = message;
+                        DatabaseService.ExecCommand(ViewModelLocator.databaseName, $"SELECT * FROM '{account}' WHERE id = {envelope.Uid};");
                     }
-
-                if (!recordExists)
-                {
-                    command = new SQLiteCommand($"CREATE TABLE {account} (id INTEGER PRIMARY KEY, value TEXT);", connection);
-                    command.ExecuteNonQuery();
                 }
-                connection.Close();
-
-
-                IsMessageLoading = true;
-                IsMessageFormVisible = true;
-                var fullMessage =
-                    await ViewModelLocator.ImapClient.DownloadEntireMessageAsync(Convert.ToInt64(envelope.Uid),
-                        true);
-                if (fullMessage.BodyPlainText == "")
-                    fullMessage.MakePlainBodyFromHtmlBody();
-                Message = fullMessage;
-                IsMessageLoading = false;
+                else
+                {
+                    DatabaseService.CreateDataBase(ViewModelLocator.databaseName);
+                    DatabaseService.ExecCommand(ViewModelLocator.databaseName, $"CREATE TABLE {account} (id INTEGER PRIMARY KEY, value BLOB);");
+                    var message = await LoadEmail(envelope);
+                    Message = message;
+                    //Добавить в БД
+                    DatabaseService.ExecCommand(ViewModelLocator.databaseName, $"INSERT INTO '{account}' ('id', 'value') VALUES ({message.UidOnServer}, {message});");
+                }*/
             }
             catch (Exception e)
             {
                 LoggingService.Log(e);
             }
+            IsMessageLoading = false;
         }
 
         public void CloseMessage()
