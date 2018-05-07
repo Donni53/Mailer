@@ -35,11 +35,11 @@
                     <Grid Name="RootGrid" Background="Transparent">
                         <Path x:Name="Icon" Fill="{DynamicResource ForegroundBrush}" Opacity="0.7" Stretch="Uniform"
                               HorizontalAlignment="Center" Margin="{TemplateBinding Padding}"
-                              Data="{StaticResource LikeIcon}" />
+                              Data="{StaticResource DislikeIcon}" />
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsChecked" Value="True">
-                            <Setter TargetName="Icon" Property="Data" Value="{StaticResource DislikeIcon}" />
+                            <Setter TargetName="Icon" Property="Data" Value="{StaticResource LikeIcon}" />
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="Icon" Property="Opacity" Value="1" />

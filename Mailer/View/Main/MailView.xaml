@@ -159,6 +159,7 @@
                                                         TransitionDelay="40" />
                     </i:Interaction.Behaviors>
                 </ListBox>
+                <Button Style="{StaticResource HighlightedButtonStyle}" Content="New message" Command="{Binding LoadMoreCommand}"  Margin="0,5,0,0" Height="30"/>
                 <!--<StackPanel Orientation="Vertical" VerticalAlignment="Bottom" Margin="10,12,5,0">
                 <TextBlock Text="Last refresh: 5 mins ago" FontSize="14" Foreground="{DynamicResource ForegroundBrush}"/>
             </StackPanel>-->
@@ -169,7 +170,19 @@
                     <RowDefinition />
                 </Grid.RowDefinitions>
 
-                <!--Эту пизду сделать в гриде что бы растягивалось нормально-->
+                <!--<Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="0" Style="{StaticResource HighlightedButtonStyle}" Content="Test" Command="{Binding OkCommand}"  Margin="0,0,10,0" Width="150" Height="30"/>
+                    <Button Grid.Column="1" Style="{StaticResource HighlightedButtonStyle}" Content="Test" Command="{Binding OkCommand}"  Margin="0,0,10,0" Width="150" Height="30"/>
+                    <Button Grid.Column="2" Style="{StaticResource HighlightedButtonStyle}" Content="Test" Command="{Binding OkCommand}"  Margin="0,0,10,0" Width="150" Height="30"/>
+                    <controls:TextBoxWithHint Grid.Column="3" x:Name="LocalSearchBox" Style="{StaticResource LocalSearchBoxStyle}" Padding="0,0,0,0" Hint="Enter text" Height="30" Width="150" Margin="0,0,20,0"
+                                              HintStyle="{StaticResource TextBoxHintStyle}" FontSize="12"/>
+                </Grid>-->
                 <!--<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                 <Button Style="{StaticResource HighlightedButtonStyle}" Content="Test" Command="{Binding OkCommand}"  Margin="0,0,10,0" Width="150" Height="20"/>
                 <Button Style="{StaticResource HighlightedButtonStyle}" Content="Test" Command="{Binding OkCommand}"  Margin="0,0,10,0" Width="150" Height="20"/>
@@ -213,7 +226,7 @@
                                      IsIndeterminate="{Binding IsMessagesLoading}" />
                         </StackPanel>
                         <Button Grid.Row="1" Style="{StaticResource HighlightedButtonStyle}" Visibility="{Binding IsLoadMoreButtonVisible, Converter={StaticResource BoolToVisibilityConverter}}" Content="Load more" 
-                            Command="{Binding LoadMoreCommand}"  Margin="0,10,0,10" Width="150" Height="25" VerticalAlignment="Bottom"/>
+                            Command="{Binding LoadMoreCommand}" CommandParameter="{Binding SelectedFolder}"  Margin="0,10,0,10" Width="150" Height="25" VerticalAlignment="Bottom"/>
                     </Grid>
                 </Grid>
 

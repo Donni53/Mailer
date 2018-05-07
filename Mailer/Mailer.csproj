@@ -143,6 +143,7 @@
     <Compile Include="Model\ImapData.cs" />
     <Compile Include="Model\SettingsLanguage.cs" />
     <Compile Include="Model\SmtpData.cs" />
+    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Resources\Localization\ErrorResources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

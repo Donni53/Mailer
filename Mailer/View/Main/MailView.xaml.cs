@@ -28,14 +28,14 @@ namespace Mailer.View.Main
             var scrollViewer = VisualTreeHelperExtensions.GetDescendantByType((ListBox)sender, typeof(ScrollViewer)) as ScrollViewer;
             if (scrollViewer.VerticalOffset == scrollViewer.ScrollableHeight)
             {
-                _viewModel.IsLoadMoreButtonVisible = true;
+                _viewModel.AtListBottom = true;
                 scrollViewer.PageDown();
             }
             else
             {
-                if (_viewModel.IsLoadMoreButtonVisible)
+                if (_viewModel.AtListBottom)
                     scrollViewer.ScrollToVerticalOffset(scrollViewer.VerticalOffset - 50);
-                _viewModel.IsLoadMoreButtonVisible = false;
+                _viewModel.AtListBottom = false;
             }
         }
     }
