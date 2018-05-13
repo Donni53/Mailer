@@ -28,6 +28,9 @@ namespace Mailer.ViewModel.Accounts
         public string UserName { get; set; }
         public string ImapServer { get; set; }
         public bool ImapSsl { get; set; }
+        public string SmtpAddress { get; set; }
+        public bool SmtpSsl { get; set; }
+        public bool SmtpAuth { get; set; }
         public bool WrongFormat { get; set; }
         public bool WrongCredentials { get; set; }
         public bool NewAccount { get; set; }
@@ -61,7 +64,10 @@ namespace Mailer.ViewModel.Accounts
 
         private void InitializeCommands()
         {
-            CloseCommand = new RelayCommand(Close);
+            CloseCommand = new RelayCommand(() =>
+            {
+                ViewModelLocator.MainViewModel.GoBackCommand.Execute(null);
+            });
 
             SaveCommand = new RelayCommand(Save);
         }
@@ -72,8 +78,9 @@ namespace Mailer.ViewModel.Accounts
             IsError = false;
             try
             {
-                var imapData = new ImapData(Login, Password, ImapServer, true);
-                await AccountManager.ImapAuth(UserName, imapData, NewAccount, Id);
+                var imapData = new ImapData(ImapServer, true);
+                var smtpData = new SmtpData(SmtpAddress, SmtpSsl, SmtpAuth);
+                await AccountManager.ImapAuth(new Account(UserName, Login, Password, imapData, smtpData), NewAccount, Id);
                 Messenger.Default.Send(new NavigateToPageMessage
                 {
                     Page = "/Main.MailView"
@@ -94,11 +101,6 @@ namespace Mailer.ViewModel.Accounts
         {
             /*if (Application.Current.MainWindow.GetVisualDescendents().FirstOrDefault(c => c is FlyoutControl) is FlyoutControl flyout)
                 flyout.Close();*/
-        }
-
-        private void Close()
-        {
-            ViewModelLocator.MainViewModel.GoBackCommand.Execute(null);
         }
     }
 }

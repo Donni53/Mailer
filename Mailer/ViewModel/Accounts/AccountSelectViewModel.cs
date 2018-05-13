@@ -68,10 +68,7 @@ namespace Mailer.ViewModel.Accounts
             IsError = false;
             try
             {
-                await AccountManager.ImapAuth(
-                    Domain.Settings.Instance.Accounts[SelectedAccount].UserName,
-                    Domain.Settings.Instance.Accounts[SelectedAccount].ImapData,
-                    false, -1);
+                await AccountManager.ImapAuth( Domain.Settings.Instance.Accounts[SelectedAccount], false, -1);
                 Domain.Settings.Instance.SelectedAccount = SelectedAccount;
                 Domain.Settings.Instance.Save();
                 Messenger.Default.Send(new NavigateToPageMessage
@@ -96,6 +93,9 @@ namespace Mailer.ViewModel.Accounts
             ViewModelLocator.AccountSetupViewModel.Password = "";
             ViewModelLocator.AccountSetupViewModel.ImapServer = "";
             ViewModelLocator.AccountSetupViewModel.ImapSsl = false;
+            ViewModelLocator.AccountSetupViewModel.SmtpAddress = "";
+            ViewModelLocator.AccountSetupViewModel.SmtpSsl = false;
+            ViewModelLocator.AccountSetupViewModel.SmtpAuth = false;
             ViewModelLocator.AccountSetupViewModel.NewAccount = true;
             ViewModelLocator.AccountSetupViewModel.Id = -1;
             Messenger.Default.Send(new NavigateToPageMessage
@@ -110,13 +110,19 @@ namespace Mailer.ViewModel.Accounts
             ViewModelLocator.AccountSetupViewModel.UserName =
                 Domain.Settings.Instance.Accounts[SelectedAccount].UserName;
             ViewModelLocator.AccountSetupViewModel.Login =
-                Domain.Settings.Instance.Accounts[SelectedAccount].ImapData.Login;
+                Domain.Settings.Instance.Accounts[SelectedAccount].Email;
             ViewModelLocator.AccountSetupViewModel.Password =
-                Domain.Settings.Instance.Accounts[SelectedAccount].ImapData.Password;
+                Domain.Settings.Instance.Accounts[SelectedAccount].Password;
             ViewModelLocator.AccountSetupViewModel.ImapServer =
                 Domain.Settings.Instance.Accounts[SelectedAccount].ImapData.Address;
             ViewModelLocator.AccountSetupViewModel.ImapSsl =
                 Domain.Settings.Instance.Accounts[SelectedAccount].ImapData.UseSsl;
+            ViewModelLocator.AccountSetupViewModel.SmtpAddress =
+                Domain.Settings.Instance.Accounts[SelectedAccount].SmtpData.Address;
+            ViewModelLocator.AccountSetupViewModel.SmtpSsl =
+                Domain.Settings.Instance.Accounts[SelectedAccount].SmtpData.UseSsl;
+            ViewModelLocator.AccountSetupViewModel.SmtpAuth =
+                Domain.Settings.Instance.Accounts[SelectedAccount].SmtpData.Auth;
             ViewModelLocator.AccountSetupViewModel.NewAccount = false;
             ViewModelLocator.AccountSetupViewModel.Id = SelectedAccount;
             Messenger.Default.Send(new NavigateToPageMessage

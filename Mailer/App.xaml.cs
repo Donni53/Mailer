@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Diagnostics;
 using System.Globalization;
@@ -11,6 +12,9 @@ using System.Windows.Threading;
 using GalaSoft.MvvmLight.Threading;
 using Mailer.Controls;
 using Mailer.Domain;
+using Mailer.Model;
+using Mailer.Services;
+using Mailer.Services.Mailer.Database;
 using Mailer.View.Flyouts;
 using Application = System.Windows.Application;
 
@@ -66,16 +70,29 @@ namespace Mailer
                     Resources.MergedDictionaries[1].Source = new Uri("/Resources/Themes/Dark.xaml", UriKind.Relative);
                     break;
             }
+
+            var dataBase = new DataBase();
+            /*DataBase dataBase = new DataBase();
+#pragma warning disable CS4014
+            dataBase.AddUser("callofduty926@mail.ru", new Contact("Sanya", "sanya@mail.ru", "Sanya"));
+            dataBase.AddUser("callofduty926@mail.ru", new Contact("Vanya", "vanya@mail.ru", "Vanya"));
+            dataBase.AddUser("callofduty926@mail.ru", new Contact("Anya", "anya@mail.ru", "Anya"));
+            dataBase.AddUser("callofduty927@mail.ru", new Contact("Danya", "danya@mail.ru", "Danya"));
+
+            //var contacts = dataBase.LoadUsers("callofduty926@mail.ru");
+
+#pragma warning restore CS4014*/
+
         }
 
         private void App_OnDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
         {
+            LoggingService.Log(e.Exception);
             Dispatcher.Invoke(async () =>
             {
                 e.Handled = true;
 
-                var flyout = new FlyoutControl();
-                flyout.FlyoutContent = new CommonErrorView();
+                var flyout = new FlyoutControl {FlyoutContent = new CommonErrorView()};
                 var restart = (bool) await flyout.ShowAsync();
                 if (restart) Process.Start(ResourceAssembly.Location);
 

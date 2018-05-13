@@ -1,6 +1,9 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using GalaSoft.MvvmLight.Messaging;
-using MailBee.ImapMail;
 using Mailer.Domain;
 using Mailer.Messages;
 using Mailer.Model;
@@ -8,8 +11,16 @@ using Mailer.ViewModel;
 
 namespace Mailer.Services
 {
-    public static class AccountManager
+    public static class ImapService
     {
+
+        public static async Task ChangeFolder(string newFolder)
+        {
+            await ViewModelLocator.ImapClient.SelectFolderAsync(newFolder);
+        }
+
+
+        public static Account Account { get; set; }
         public static async Task ImapAuth(Account account, bool newAccount, int id)
         {
             await ViewModelLocator.ImapClient.ConnectAsync(account.ImapData.Address, account.ImapData.UseSsl ? 993 : 143);
@@ -28,6 +39,7 @@ namespace Mailer.Services
                 }
             }
 
+            Account = account;
             Settings.Instance.Save();
         }
 

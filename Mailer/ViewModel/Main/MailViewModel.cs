@@ -152,7 +152,7 @@ namespace Mailer.ViewModel.Main
 
         public async void ChangeFolder(int folderIndex)
         {
-            await ViewModelLocator.ImapClient.SelectFolderAsync(FoldersExtended[folderIndex].Name);
+            await ImapService.ChangeFolder(FoldersExtended[folderIndex].Name);
         }
 
         public async Task LoadMessages(int folderIndex)
@@ -236,11 +236,11 @@ namespace Mailer.ViewModel.Main
 
         public async void ReadEmail(EnvelopeWarpper envelope)
         {
-            IsMessageLoading = true;
+            /*IsMessageLoading = true;
             IsMessageFormVisible = true;
             try
             {
-                var messagefilenameMd5 = Md5Helper.Md5(Domain.Settings.Instance.Accounts[Domain.Settings.Instance.SelectedAccount].ImapData.Login + envelope.Uid);
+                var messagefilenameMd5 = Md5Helper.Md5(Domain.Settings.Instance.Accounts[Domain.Settings.Instance.SelectedAccount].Email + envelope.Uid);
                 var cacheFilePath = @"Cache\" + messagefilenameMd5 + ".xml";
                 if (File.Exists(cacheFilePath))
                 {
@@ -256,12 +256,13 @@ namespace Mailer.ViewModel.Main
                     Message = message;
                 }
                 envelope.IsUnseen = false;
+                FoldersExtended[SelectedFolder].UnreadedMessagesCount--s;
             }
             catch (Exception e)
             {
                 LoggingService.Log(e);
             }
-            IsMessageLoading = false;
+            IsMessageLoading = false;*/
         }
 
         public void CloseMessage()

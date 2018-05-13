@@ -44,6 +44,16 @@
             <CheckBox IsChecked="{Binding ImapSsl, Mode=TwoWay}"
                       Content="{x:Static localization:MainResources.AccountImapSsl}" FontSize="12" Opacity="0.7"
                       Margin="0,3,0,0" Foreground="{DynamicResource ForegroundBrush}" />
+            <TextBlock Text="{x:Static localization:MainResources.SmtpAddressTitle}" FontSize="12" Margin="0,10,0,0"
+                       Foreground="{DynamicResource ForegroundBrush}" />
+            <TextBox x:Name="SmtpAddressTextBox" Margin="0,3,0,0" Text="{Binding SmtpAddress, Mode=TwoWay}"
+                     Style="{StaticResource CommonTextBoxStyle}" Foreground="{DynamicResource ForegroundBrush}" />
+            <CheckBox IsChecked="{Binding SmtpSsl, Mode=TwoWay}"
+                      Content="{x:Static localization:MainResources.SmtpUseSslTitle}" FontSize="12" Opacity="0.7"
+                      Margin="0,3,0,0" Foreground="{DynamicResource ForegroundBrush}" />
+            <CheckBox IsChecked="{Binding SmtpAuth, Mode=TwoWay}"
+                      Content="{x:Static localization:MainResources.SmtpNeedAuth}" FontSize="12" Opacity="0.7"
+                      Margin="0,3,0,0" Foreground="{DynamicResource ForegroundBrush}" />
             <TextBlock Foreground="Red" Text="{Binding Error}" Margin="0,3,0,0"
                        Visibility="{Binding IsError, Converter={StaticResource NullToVisibilityConverter}}"
                        TextWrapping="Wrap" />

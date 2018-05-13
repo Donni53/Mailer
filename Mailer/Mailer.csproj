@@ -54,8 +54,8 @@
     <Reference Include="GalaSoft.MvvmLight.Platform, Version=5.4.1.0, Culture=neutral, PublicKeyToken=5f873c45e98af8a1, processorArchitecture=MSIL">
       <HintPath>..\packages\MvvmLightLibs.5.4.1\lib\net45\GalaSoft.MvvmLight.Platform.dll</HintPath>
     </Reference>
-    <Reference Include="GongSolutions.Wpf.DragDrop, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\gong-wpf-dragdrop.1.1.0\lib\net46\GongSolutions.Wpf.DragDrop.dll</HintPath>
+    <Reference Include="GongSolutions.WPF.DragDrop, Version=1.2.0.57, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\gong-wpf-dragdrop.1.2.0-alpha0057\lib\net46\GongSolutions.WPF.DragDrop.dll</HintPath>
     </Reference>
     <Reference Include="MailBee.NET, Version=11.2.0.590, Culture=neutral, PublicKeyToken=cd85b70fb26f9fc1, processorArchitecture=MSIL">
       <HintPath>..\packages\MailBee.NET.11.2.0\lib\net45\MailBee.NET.dll</HintPath>
@@ -67,7 +67,7 @@
       <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
-      <HintPath>..\packages\NLog.4.5.3\lib\net45\NLog.dll</HintPath>
+      <HintPath>..\packages\NLog.4.5.4\lib\net45\NLog.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -124,6 +124,7 @@
     <Compile Include="Controls\TextBoxWithHint.cs" />
     <Compile Include="Converters\MainMenuGroupStyleSelector.cs" />
     <Compile Include="Domain\Settings.cs" />
+    <Compile Include="Helpers\ByteConverters.cs" />
     <Compile Include="Helpers\DateTimeConverter.cs" />
     <Compile Include="Helpers\ImageAsyncHelper.cs" />
     <Compile Include="Helpers\LongRunningOperation.cs" />
@@ -138,6 +139,7 @@
     <Compile Include="Messages\NavigateToPageMessage.cs" />
     <Compile Include="Model\Account.cs" />
     <Compile Include="Model\ColorScheme.cs" />
+    <Compile Include="Model\Contact.cs" />
     <Compile Include="Model\EnvelopeWrapper.cs" />
     <Compile Include="Model\FolderExtended.cs" />
     <Compile Include="Model\ImapData.cs" />
@@ -160,7 +162,9 @@
       <DependentUpon>MainResources.resx</DependentUpon>
     </Compile>
     <Compile Include="Services\AccountManager.cs" />
+    <Compile Include="Services\DataBase.cs" />
     <Compile Include="Services\DatabaseService.cs" />
+    <Compile Include="Services\ImapService.cs" />
     <Compile Include="Services\LoggingService.cs" />
     <Compile Include="UI\Converters\BooleanToObjectConverter.cs" />
     <Compile Include="UI\Converters\BooleanToVisibilityConverter.cs" />
@@ -174,7 +178,6 @@
     <Compile Include="ViewModel\Accounts\AccountSelectViewModel.cs" />
     <Compile Include="ViewModel\Accounts\AccountSetupViewModel.cs" />
     <Compile Include="ViewModel\Flyouts\CreateFolderViewModel.cs" />
-    <Compile Include="ViewModel\Flyouts\SmtpSetupViewModel.cs" />
     <Compile Include="ViewModel\Main\MailViewModel.cs" />
     <Compile Include="ViewModel\Main\MainViewModel.cs" />
     <Compile Include="ViewModel\Main\TextEditorViewModel.cs" />
@@ -192,9 +195,6 @@
     </Compile>
     <Compile Include="View\Flyouts\CreateFolderView.xaml.cs">
       <DependentUpon>CreateFolderView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Flyouts\SmtpSetupView.xaml.cs">
-      <DependentUpon>SmtpSetupView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Main\MailView.xaml.cs">
       <DependentUpon>MailView.xaml</DependentUpon>
@@ -293,10 +293,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Flyouts\CreateFolderView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Flyouts\SmtpSetupView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -427,6 +423,12 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>MainResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <Content Include="NLog.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="NLog.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

@@ -16,81 +16,8 @@
                    d:DesignHeight="700" d:DesignWidth="1024"
                    Title="MailView">
     <Page.Resources>
-
-        <Storyboard x:Key="TransitionIn">
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="Opacity">
-                <DiscreteDoubleKeyFrame KeyTime="0" Value="0" />
-                <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="1">
-                    <EasingDoubleKeyFrame.EasingFunction>
-                        <ExponentialEase Exponent="6" />
-                    </EasingDoubleKeyFrame.EasingFunction>
-                </EasingDoubleKeyFrame>
-            </DoubleAnimationUsingKeyFrames>
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(RenderTransform).X">
-                <DiscreteDoubleKeyFrame KeyTime="0" Value="30" />
-                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0">
-                    <EasingDoubleKeyFrame.EasingFunction>
-                        <ExponentialEase Exponent="6" />
-                    </EasingDoubleKeyFrame.EasingFunction>
-                </EasingDoubleKeyFrame>
-            </DoubleAnimationUsingKeyFrames>
-        </Storyboard>
-        <Storyboard x:Key="TransitionOut">
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="Opacity">
-                <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="0">
-                    <EasingDoubleKeyFrame.EasingFunction>
-                        <ExponentialEase Exponent="8" />
-                    </EasingDoubleKeyFrame.EasingFunction>
-                </EasingDoubleKeyFrame>
-            </DoubleAnimationUsingKeyFrames>
-        </Storyboard>
-        <converters:BooleanToObjectConverter x:Key="WindowMarginConverter" TrueObject="6,6,6,0" FalseObject="0" />
         <CollectionViewSource x:Key="MailFolders" Source="{Binding FoldersExtended}" />
         <CollectionViewSource x:Key="EnvelopeCollection" Source="{Binding MailEnvelopeCollection}" />
-
-        <Style x:Key="NormalGroupStyle" TargetType="{x:Type GroupItem}">
-            <Setter Property="Margin" Value="0,0,0,0" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type GroupItem}">
-                        <Grid Margin="0,0,0,20">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition />
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition />
-                            </Grid.RowDefinitions>
-                            <Path Data="{Binding Items[0].GroupIcon}" Stretch="Uniform"
-                                  Fill="{DynamicResource SidebarForegroundBrush}" Height="8" Margin="17,1,-10,0"
-                                  Opacity="0.4" VerticalAlignment="Center"
-                                  Visibility="{Binding Items[0].GroupIcon, Converter={StaticResource NullToVisibilityConverter}}" />
-                            <TextBlock Grid.Column="1" FontWeight="SemiBold" Text="{Binding Path=Name}"
-                                       Margin="17,0,0,0" FontSize="12"
-                                       Foreground="{DynamicResource SidebarGroupForegroundBrush}" />
-                            <ItemsPresenter Grid.Row="1" Grid.ColumnSpan="2" Margin="0,5,0,0" />
-                        </Grid>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-        <Style x:Key="EmptyHeaderGroupStyle" TargetType="{x:Type GroupItem}">
-            <Setter Property="Margin" Value="0,0,0,0" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type GroupItem}">
-                        <Grid Margin="0,0,0,20">
-                            <ItemsPresenter Margin="0,0,0,0" />
-                        </Grid>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <converters1:MainMenuGroupStyleSelector x:Key="MainMenuGroupStyleSelector"
-                                                NormalGroupStyle="{StaticResource NormalGroupStyle}"
-                                                EmptyHeaderGroupStyle="{StaticResource EmptyHeaderGroupStyle}" />
     </Page.Resources>
 
     <Page.RenderTransform>
@@ -155,44 +82,27 @@
                          HorizontalContentAlignment="Stretch"
                          SelectedIndex="{Binding SelectedFolder}">
                     <i:Interaction.Behaviors>
-                        <behaviours:TransitionBehaviour Transition="{StaticResource MainMenuLoadAnim}"
-                                                        TransitionDelay="40" />
+                        <behaviours:TransitionBehaviour Transition="{StaticResource MainMenuLoadAnim}" TransitionDelay="40" />
                     </i:Interaction.Behaviors>
                 </ListBox>
                 <Button Style="{StaticResource HighlightedButtonStyle}" Content="New message" Command="{Binding LoadMoreCommand}"  Margin="0,5,0,0" Height="30"/>
-                <!--<StackPanel Orientation="Vertical" VerticalAlignment="Bottom" Margin="10,12,5,0">
-                <TextBlock Text="Last refresh: 5 mins ago" FontSize="14" Foreground="{DynamicResource ForegroundBrush}"/>
-            </StackPanel>-->
             </StackPanel>
-            <Grid Grid.Column="1" Margin="0,35,10,0">
+            <Grid Grid.Column="1" Margin="0,33,10,0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition />
                 </Grid.RowDefinitions>
 
-                <!--<Grid>
+                <Grid Grid.Row="0" Margin="27,0,0,0" Visibility="{Binding IsMessagesLoading, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=True}">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
+                        <ColumnDefinition Width="20" />
+                        <ColumnDefinition Width="200"/>
                     </Grid.ColumnDefinitions>
-                    <Button Grid.Column="0" Style="{StaticResource HighlightedButtonStyle}" Content="Test" Command="{Binding OkCommand}"  Margin="0,0,10,0" Width="150" Height="30"/>
-                    <Button Grid.Column="1" Style="{StaticResource HighlightedButtonStyle}" Content="Test" Command="{Binding OkCommand}"  Margin="0,0,10,0" Width="150" Height="30"/>
-                    <Button Grid.Column="2" Style="{StaticResource HighlightedButtonStyle}" Content="Test" Command="{Binding OkCommand}"  Margin="0,0,10,0" Width="150" Height="30"/>
-                    <controls:TextBoxWithHint Grid.Column="3" x:Name="LocalSearchBox" Style="{StaticResource LocalSearchBoxStyle}" Padding="0,0,0,0" Hint="Enter text" Height="30" Width="150" Margin="0,0,20,0"
-                                              HintStyle="{StaticResource TextBoxHintStyle}" FontSize="12"/>
-                </Grid>-->
-                <!--<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button Style="{StaticResource HighlightedButtonStyle}" Content="Test" Command="{Binding OkCommand}"  Margin="0,0,10,0" Width="150" Height="20"/>
-                <Button Style="{StaticResource HighlightedButtonStyle}" Content="Test" Command="{Binding OkCommand}"  Margin="0,0,10,0" Width="150" Height="20"/>
-                <Button Style="{StaticResource HighlightedButtonStyle}" Content="Test" Command="{Binding OkCommand}"  Margin="0,0,10,0" Width="150" Height="20"/>
-                <controls:TextBoxWithHint x:Name="LocalSearchBox" Style="{StaticResource LocalSearchBoxStyle}" Padding="0,0,0,0" Hint="Start typing" Height="20" Width="150" Margin="0,0,20,0"
-                                      HintStyle="{StaticResource TextBoxHintStyle}"
-                                      TextChanged="LocalSearchBox_TextChanged" FontSize="12"/>
-            </StackPanel>-->
-                <Grid Grid.Row="1"
-                      Visibility="{Binding IsMessageFormVisible, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=True}">
+                    <CheckBox Grid.Column="0" IsChecked="{Binding IsChecked, Mode=TwoWay}" FontSize="12" Opacity="0.7" Foreground="{DynamicResource ForegroundBrush}"
+                              VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,5,0"/>
+                    <TextBlock Grid.Column="1" Text="Mark as readed" FontSize="11" Opacity="0.7" Foreground="{DynamicResource ForegroundBrush}" FontWeight="SemiBold" />
+                </Grid>
+                <Grid Grid.Row="1">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition/>
@@ -212,13 +122,10 @@
                                 <TranslateTransform />
                             </ListBox.RenderTransform>
                             <i:Interaction.Behaviors>
-                                <behaviours:TransitionBehaviour Transition="{StaticResource AudioLoadAnim}"
-                                                            TransitionDelay="40" />
+                                <behaviours:TransitionBehaviour Transition="{StaticResource AudioLoadAnim}" TransitionDelay="40" />
                             </i:Interaction.Behaviors>
                         </ListBox>
-                        <StackPanel Grid.Row="0"
-                        Visibility="{Binding IsMessagesLoading, Converter={StaticResource BoolToVisibilityConverter}}"
-                        VerticalAlignment="Center" Margin="0,0,0,0">
+                        <StackPanel Grid.Row="0" Visibility="{Binding IsMessagesLoading, Converter={StaticResource BoolToVisibilityConverter}}" VerticalAlignment="Center" Margin="0,0,0,0">
                             <TextBlock Text="{x:Static localization:MainResources.WaitMessage}" FontSize="22"
                                    HorizontalAlignment="Center" FontWeight="Light"
                                    Foreground="{DynamicResource ForegroundBrush}" />
@@ -229,52 +136,7 @@
                             Command="{Binding LoadMoreCommand}" CommandParameter="{Binding SelectedFolder}"  Margin="0,10,0,10" Width="150" Height="25" VerticalAlignment="Bottom"/>
                     </Grid>
                 </Grid>
-
-                <Grid Grid.Row="1"
-                      Visibility="{Binding IsMessageFormVisible, Converter={StaticResource BoolToVisibilityConverter}}">
-                    <Grid Margin="10,0,10,10"
-                          Visibility="{Binding IsMessageLoading, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=True}">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="30" />
-                            <RowDefinition Height="25" />
-                            <RowDefinition Height="25" />
-                            <RowDefinition Height="25" />
-                            <RowDefinition />
-                            <RowDefinition Height="30" />
-                        </Grid.RowDefinitions>
-                        <TextBlock Grid.Row="0" Text="{Binding Message.Subject}" FontSize="22"
-                                   HorizontalAlignment="Left" FontWeight="Light"
-                                   Foreground="{DynamicResource ForegroundBrush}" />
-                        <TextBlock Grid.Row="1" Text="{Binding Message.From}" FontSize="18" HorizontalAlignment="Left"
-                                   FontWeight="Light" Foreground="{DynamicResource ForegroundBrush}" />
-                        <TextBlock Grid.Row="2" Text="{Binding Message.To.AsString}" FontSize="18"
-                                   HorizontalAlignment="Left" FontWeight="Light"
-                                   Foreground="{DynamicResource ForegroundBrush}" />
-                        <TextBlock Grid.Row="3" Text="{Binding Message.DateReceived}" FontSize="18"
-                                   HorizontalAlignment="Left" FontWeight="Light"
-                                   Foreground="{DynamicResource ForegroundBrush}" />
-                        <TextBox Grid.Row="4" Text="{Binding Message.BodyPlainText}"
-                                 Foreground="{DynamicResource ForegroundBrush}"
-                                 ScrollViewer.HorizontalScrollBarVisibility="Auto"
-                                 ScrollViewer.VerticalScrollBarVisibility="Auto"
-                                 Style="{StaticResource CommonTextBoxStyle}" />
-                        <StackPanel Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,5,0,0">
-                            <Button Content="Ответить" Padding="23,3" Margin="0,0,10,0"
-                                    Style="{StaticResource HighlightedButtonStyle}" Command="{Binding CopyCommand}" />
-                            <Button Content="Закрыть" Padding="23,3" Style="{StaticResource CommonButtonStyle}"
-                                    Command="{Binding CloseMessageCommand}" />
-                        </StackPanel>
-                    </Grid>
-                    <StackPanel
-                        Visibility="{Binding IsMessageLoading, Converter={StaticResource BoolToVisibilityConverter}}"
-                        VerticalAlignment="Center" Margin="0,0,0,0">
-                        <TextBlock Text="{x:Static localization:MainResources.WaitMessage}" FontSize="22"
-                                   HorizontalAlignment="Center" FontWeight="Light"
-                                   Foreground="{DynamicResource ForegroundBrush}" />
-                        <ProgressBar Style="{StaticResource CommonProgressBarStyle}"
-                                     IsIndeterminate="{Binding IsMessageLoading}" />
-                    </StackPanel>
-                </Grid>
+                
             </Grid>
             <Rectangle Width="1" Grid.Column="1" HorizontalAlignment="Left"
                        Fill="{DynamicResource MainBackgroundSplitterBrush}" SnapsToDevicePixels="True"

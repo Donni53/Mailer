@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Windows;
+using System.Windows.Media;
 using Mailer.Controls;
 using Mailer.Model;
 using Mailer.Resources.Localization;
@@ -59,6 +60,9 @@ namespace Mailer.Domain
         public int SelectedAccount { get; set; }
         public bool CustomBackground { get; set; }
         public string CustomBackgroundPath { get; set; }
+        public bool AutoReplie { get; set; }
+        public string AutoReplieText { get; set; }
+        public int SelectedImage { get; set; }
 
         public static void Load()
         {

@@ -56,7 +56,7 @@
                 <CheckBox Grid.Column="1" IsChecked="{Binding IsChecked, Mode=TwoWay}" FontSize="12" Opacity="0.7" Foreground="{DynamicResource ForegroundBrush}"
                           VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 <ToggleButton Grid.Column="2" x:Name="ImportantButton" Style="{StaticResource ImportantButtonStyle}" IsChecked="{Binding IsFlagged}"
-                              Width="22" Height="22" Padding="4" SnapsToDevicePixels="False" Margin="0,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                              Padding="4" SnapsToDevicePixels="False" Margin="0,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 <TextBlock Grid.Column="3" ToolTipService.ShowDuration="12000" Text="{Binding DisplayName}"
                            Foreground="{DynamicResource ForegroundBrush}" FontSize="13"
                            TextTrimming="CharacterEllipsis"
@@ -65,16 +65,25 @@
                            Foreground="{DynamicResource ForegroundBrush}" FontSize="13"
                            TextTrimming="CharacterEllipsis"
                            ToolTip="{Binding Subject}" />
-                <TextBlock Grid.Column="5" ToolTipService.ShowDuration="12000" Text="{Binding DateReceived}"
+                <TextBlock x:Name="DateReceived" Grid.Column="5" ToolTipService.ShowDuration="12000" Text="{Binding DateReceived}"
                            Foreground="{DynamicResource ForegroundBrush}" FontSize="13"
                            TextTrimming="CharacterEllipsis"
                            ToolTip="{Binding DateReceived}" />
+                <StackPanel x:Name="ToolBar" Grid.Column="5" Orientation="Horizontal" HorizontalAlignment="Right" Visibility="Hidden" Margin="0,0,15,0">
+                    <Button Style="{StaticResource InfoButtonStyle}" Command="{Binding EditMessageCommand}" HorizontalAlignment="Right"/>
+                    <Button Style="{StaticResource EditButtonStyle}" Command="{Binding EditMessageCommand}" HorizontalAlignment="Right"/>
+                    <Button Style="{StaticResource DeleteButtonStyle}" Command="{Binding DeleteMessageCommand}" HorizontalAlignment="Right"/>
+                </StackPanel>
             </Grid>
         </Button>
         <DataTemplate.Triggers>
             <DataTrigger Binding="{Binding IsUnseen, Mode=OneWay}" Value="True">
                 <Setter Property="Opacity" Value="1" TargetName="RootElement" />
             </DataTrigger>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter TargetName="DateReceived" Property="Visibility" Value="Hidden" />
+                <Setter TargetName="ToolBar" Property="Visibility" Value="Visible" />
+            </Trigger>
         </DataTemplate.Triggers>
     </DataTemplate>
 </ResourceDictionary>

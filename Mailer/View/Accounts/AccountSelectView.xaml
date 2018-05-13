@@ -35,7 +35,7 @@
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="{Binding UserName}" />
                                 <TextBlock Text=" / " />
-                                <TextBlock Text="{Binding ImapData.Login}" />
+                                <TextBlock Text="{Binding Email}" />
                             </StackPanel>
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
@@ -54,6 +54,7 @@
                 <Button Style="{StaticResource HighlightedButtonStyle}"
                         Content="{x:Static localization:MainResources.SettingsAccountAdd}"
                         Command="{Binding AddNewCommand}" Margin="10,0,0,0" />
+                <!--<Button Style="{StaticResource DeleteButtonStyle}" Command="{Binding DeleteMessageCommand}" HorizontalAlignment="Right"/>-->
                 <!--<Button Style="{StaticResource HighlightedButtonStyle}" Content=")))" Command="{Binding TextEditorCommand}"  Margin="10,0,0,0"/>-->
             </StackPanel>
         </StackPanel>
