@@ -71,6 +71,9 @@ namespace Mailer
                     break;
             }
 
+            if (!Directory.Exists("Cache"))
+                Directory.CreateDirectory("Cache");
+
             var dataBase = new DataBase();
             /*DataBase dataBase = new DataBase();
 #pragma warning disable CS4014

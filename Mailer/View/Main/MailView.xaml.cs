@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+using System.Windows.Input;
 using System.Windows.Media;
 using Mailer.Controls;
 using Mailer.UI.Extensions;
@@ -37,6 +39,32 @@ namespace Mailer.View.Main
                     scrollViewer.ScrollToVerticalOffset(scrollViewer.VerticalOffset - 50);
                 _viewModel.AtListBottom = false;
             }
+        }
+
+        private void MarkButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (MarkButton.ContextMenu == null || MarkButton.ContextMenu.IsOpen) return;
+            e.Handled = true;
+
+            var mouseRightClickEvent = new MouseButtonEventArgs(Mouse.PrimaryDevice, Environment.TickCount, MouseButton.Right)
+            {
+                RoutedEvent = Mouse.MouseUpEvent,
+                Source = sender,
+            };
+            InputManager.Current.ProcessInput(mouseRightClickEvent);
+        }
+
+        private void MoveButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (MoveButton.ContextMenu == null || MoveButton.ContextMenu.IsOpen) return;
+            e.Handled = true;
+
+            var mouseRightClickEvent = new MouseButtonEventArgs(Mouse.PrimaryDevice, Environment.TickCount, MouseButton.Right)
+            {
+                RoutedEvent = Mouse.MouseUpEvent,
+                Source = sender,
+            };
+            InputManager.Current.ProcessInput(mouseRightClickEvent);
         }
     }
 }

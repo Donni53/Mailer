@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight.Messaging;
+using MailBee.ImapMail;
 using Mailer.Domain;
 using Mailer.Messages;
 using Mailer.Model;
@@ -13,18 +15,46 @@ namespace Mailer.Services
 {
     public static class ImapService
     {
+        public static Account Account { get; set; }
+        public static Imap ImapClient { get; set; }
 
-        public static async Task ChangeFolder(string newFolder)
+        static ImapService()
         {
-            await ViewModelLocator.ImapClient.SelectFolderAsync(newFolder);
+            ImapClient = new Imap("MN110-7DB5B590B5C3B5D7B5F4B56BC8C8-0D68");
         }
 
+        public static async Task MoveMessageAsync(List<string> messages, string newFolder)
+        {
+            var messagesSet = messages.Aggregate("", (current, t) => current + (t + ","));
+            await ImapClient.MoveMessagesAsync(messagesSet, true, newFolder);
+        }
 
-        public static Account Account { get; set; }
+        public static async Task MoveMessageAsync(string messageUid, string newFolder)
+        {
+            await ImapClient.MoveMessagesAsync(messageUid, true, newFolder);
+        }
+
+        public static async Task DeleteMessageAsync(List<string> messages)
+        {
+            var messagesSet = messages.Aggregate("", (current, t) => current + (t + ","));
+            await ImapClient.DeleteMessagesAsync(messagesSet, true);
+        }
+
+        public static async Task DeleteMessageAsync(string messageUid)
+        {
+            await ImapClient.DeleteMessagesAsync(messageUid, true);
+        }
+
+        public static async Task MarkMessages(List<string> messages, SystemMessageFlags systemMessageFlags, MessageFlagAction messageFlagAction)
+        {
+            var messagesSet = messages.Aggregate("", (current, t) => current + (t + ","));
+            await ImapClient.SetMessageFlagsAsync(messagesSet, true, systemMessageFlags, messageFlagAction);
+        }
+
         public static async Task ImapAuth(Account account, bool newAccount, int id)
         {
-            await ViewModelLocator.ImapClient.ConnectAsync(account.ImapData.Address, account.ImapData.UseSsl ? 993 : 143);
-            await ViewModelLocator.ImapClient.LoginAsync(account.Email, account.Password);
+            await ImapClient.ConnectAsync(account.ImapData.Address, account.ImapData.UseSsl ? 993 : 143);
+            await ImapClient.LoginAsync(account.Email, account.Password);
             if (newAccount)
             {
                 Settings.Instance.Accounts.Add(account);
@@ -45,8 +75,8 @@ namespace Mailer.Services
 
         public static void ImapLogout(int id)
         {
-            if (ViewModelLocator.ImapClient.IsConnected)
-                ViewModelLocator.ImapClient.Disconnect();
+            if (ImapClient.IsConnected)
+                ImapClient.Disconnect();
             Settings.Instance.Accounts.RemoveAt(id);
             Settings.Instance.SelectedAccount = Settings.Instance.Accounts.Count - 1;
             if (Settings.Instance.Accounts.Count == 0)

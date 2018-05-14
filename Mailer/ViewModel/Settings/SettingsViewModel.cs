@@ -448,7 +448,7 @@ namespace Mailer.ViewModel.Settings
 
         private void DeleteAccount()
         {
-            AccountManager.ImapLogout(SelectedAccount);
+            ImapService.ImapLogout(SelectedAccount);
             //TODO Delete confirmation
         }
 
@@ -510,7 +510,7 @@ namespace Mailer.ViewModel.Settings
                 IsError = false;
                 try
                 {
-                    await AccountManager.ImapAuth(Domain.Settings.Instance.Accounts[SelectedAccount], false, -1);
+                    await ImapService.ImapAuth(Domain.Settings.Instance.Accounts[SelectedAccount], false, -1);
                     Messenger.Default.Send(new NavigateToPageMessage
                     {
                         Page = "/Main.MailView"

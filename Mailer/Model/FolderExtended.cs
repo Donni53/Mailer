@@ -10,17 +10,11 @@ using Mailer.Annotations;
 
 namespace Mailer.Model
 {
-    public class Message
-    {
-        public int Id { get; set; }
-        public string Header { get; set; }
-        public string Body { get; set; }
-    }
-
 
     public class FolderExtended : INotifyPropertyChanged
     {
         private int _unreadedMessagesCount;
+        private int _messagesCount;
 
         public FolderExtended(string name, string shortName, int messagesCount, int unreadedMessagesCount)
         {
@@ -33,7 +27,16 @@ namespace Mailer.Model
 
         public string Name { get; set; }
         public string ShortName { get; set; }
-        public int MessagesCount { get; set; }
+
+        public int MessagesCount
+        {
+            get => _messagesCount;
+            set
+            {
+                _messagesCount = value;
+                OnPropertyChanged();
+            } 
+        }
 
         public int UnreadedMessagesCount
         {

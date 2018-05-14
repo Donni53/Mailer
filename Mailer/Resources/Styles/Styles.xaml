@@ -189,11 +189,9 @@
 
     <Style x:Key="PinButtonStyle" TargetType="ToggleButton">
         <Setter Property="Foreground" Value="{DynamicResource ForegroundBrush}" />
-        <Setter Property="Width" Value="56" />
-        <Setter Property="Height" Value="56" />
+        <Setter Property="Width" Value="22" />
+        <Setter Property="Height" Value="22" />
         <Setter Property="Opacity" Value="0.7" />
-        <Setter Property="Padding" Value="15" />
-        <Setter Property="ToolTip" Value="{x:Static localization1:MainResources.BackButton}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ToggleButton">
@@ -224,6 +222,7 @@
                         </Trigger>
                         <Trigger Property="IsChecked" Value="True">
                             <Setter Property="Data" TargetName="Icon" Value="{StaticResource PinIcon}" />
+                            <Setter Property="Foreground" Value="{DynamicResource AccentBrush}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

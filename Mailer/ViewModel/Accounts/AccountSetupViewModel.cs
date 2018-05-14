@@ -80,7 +80,7 @@ namespace Mailer.ViewModel.Accounts
             {
                 var imapData = new ImapData(ImapServer, true);
                 var smtpData = new SmtpData(SmtpAddress, SmtpSsl, SmtpAuth);
-                await AccountManager.ImapAuth(new Account(UserName, Login, Password, imapData, smtpData), NewAccount, Id);
+                await ImapService.ImapAuth(new Account(UserName, Login, Password, imapData, smtpData), NewAccount, Id);
                 Messenger.Default.Send(new NavigateToPageMessage
                 {
                     Page = "/Main.MailView"

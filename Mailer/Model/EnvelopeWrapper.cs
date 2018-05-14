@@ -14,8 +14,19 @@ namespace Mailer.Model
 {
     public class EnvelopeWarpper : INotifyPropertyChanged
     {
+        private bool _isChecked;
         public Envelope Envelope { get; }
-        public bool IsChecked { get; set; }
+
+        public bool IsChecked
+        {
+            get => _isChecked;
+            set
+            {
+                _isChecked = value;
+                OnPropertyChanged();
+            }
+        }
+
         public List<string> AllFlags { get; set; }
 
         public EnvelopeWarpper(Envelope envelope)
@@ -28,6 +39,19 @@ namespace Mailer.Model
         public string Subject => Envelope.MessagePreview.Subject;
         public DateTime DateReceived => Envelope.MessagePreview.DateReceived;
 
+        public bool IsUnseenSilent
+        {
+            get => AllFlags.Contains("\\Unseen");
+            set
+            {
+                if (!value && IsUnseen)
+                    AllFlags[AllFlags.IndexOf("\\Unseen")] = "\\Seen";
+                else
+                    AllFlags[AllFlags.IndexOf("\\Seen")] = "\\Unseen";
+                OnPropertyChanged(nameof(IsUnseen));
+            }
+        }
+
         public bool IsUnseen
         {
             get => AllFlags.Contains("\\Unseen");
@@ -37,6 +61,11 @@ namespace Mailer.Model
                 {
                     AllFlags[AllFlags.IndexOf("\\Unseen")] = "\\Seen";
                     SetMessageFlagsAsync(Envelope.Uid.ToString(), true, SystemMessageFlags.Seen, MessageFlagAction.Add);
+                }
+                else
+                {
+                    AllFlags[AllFlags.IndexOf("\\Seen")] = "\\Unseen";
+                    SetMessageFlagsAsync(Envelope.Uid.ToString(), true, SystemMessageFlags.Seen, MessageFlagAction.Remove);
                 }
                 OnPropertyChanged();
             }
@@ -69,7 +98,7 @@ namespace Mailer.Model
         {
             try
             {
-                await ViewModelLocator.ImapClient.SetMessageFlagsAsync(messageIndexSet, indexIsUid, systemFlags, action);
+                await ImapService.ImapClient.SetMessageFlagsAsync(messageIndexSet, indexIsUid, systemFlags, action);
             }
             catch (Exception e)
             {

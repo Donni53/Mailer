@@ -126,6 +126,7 @@
     <Compile Include="Domain\Settings.cs" />
     <Compile Include="Helpers\ByteConverters.cs" />
     <Compile Include="Helpers\DateTimeConverter.cs" />
+    <Compile Include="Helpers\Enums.cs" />
     <Compile Include="Helpers\ImageAsyncHelper.cs" />
     <Compile Include="Helpers\LongRunningOperation.cs" />
     <Compile Include="Helpers\Md5Helper.cs" />
@@ -140,6 +141,7 @@
     <Compile Include="Model\Account.cs" />
     <Compile Include="Model\ColorScheme.cs" />
     <Compile Include="Model\Contact.cs" />
+    <Compile Include="Model\ContextAction.cs" />
     <Compile Include="Model\EnvelopeWrapper.cs" />
     <Compile Include="Model\FolderExtended.cs" />
     <Compile Include="Model\ImapData.cs" />
@@ -161,7 +163,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MainResources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Services\AccountManager.cs" />
     <Compile Include="Services\DataBase.cs" />
     <Compile Include="Services\DatabaseService.cs" />
     <Compile Include="Services\ImapService.cs" />
@@ -177,7 +178,9 @@
     <Compile Include="UI\Extensions\VisualTreeHelperExtensions.cs" />
     <Compile Include="ViewModel\Accounts\AccountSelectViewModel.cs" />
     <Compile Include="ViewModel\Accounts\AccountSetupViewModel.cs" />
+    <Compile Include="ViewModel\Flyouts\ConfirmViewModel.cs" />
     <Compile Include="ViewModel\Flyouts\CreateFolderViewModel.cs" />
+    <Compile Include="ViewModel\Flyouts\MessageViewModel.cs" />
     <Compile Include="ViewModel\Main\MailViewModel.cs" />
     <Compile Include="ViewModel\Main\MainViewModel.cs" />
     <Compile Include="ViewModel\Main\TextEditorViewModel.cs" />
@@ -193,8 +196,14 @@
     <Compile Include="View\Flyouts\CommonErrorView.xaml.cs">
       <DependentUpon>CommonErrorView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Flyouts\ConfirmView.xaml.cs">
+      <DependentUpon>ConfirmView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Flyouts\CreateFolderView.xaml.cs">
       <DependentUpon>CreateFolderView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Flyouts\MessageView.xaml.cs">
+      <DependentUpon>MessageView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Main\MailView.xaml.cs">
       <DependentUpon>MailView.xaml</DependentUpon>
@@ -248,6 +257,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Resources\Styles\ContextMenuStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Resources\Styles\DataTemplates.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -292,7 +305,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\Flyouts\ConfirmView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Flyouts\CreateFolderView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Flyouts\MessageView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

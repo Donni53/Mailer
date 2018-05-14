@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Mailer"
         xmlns:localization="clr-namespace:Mailer.Resources.Localization"
         mc:Ignorable="d"
-        Height="700" Width="1024"
+        Height="700"  Width="1024"
         AllowsTransparency="True"
         ResizeMode="CanResize"
         WindowStyle="None"

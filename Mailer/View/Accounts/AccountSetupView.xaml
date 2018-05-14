@@ -7,7 +7,7 @@
                    xmlns:localization="clr-namespace:Mailer.Resources.Localization"
                    xmlns:controls="clr-namespace:Mailer.Controls"
                    mc:Ignorable="d"
-                   d:DesignHeight="700" d:DesignWidth="400"
+                   d:DesignHeight="700" d:DesignWidth="1024"
                    Focusable="True" FocusManager.IsFocusScope="True"
                    Background="Transparent"
                    VerticalAlignment="Center">

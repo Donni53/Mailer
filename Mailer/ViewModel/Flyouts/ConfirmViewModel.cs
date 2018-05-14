@@ -1,44 +1,38 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using GalaSoft.MvvmLight.Command;
 using Mailer.Controls;
-using Mailer.Services;
 using Mailer.UI.Extensions;
 
 namespace Mailer.ViewModel.Flyouts
 {
-    public class CreateFolderViewModel : ViewModelBase
+    public class ConfirmViewModel : ViewModelBase
     {
-        public CreateFolderViewModel()
+        public string Message { get; set; }
+
+        public RelayCommand ApplyCommand { get; private set; }
+        public RelayCommand<bool> CloseCommand { get; private set; }
+
+        public ConfirmViewModel(string message)
         {
+            Message = message;
             InitializeCommands();
         }
 
-        public string Name { get; set; }
-
-        public RelayCommand SaveCommand { get; private set; }
-        public RelayCommand<bool> CloseCommand { get; private set; }
-
         private void InitializeCommands()
         {
+            ApplyCommand = new RelayCommand(Apply);
             CloseCommand = new RelayCommand<bool>(Close);
-            SaveCommand = new RelayCommand(Save);
         }
 
-        private void Save()
+        private void Apply()
         {
-            try
-            {
-                ImapService.ImapClient.CreateFolderAsync(Name);
-            }
-            catch (Exception e)
-            {
-                LoggingService.Log(e);
-            }
             Close(true);
         }
-
 
         private void Close(bool result)
         {
