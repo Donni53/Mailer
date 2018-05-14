@@ -303,6 +303,10 @@ namespace Mailer.ViewModel.Main
             try
             {
                 obj.IsUnseen = !obj.IsUnseen;
+                if (obj.IsUnseen)
+                    FoldersExtended[SelectedFolder].UnreadedMessagesCount++;
+                else
+                    FoldersExtended[SelectedFolder].UnreadedMessagesCount--;
             }
             catch (Exception e)
             {
