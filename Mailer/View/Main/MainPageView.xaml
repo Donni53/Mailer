@@ -100,7 +100,7 @@
                             Command="{Binding AddFolderCommand}"
                             ToolTip="Add new folder" />
                 </StackPanel>
-                <ListBox x:Name="MenuListBox" Padding="0,0,0,10" Margin="0,12,0,0"
+                <ListBox x:Name="MenuListBox" Padding="0,0,0,10" Margin="0,12,0,0" MaxHeight="500"
                          ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                          ItemsSource="{Binding Source={StaticResource MailFolders}}"
                          Foreground="{DynamicResource ForegroundBrush}"
@@ -165,16 +165,16 @@
                                 <behaviours:TransitionBehaviour Transition="{StaticResource AudioLoadAnim}" TransitionDelay="40" />
                             </i:Interaction.Behaviors>
                         </ListBox>
-                        <StackPanel Grid.Row="0" Visibility="{Binding IsMessagesLoading, Converter={StaticResource BoolToVisibilityConverter}}" VerticalAlignment="Center" Margin="0,0,0,0">
-                            <TextBlock Text="{x:Static localization:MainResources.WaitMessage}" FontSize="22"
-                                   HorizontalAlignment="Center" FontWeight="Light"
-                                   Foreground="{DynamicResource ForegroundBrush}" />
-                            <ProgressBar Style="{StaticResource CommonProgressBarStyle}"
-                                     IsIndeterminate="{Binding IsMessagesLoading}" />
-                        </StackPanel>
                         <Button Grid.Row="1" Style="{StaticResource HighlightedButtonStyle}" Visibility="{Binding IsLoadMoreButtonVisible, Converter={StaticResource BoolToVisibilityConverter}}" Content="Load more" 
                             Command="{Binding LoadMoreCommand}" CommandParameter="{Binding SelectedFolder}"  Margin="0,10,0,10" Width="150" Height="25" VerticalAlignment="Bottom"/>
                     </Grid>
+                    <StackPanel Visibility="{Binding IsMessagesLoading, Converter={StaticResource BoolToVisibilityConverter}}" VerticalAlignment="Center" Margin="0,0,0,0">
+                        <TextBlock Text="{x:Static localization:MainResources.WaitMessage}" FontSize="22"
+                                   HorizontalAlignment="Center" FontWeight="Light"
+                                   Foreground="{DynamicResource ForegroundBrush}" />
+                        <ProgressBar Style="{StaticResource CommonProgressBarStyle}"
+                                     IsIndeterminate="{Binding IsMessagesLoading}" />
+                    </StackPanel>
                 </Grid>
                 
             </Grid>
