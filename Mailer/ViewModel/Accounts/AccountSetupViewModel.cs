@@ -83,7 +83,7 @@ namespace Mailer.ViewModel.Accounts
                 await ImapService.ImapAuth(new Account(UserName, Login, Password, imapData, smtpData), NewAccount, Id);
                 Messenger.Default.Send(new NavigateToPageMessage
                 {
-                    Page = "/Main.MailView"
+                    Page = "/Main.MainPageView"
                 });
             }
             catch (Exception ex)

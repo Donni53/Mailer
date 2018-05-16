@@ -181,7 +181,7 @@
     <Compile Include="ViewModel\Flyouts\ConfirmViewModel.cs" />
     <Compile Include="ViewModel\Flyouts\CreateFolderViewModel.cs" />
     <Compile Include="ViewModel\Flyouts\MessageViewModel.cs" />
-    <Compile Include="ViewModel\Main\MailViewModel.cs" />
+    <Compile Include="ViewModel\Main\MainPageViewModel.cs" />
     <Compile Include="ViewModel\Main\MainViewModel.cs" />
     <Compile Include="ViewModel\Main\TextEditorViewModel.cs" />
     <Compile Include="ViewModel\Settings\SettingsViewModel.cs" />
@@ -205,8 +205,8 @@
     <Compile Include="View\Flyouts\MessageView.xaml.cs">
       <DependentUpon>MessageView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Main\MailView.xaml.cs">
-      <DependentUpon>MailView.xaml</DependentUpon>
+    <Compile Include="View\Main\MainPageView.xaml.cs">
+      <DependentUpon>MainPageView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Main\TextEditor.xaml.cs">
       <DependentUpon>TextEditor.xaml</DependentUpon>
@@ -317,7 +317,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Main\MailView.xaml">
+    <Page Include="View\Main\MainPageView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -73,7 +73,7 @@ namespace Mailer.ViewModel.Accounts
                 Domain.Settings.Instance.Save();
                 Messenger.Default.Send(new NavigateToPageMessage
                 {
-                    Page = "/Main.MailView"
+                    Page = "/Main.MainPageView"
                 });
             }
             catch (Exception ex)

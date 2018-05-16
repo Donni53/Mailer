@@ -13,14 +13,14 @@ namespace Mailer.View.Main
     /// <summary>
     ///     Логика взаимодействия для MailView.xaml
     /// </summary>
-    public partial class MailView : PageBase
+    public partial class MainPageView : PageBase
     {
-        private readonly MailViewModel _viewModel;
+        private readonly MainPageViewModel _viewModel;
 
-        public MailView()
+        public MainPageView()
         {
             InitializeComponent();
-            _viewModel = new MailViewModel();
+            _viewModel = new MainPageViewModel();
             DataContext = _viewModel;
         }
 

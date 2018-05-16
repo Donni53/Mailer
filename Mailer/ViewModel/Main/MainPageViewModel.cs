@@ -19,7 +19,7 @@ using Mailer.View.Flyouts;
 
 namespace Mailer.ViewModel.Main
 {
-    public class MailViewModel : ViewModelBase
+    public class MainPageViewModel : ViewModelBase
     {
         private FolderCollection _folders;
         private List<FolderExtended> _foldersExtended;
@@ -29,13 +29,16 @@ namespace Mailer.ViewModel.Main
         private bool _atListBottom;
         private bool _isChecked;
 
+        public event EventHandler SelectedFolderNameChanged;
+
         public ObservableCollection<ContextAction> Actions { get; set; }
 
-        public MailViewModel()
+        public MainPageViewModel()
         {
             IsWorking = true;
             Actions = new ObservableCollection<ContextAction>();
             InitializeCommands();
+            SelectedFolderNameChanged += OnSelectedFolderChanged;
             LoadInfo();
         }
 
@@ -57,14 +60,32 @@ namespace Mailer.ViewModel.Main
             set
             {
                 Set(ref _selectedFolder, value);
-                if (FoldersExtended[_selectedFolder].EnvelopeCollection == null || FoldersExtended[_selectedFolder].EnvelopeCollection.Count == 0)
-                    LoadFolderMessages(_selectedFolder);
-                else
-                {
-                    ChangeFolder(_selectedFolder);
-                    RaisePropertyChanged($"MailEnvelopeCollection");
-                }
+                OnSelectedFolderChanged(EventArgs.Empty);
             }
+        }
+
+        protected virtual void OnSelectedFolderChanged(EventArgs e)
+        {
+            SelectedFolderNameChanged?.Invoke(this, e);
+        }
+
+        private async void OnSelectedFolderChanged(object sender, EventArgs eventArgs)
+        {
+            if (FoldersExtended == null) return;
+            if (FoldersExtended[_selectedFolder].EnvelopeCollection == null ||
+                FoldersExtended[_selectedFolder].EnvelopeCollection.Count == 0)
+            {
+                IsMessagesLoading = true;
+                AtListBottom = false;
+                IsLoadMoreButtonVisible = false;
+                await LoadFolderMessages(_selectedFolder);
+                IsMessagesLoading = false;
+            }
+            else
+            {
+                ChangeFolder(_selectedFolder);
+            }
+            RaisePropertyChanged($"MailEnvelopeCollection");
         }
 
         public FolderCollection Folders
@@ -134,7 +155,7 @@ namespace Mailer.ViewModel.Main
             DeleteFolderCommand = new RelayCommand(DeleteFolder);
             ClearFolderCommand = new RelayCommand(ClearFolder);
             ReadEmailCommand = new RelayCommand<EnvelopeWarpper>(ReadEmail);
-            LoadMoreCommand = new RelayCommand<int>(LoadFolderMessages);
+            LoadMoreCommand = new RelayCommand<int>(LoadMore);
             DeleteMessageCommand = new RelayCommand<EnvelopeWarpper>(DeleteMessage);
             MarkMessageCommand = new RelayCommand<EnvelopeWarpper>(MarkMessage);
             DeleteMessagesCommand = new RelayCommand(DeleteMessages);
@@ -144,17 +165,29 @@ namespace Mailer.ViewModel.Main
 
         private async void LoadInfo()
         {
+            IsWorking = true;
             await LoadFolders();
-            SelectedFolder = 0;
             IsWorking = false;
+            IsMessagesLoading = true;
+            AtListBottom = false;
+            IsLoadMoreButtonVisible = false;
+            await LoadFolderMessages(SelectedFolder);
+            IsMessagesLoading = false;
+            RaisePropertyChanged($"MailEnvelopeCollection");
         }
 
-        private async void LoadFolderMessages(int folderIndex)
+        private async void LoadMore(int folderIndex)
         {
-            IsLoadMoreButtonVisible = false;
             IsMessagesLoading = true;
-            await LoadMessages(folderIndex);
+            AtListBottom = false;
+            IsLoadMoreButtonVisible = false;
+            await LoadFolderMessages(folderIndex);
             IsMessagesLoading = false;
+        }
+
+        private async Task LoadFolderMessages(int folderIndex)
+        {
+            await LoadMessages(folderIndex);
         }
 
         public async void ChangeFolder(int folderIndex)
@@ -196,6 +229,7 @@ namespace Mailer.ViewModel.Main
         {
             try
             {
+                FoldersExtended = null;
                 Actions = new ObservableCollection<ContextAction>();
                 Folders = await ImapService.ImapClient.DownloadFoldersAsync();
                 var tmpFldrs = new List<FolderExtended>();
@@ -208,6 +242,7 @@ namespace Mailer.ViewModel.Main
                 }
                 FoldersExtended = tmpFldrs;
                 RaisePropertyChanged($"Actions");
+                RaisePropertyChanged($"MailEnvelopeCollection");
             }
             catch (Exception e)
             {
@@ -239,8 +274,8 @@ namespace Mailer.ViewModel.Main
         {
             var flyout = new FlyoutControl { FlyoutContent = new CreateFolderView() };
             var result = (bool) await flyout.ShowAsync();
-            if (result)
-                LoadInfo();
+            if (!result) return;
+            LoadInfo();
         }
 
 
