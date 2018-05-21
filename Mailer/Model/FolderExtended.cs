@@ -16,6 +16,8 @@ namespace Mailer.Model
         private int _unreadedMessagesCount;
         private int _messagesCount;
 
+        public ObservableCollection<EnvelopeWarpper> EnvelopeCollection { get; set; }
+
         public FolderExtended(string name, string shortName, int messagesCount, int unreadedMessagesCount)
         {
             Name = name;
@@ -23,6 +25,7 @@ namespace Mailer.Model
             MessagesCount = messagesCount;
             LastLoadedIndex = MessagesCount;
             UnreadedMessagesCount = unreadedMessagesCount;
+            EnvelopeCollection = new ObservableCollection<EnvelopeWarpper>();
         }
 
         public string Name { get; set; }
@@ -49,7 +52,6 @@ namespace Mailer.Model
         }
 
         public int LastLoadedIndex { get; set; }
-        public ObservableCollection<EnvelopeWarpper> EnvelopeCollection { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 

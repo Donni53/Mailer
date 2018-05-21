@@ -22,7 +22,6 @@ namespace Mailer.ViewModel.Main
     public class MainPageViewModel : ViewModelBase
     {
         private FolderCollection _folders;
-        private List<FolderExtended> _foldersExtended;
         private bool _isMessagesLoading;
         private int _selectedFolder;
         private bool _isLoadMoreButtonVisible;
@@ -32,15 +31,7 @@ namespace Mailer.ViewModel.Main
         public event EventHandler SelectedFolderNameChanged;
 
         public ObservableCollection<ContextAction> Actions { get; set; }
-
-        public MainPageViewModel()
-        {
-            IsWorking = true;
-            Actions = new ObservableCollection<ContextAction>();
-            InitializeCommands();
-            SelectedFolderNameChanged += OnSelectedFolderChanged;
-            LoadInfo();
-        }
+        public ObservableCollection<FolderExtended> FoldersExtended { get; set; }
 
 
         public RelayCommand GoToSettingsCommand { get; private set; }
@@ -54,93 +45,16 @@ namespace Mailer.ViewModel.Main
         public RelayCommand ClearFolderCommand { get; set; }
         public RelayCommand DeleteFolderCommand { get; set; }
         public RelayCommand NewMessageCommand { get; private set; }
-        public int SelectedFolder
-        {
-            get => _selectedFolder;
-            set
-            {
-                Set(ref _selectedFolder, value);
-                OnSelectedFolderChanged(EventArgs.Empty);
-            }
-        }
 
-        protected virtual void OnSelectedFolderChanged(EventArgs e)
-        {
-            SelectedFolderNameChanged?.Invoke(this, e);
-        }
 
-        private async void OnSelectedFolderChanged(object sender, EventArgs eventArgs)
+        public MainPageViewModel()
         {
-            if (FoldersExtended == null) return;
-            if (FoldersExtended[_selectedFolder].EnvelopeCollection == null ||
-                FoldersExtended[_selectedFolder].EnvelopeCollection.Count == 0)
-            {
-                IsMessagesLoading = true;
-                AtListBottom = false;
-                IsLoadMoreButtonVisible = false;
-                await LoadFolderMessages(_selectedFolder);
-                IsMessagesLoading = false;
-            }
-            else
-            {
-                ChangeFolder(_selectedFolder);
-            }
-            RaisePropertyChanged($"MailEnvelopeCollection");
+            Actions = new ObservableCollection<ContextAction>();
+            FoldersExtended = new ObservableCollection<FolderExtended>();
+            InitializeCommands();
+            SelectedFolderNameChanged += OnSelectedFolderChanged;
+            LoadInfo();
         }
-
-        public FolderCollection Folders
-        {
-            get => _folders;
-            set => Set(ref _folders, value);
-        }
-
-        public List<FolderExtended> FoldersExtended
-        {
-            get => _foldersExtended;
-            set => Set(ref _foldersExtended, value);
-        }
-
-        public bool IsMessagesLoading
-        {
-            get => _isMessagesLoading;
-            set => Set(ref _isMessagesLoading, value);
-        }
-
-        public bool IsLoadMoreButtonVisible
-        {
-            get => _isLoadMoreButtonVisible;
-            set => Set(ref _isLoadMoreButtonVisible, value);
-        }
-
-        public bool AtListBottom
-        {
-            get => _atListBottom;
-            set
-            {
-                Set(ref _atListBottom, value);
-                if (value && FoldersExtended[SelectedFolder].LastLoadedIndex > 1)
-                    IsLoadMoreButtonVisible = true;
-                else
-                    IsLoadMoreButtonVisible = false;
-            }
-        }
-
-        public bool IsChecked
-        {
-            get => _isChecked;
-            set
-            {
-                Set(ref _isChecked, value);
-                foreach (var item in FoldersExtended[SelectedFolder].EnvelopeCollection)
-                {
-                    item.IsChecked = IsChecked;
-                }
-            }
-        }
-
-        public ObservableCollection<EnvelopeWarpper> MailEnvelopeCollection => _foldersExtended == null
-            ? null
-            : FoldersExtended[SelectedFolder].EnvelopeCollection;
 
         private void InitializeCommands()
         {
@@ -163,14 +77,102 @@ namespace Mailer.ViewModel.Main
             NewMessageCommand = new RelayCommand(NewMessage);
         }
 
+
+
+        public int SelectedFolder
+        {
+            get => _selectedFolder;
+            set
+            {
+                Set(ref _selectedFolder, value);
+                OnSelectedFolderChanged(EventArgs.Empty);
+            }
+        }
+
+        protected virtual void OnSelectedFolderChanged(EventArgs e)
+        {
+            SelectedFolderNameChanged?.Invoke(this, e);
+        }
+
+        private async void OnSelectedFolderChanged(object sender, EventArgs eventArgs)
+        {
+            if (FoldersExtended.Count == 0) return;
+            if (FoldersExtended[SelectedFolder].EnvelopeCollection.Count == 0)
+            {
+                IsMessagesLoading = true;
+                await LoadFolderMessages(SelectedFolder);
+                IsMessagesLoading = false;
+            }
+            else
+            {
+                ChangeFolder(SelectedFolder);
+            }
+            RaisePropertyChanged($"MailEnvelopeCollection");
+        }
+
+        public FolderCollection Folders
+        {
+            get => _folders;
+            set => Set(ref _folders, value);
+        }
+
+        public bool IsMessagesLoading
+        {
+            get => _isMessagesLoading;
+            set => Set(ref _isMessagesLoading, value);
+        }
+
+        public bool IsLoadMoreButtonVisible
+        {
+            get => _isLoadMoreButtonVisible;
+            set => Set(ref _isLoadMoreButtonVisible, value);
+        }
+
+        public bool AtListBottom
+        {
+            get => _atListBottom;
+            set
+            {
+                Set(ref _atListBottom, value);
+                if (FoldersExtended.Count > 0 && value && FoldersExtended[SelectedFolder].LastLoadedIndex > 1)
+                    IsLoadMoreButtonVisible = true;
+                else
+                    IsLoadMoreButtonVisible = false;
+            }
+        }
+
+        public bool IsChecked
+        {
+            get => _isChecked;
+            set
+            {
+                Set(ref _isChecked, value);
+                foreach (var item in FoldersExtended[SelectedFolder].EnvelopeCollection)
+                {
+                    item.IsChecked = IsChecked;
+                }
+            }
+        }
+
+        public ObservableCollection<EnvelopeWarpper> MailEnvelopeCollection
+        {
+            get
+            {
+                if (FoldersExtended.Count > 0)
+                    return FoldersExtended[SelectedFolder].EnvelopeCollection.Count > 0 ? FoldersExtended[SelectedFolder].EnvelopeCollection: null;
+                return null;
+            }
+        }
+
+
         private async void LoadInfo()
         {
             IsWorking = true;
-            await LoadFolders();
-            IsWorking = false;
             IsMessagesLoading = true;
-            AtListBottom = false;
-            IsLoadMoreButtonVisible = false;
+            await LoadFolders();
+            _selectedFolder = 0;
+            RaisePropertyChanged($"SelectedFolder");
+            IsWorking = false;
             await LoadFolderMessages(SelectedFolder);
             IsMessagesLoading = false;
             RaisePropertyChanged($"MailEnvelopeCollection");
@@ -179,8 +181,8 @@ namespace Mailer.ViewModel.Main
         private async void LoadMore(int folderIndex)
         {
             IsMessagesLoading = true;
-            AtListBottom = false;
             IsLoadMoreButtonVisible = false;
+            AtListBottom = false;
             await LoadFolderMessages(folderIndex);
             IsMessagesLoading = false;
         }
@@ -202,12 +204,9 @@ namespace Mailer.ViewModel.Main
                 var folder = FoldersExtended[folderIndex];
                 await ImapService.ImapClient.SelectFolderAsync(folder.Name);
                 var msgCount = folder.LastLoadedIndex > 50 ? 50 : folder.LastLoadedIndex;
-                if (folder.EnvelopeCollection == null)
-                    folder.EnvelopeCollection = new ObservableCollection<EnvelopeWarpper>();
                 var range = folder.LastLoadedIndex + ":" + (folder.LastLoadedIndex - msgCount + 1);
                 var envelopes = await ImapService.ImapClient.DownloadEnvelopesAsync(range, false,
-                    EnvelopeParts.BodyStructure | EnvelopeParts.MessagePreview | EnvelopeParts.InternalDate | EnvelopeParts.Flags | EnvelopeParts.Uid,
-                    1000);
+                    EnvelopeParts.BodyStructure | EnvelopeParts.MessagePreview | EnvelopeParts.InternalDate | EnvelopeParts.Flags | EnvelopeParts.Uid, 0);
                 folder.LastLoadedIndex = folder.LastLoadedIndex - msgCount + 1;
 
                 envelopes.Reverse();
@@ -216,8 +215,7 @@ namespace Mailer.ViewModel.Main
                 {
                     folder.EnvelopeCollection.Add(new EnvelopeWarpper(item));
                 }
-
-                RaisePropertyChanged($"MailEnvelopeCollection");
+                //RaisePropertyChanged($"MailEnvelopeCollection");
             }
             catch (Exception e)
             {
@@ -229,20 +227,18 @@ namespace Mailer.ViewModel.Main
         {
             try
             {
-                FoldersExtended = null;
-                Actions = new ObservableCollection<ContextAction>();
+                FoldersExtended.Clear();
+                Actions.Clear();
                 Folders = await ImapService.ImapClient.DownloadFoldersAsync();
-                var tmpFldrs = new List<FolderExtended>();
                 foreach (Folder item in Folders)
                 {
                     var folderInfo = await ImapService.ImapClient.GetFolderStatusAsync(item.Name);
                     var folderExtended = new FolderExtended(item.Name, item.ShortName, folderInfo.MessageCount, folderInfo.UnseenCount);
                     Actions.Add(new ContextAction(folderExtended.Name, new RelayCommand<string>(MoveMessages)));
-                    tmpFldrs.Add(folderExtended);
+                    FoldersExtended.Add(folderExtended);
                 }
-                FoldersExtended = tmpFldrs;
-                RaisePropertyChanged($"Actions");
-                RaisePropertyChanged($"MailEnvelopeCollection");
+                //RaisePropertyChanged($"Actions");
+                //RaisePropertyChanged($"MailEnvelopeCollection");
             }
             catch (Exception e)
             {
@@ -260,7 +256,7 @@ namespace Mailer.ViewModel.Main
                     folder.MessagesCount = folderInfo.MessageCount;
                     folder.UnreadedMessagesCount = folderInfo.UnseenCount;
                     if (FoldersExtended[SelectedFolder].Name == folder.Name) continue;
-                    folder.EnvelopeCollection = null;
+                    folder.EnvelopeCollection.Clear();
                     folder.LastLoadedIndex = folderInfo.MessageCount;
                 }
             }
