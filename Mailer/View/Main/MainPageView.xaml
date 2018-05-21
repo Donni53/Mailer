@@ -117,7 +117,7 @@
                     <Button Content="Clear" Style="{StaticResource TextBlockButtonStyle}" HorizontalAlignment="Left" Command="{Binding ClearFolderCommand}"/>
                     <Button Content="Delete" Style="{StaticResource TextBlockButtonStyle}" HorizontalAlignment="Left" Margin="10,0,0,0" Command="{Binding DeleteFolderCommand}"/>
                 </StackPanel>
-                <Button Style="{StaticResource HighlightedButtonStyle}" Content="New message" Command="{Binding NewMessageCommand}"  Margin="0,5,0,0" Height="30"/>
+                <Button Visibility="Hidden" Style="{StaticResource HighlightedButtonStyle}" Content="New message" Command="{Binding NewMessageCommand}"  Margin="0,5,0,0" Height="30"/>
             </StackPanel>
             <Grid Grid.Column="1" Margin="0,33,10,0">
                 <Grid.RowDefinitions>
