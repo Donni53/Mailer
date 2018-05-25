@@ -15,12 +15,13 @@ namespace Mailer.Services
 {
     public static class ImapService
     {
+        private const string Key = "MN110-7DB5B590B5C3B5D7B5F4B56BC8C8-0D68";
         public static Account Account { get; set; }
         public static Imap ImapClient { get; set; }
 
         static ImapService()
         {
-            ImapClient = new Imap("MN110-7DB5B590B5C3B5D7B5F4B56BC8C8-0D68");
+            ImapClient = new Imap(Key);
         }
 
         public static async Task MoveMessageAsync(List<string> messages, string newFolder)
@@ -53,10 +54,10 @@ namespace Mailer.Services
 
         public static async Task ImapAuth(Account account, bool newAccount, int id)
         {
-            if (ImapClient.IsConnected)
-                await ImapClient.DisconnectAsync();
-            await ImapClient.ConnectAsync(account.ImapData.Address, account.ImapData.UseSsl ? 993 : 143);
-            await ImapClient.LoginAsync(account.Email, account.Password);
+            var imap = new Imap(Key);
+
+            await imap.ConnectAsync(account.ImapData.Address, account.ImapData.UseSsl ? 993 : 143);
+            await imap.LoginAsync(account.Email, account.Password);
             if (newAccount)
             {
                 Settings.Instance.Accounts.Add(account);
@@ -72,6 +73,7 @@ namespace Mailer.Services
             }
 
             Account = account;
+            ImapClient = imap;
             Settings.Instance.Save();
         }
 

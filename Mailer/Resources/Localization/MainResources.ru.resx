@@ -345,4 +345,7 @@
   <data name="NewFolderName" xml:space="preserve">
     <value>Название</value>
   </data>
+  <data name="AddFolderHint" xml:space="preserve">
+    <value>Добавить новую папку</value>
+  </data>
 </root>

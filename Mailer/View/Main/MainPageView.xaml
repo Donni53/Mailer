@@ -98,7 +98,7 @@
                                Foreground="{DynamicResource ForegroundBrush}" FontWeight="SemiBold" />
                     <Button Style="{StaticResource AddButtonStyle}" VerticalAlignment="Top" Margin="3,0,0,0"
                             Command="{Binding AddFolderCommand}"
-                            ToolTip="Add new folder" />
+                            ToolTip="{x:Static localization:MainResources.AddFolderHint}" />
                 </StackPanel>
                 <ListBox x:Name="MenuListBox" Padding="0,0,0,10" Margin="0,12,0,0" MaxHeight="500"
                          ScrollViewer.HorizontalScrollBarVisibility="Disabled"

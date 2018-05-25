@@ -160,6 +160,15 @@ namespace Mailer.Resources.Localization {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Add new folder.
+        /// </summary>
+        public static string AddFolderHint {
+            get {
+                return ResourceManager.GetString("AddFolderHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Apply.
         /// </summary>
         public static string Apply {

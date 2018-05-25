@@ -348,4 +348,7 @@
   <data name="NewFolderName" xml:space="preserve">
     <value>Name</value>
   </data>
+  <data name="AddFolderHint" xml:space="preserve">
+    <value>Add new folder</value>
+  </data>
 </root>
