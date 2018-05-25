@@ -94,7 +94,7 @@
                     </Button.Template>
                 </Button>
                 <StackPanel Orientation="Horizontal" Margin="10,10,0,0">
-                    <TextBlock Text="Folders" FontSize="11" Opacity="0.7"
+                    <TextBlock Text="{x:Static localization:MainResources.Folders}" FontSize="11" Opacity="0.7"
                                Foreground="{DynamicResource ForegroundBrush}" FontWeight="SemiBold" />
                     <Button Style="{StaticResource AddButtonStyle}" VerticalAlignment="Top" Margin="3,0,0,0"
                             Command="{Binding AddFolderCommand}"
@@ -114,8 +114,8 @@
                     </i:Interaction.Behaviors>
                 </ListBox>
                 <StackPanel Orientation="Horizontal" Margin="10,0,0,0">
-                    <Button Content="Clear" Style="{StaticResource TextBlockButtonStyle}" HorizontalAlignment="Left" Command="{Binding ClearFolderCommand}"/>
-                    <Button Content="Delete" Style="{StaticResource TextBlockButtonStyle}" HorizontalAlignment="Left" Margin="10,0,0,0" Command="{Binding DeleteFolderCommand}"/>
+                    <Button Content="{x:Static localization:MainResources.FoldersClear}" Style="{StaticResource TextBlockButtonStyle}" HorizontalAlignment="Left" Command="{Binding ClearFolderCommand}"/>
+                    <Button Content="{x:Static localization:MainResources.FoldersDelete}" Style="{StaticResource TextBlockButtonStyle}" HorizontalAlignment="Left" Margin="10,0,0,0" Command="{Binding DeleteFolderCommand}"/>
                 </StackPanel>
                 <Button Visibility="Hidden" Style="{StaticResource HighlightedButtonStyle}" Content="New message" Command="{Binding NewMessageCommand}"  Margin="0,5,0,0" Height="30"/>
             </StackPanel>
@@ -127,20 +127,20 @@
                 <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="28,0,0,0" Visibility="{Binding IsMessagesLoading, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=True}">
                     <CheckBox IsChecked="{Binding IsChecked, Mode=TwoWay}" FontSize="12" Opacity="0.7" Foreground="{DynamicResource ForegroundBrush}"
                               VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,5,0"/>
-                    <Button x:Name="MarkButton" Content="Mark" Style="{StaticResource TextBlockButtonStyle}" Margin="0,0,0,0" HorizontalAlignment="Center" Click="MarkButton_OnClick">
+                    <Button x:Name="MarkButton" Content="{x:Static localization:MainResources.MessagesMark}" Style="{StaticResource TextBlockButtonStyle}" Margin="0,0,0,0" HorizontalAlignment="Center" Click="MarkButton_OnClick">
                         <Button.ContextMenu>
                             <ContextMenu Style="{StaticResource CommonContextMenuStyle}" ItemContainerStyle="{StaticResource CommonContextMenuItemStyle}" Focusable="False">
-                                <MenuItem Header="As Readed" Command="{Binding MarkMessagesCommand}" CommandParameter="{x:Static helpers:MarkAs.Readed}"/>
-                                <MenuItem Header="As Unreaded" Command="{Binding MarkMessagesCommand}" CommandParameter="{x:Static helpers:MarkAs.Unreaded}"/>
+                                <MenuItem Header="{x:Static localization:MainResources.AsReaded}" Command="{Binding MarkMessagesCommand}" CommandParameter="{x:Static helpers:MarkAs.Readed}"/>
+                                <MenuItem Header="{x:Static localization:MainResources.AsUnreaded}" Command="{Binding MarkMessagesCommand}" CommandParameter="{x:Static helpers:MarkAs.Unreaded}"/>
                             </ContextMenu>
                         </Button.ContextMenu>
                     </Button>
-                    <Button x:Name="MoveButton" Content="Move" Style="{StaticResource TextBlockButtonStyle}" Margin="20,0,0,0" HorizontalAlignment="Center" Click="MoveButton_OnClick">
+                    <Button x:Name="MoveButton" Content="{x:Static localization:MainResources.MessagesMove}" Style="{StaticResource TextBlockButtonStyle}" Margin="20,0,0,0" HorizontalAlignment="Center" Click="MoveButton_OnClick">
                         <Button.ContextMenu>
                             <ContextMenu Style="{StaticResource CommonContextMenuStyle}" Focusable="False" ItemsSource="{Binding Actions}" ItemContainerStyle ="{StaticResource CommonContextMoveMenuItemStyle}"/>
                         </Button.ContextMenu>
                     </Button>
-                    <Button x:Name="DeleteButton" Content="Delete" Style="{StaticResource TextBlockButtonStyle}" Margin="20,0,0,0" HorizontalAlignment="Center" Command="{Binding DeleteMessagesCommand}"/>
+                    <Button x:Name="DeleteButton" Content="{x:Static localization:MainResources.MessagesDelete}" Style="{StaticResource TextBlockButtonStyle}" Margin="20,0,0,0" HorizontalAlignment="Center" Command="{Binding DeleteMessagesCommand}"/>
                 </StackPanel>
                 <Grid Grid.Row="1">
                     <Grid>

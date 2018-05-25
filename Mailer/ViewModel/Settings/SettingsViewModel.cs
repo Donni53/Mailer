@@ -12,14 +12,12 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
-using Mailer.Controls;
 using Mailer.Helpers;
 using Mailer.Messages;
 using Mailer.Model;
 using Mailer.Resources.Localization;
 using Mailer.Services;
 using Mailer.UI.Extensions;
-using Mailer.View.Flyouts;
 using Microsoft.Win32;
 
 namespace Mailer.ViewModel.Settings
@@ -57,17 +55,13 @@ namespace Mailer.ViewModel.Settings
             _customBackground = Domain.Settings.Instance.CustomBackground;
             _customBackgroundPath = Domain.Settings.Instance.CustomBackgroundPath;
             var lang = Languages.FirstOrDefault(l => l.LanguageCode == Domain.Settings.Instance.Language);
-            if (lang != null)
-                _selectedLanguage = lang;
-            else
-                _selectedLanguage = Languages.First();
+            _selectedLanguage = lang ?? Languages.First();
         }
 
         public Dictionary<string, string> MenuItems { get; } = new Dictionary<string, string>
         {
             {MainResources.SettingsAccounts, "/View/Settings/AccountsView.xaml"},
             {MainResources.SettingsPersonalization, "/View/Settings/PersonalizationView.xaml"},
-            //{MainResources.SettingsSecurity, "/View/Settings/SecurityView.xaml"},
             {MainResources.SettingsNotifications, "/View/Settings/NotificationsView.xaml"},
             {MainResources.SettingsAbout, "/View/Settings/AboutView.xaml"}
         };
@@ -96,12 +90,10 @@ namespace Mailer.ViewModel.Settings
         public RelayCommand CloseSettingsCommand { get; private set; }
         public RelayCommand SaveCommand { get; private set; }
         public RelayCommand SaveRestartCommand { get; private set; }
-        public RelayCommand CheckUpdatesCommand { get; private set; }
         public RelayCommand ClearCacheCommand { get; private set; }
         public RelayCommand EditAccountCommand { get; private set; }
         public RelayCommand DeleteAccountCommand { get; private set; }
         public RelayCommand AddAccountCommand { get; private set; }
-        public RelayCommand OmsSetupCommand { get; private set; }
 
         public List<Account> Accounts => Domain.Settings.Instance.Accounts;
 
@@ -373,7 +365,6 @@ namespace Mailer.ViewModel.Settings
         }
 
 
-        //необходимое зло
         private void SetBackgroundImage()
         {
             ImageSource backgroundImageSource = new BitmapImage(new Uri(CustomBackgroundPath));
@@ -513,7 +504,7 @@ namespace Mailer.ViewModel.Settings
                     await ImapService.ImapAuth(Domain.Settings.Instance.Accounts[SelectedAccount], false, -1);
                     Messenger.Default.Send(new NavigateToPageMessage
                     {
-                        Page = "/Main.MailView"
+                        Page = "/Main.MainPageView"
                     });
                 }
                 catch (Exception ex)

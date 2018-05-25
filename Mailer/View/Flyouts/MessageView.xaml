@@ -39,7 +39,7 @@
             <StackPanel Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,5,0,0">
                 <Button Visibility="Hidden" Content="Ответить" Padding="23,3" Margin="0,0,10,0" 
                         Style="{StaticResource HighlightedButtonStyle}" Command="{Binding CopyCommand}" />
-                <Button Content="Закрыть" Padding="23,3" Style="{StaticResource CommonButtonStyle}" 
+                <Button Content="{x:Static localization:MainResources.MessageClose}" Padding="23,3" Style="{StaticResource CommonButtonStyle}" 
                         Command="{Binding CloseMessageCommand}" />
             </StackPanel>
         </Grid>

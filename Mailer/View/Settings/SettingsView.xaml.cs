@@ -17,8 +17,7 @@ namespace Mailer.View.Settings
 
         private void SettingsFrame_Navigated(object sender, NavigationEventArgs e)
         {
-            var content = SettingsFrame.Content as FrameworkElement;
-            if (content == null)
+            if (!(SettingsFrame.Content is FrameworkElement content))
                 return;
             content.DataContext = ViewModelLocator.SettingsViewModel;
         }

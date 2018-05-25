@@ -169,6 +169,24 @@ namespace Mailer.Resources.Localization {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на As Readed.
+        /// </summary>
+        public static string AsReaded {
+            get {
+                return ResourceManager.GetString("AsReaded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на As Unreaded.
+        /// </summary>
+        public static string AsUnreaded {
+            get {
+                return ResourceManager.GetString("AsUnreaded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Back.
         /// </summary>
         public static string BackButton {
@@ -223,11 +241,92 @@ namespace Mailer.Resources.Localization {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на New folder.
+        /// </summary>
+        public static string CreateFolder {
+            get {
+                return ResourceManager.GetString("CreateFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Folders.
+        /// </summary>
+        public static string Folders {
+            get {
+                return ResourceManager.GetString("Folders", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Clear.
+        /// </summary>
+        public static string FoldersClear {
+            get {
+                return ResourceManager.GetString("FoldersClear", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Delete.
+        /// </summary>
+        public static string FoldersDelete {
+            get {
+                return ResourceManager.GetString("FoldersDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Loading all the necessary information....
         /// </summary>
         public static string LoadingMessage {
             get {
                 return ResourceManager.GetString("LoadingMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Close.
+        /// </summary>
+        public static string MessageClose {
+            get {
+                return ResourceManager.GetString("MessageClose", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Delete.
+        /// </summary>
+        public static string MessagesDelete {
+            get {
+                return ResourceManager.GetString("MessagesDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Mark.
+        /// </summary>
+        public static string MessagesMark {
+            get {
+                return ResourceManager.GetString("MessagesMark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Move.
+        /// </summary>
+        public static string MessagesMove {
+            get {
+                return ResourceManager.GetString("MessagesMove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Name.
+        /// </summary>
+        public static string NewFolderName {
+            get {
+                return ResourceManager.GetString("NewFolderName", resourceCulture);
             }
         }
         

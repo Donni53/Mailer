@@ -118,73 +118,73 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="BackButton" xml:space="preserve">
-    <value>Back</value>
+    <value>Назад</value>
   </data>
   <data name="CancelButton" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Отмена</value>
   </data>
   <data name="CommonErrorViewContent" xml:space="preserve">
-    <value>We are sorry but something goes wrong. We will try to fix this as soon as possible.</value>
+    <value>Мы сожалеем, но что-то пошло не так. Мы постараемся исправить это как можно скорее.</value>
   </data>
   <data name="CommonErrorViewRestart" xml:space="preserve">
-    <value>Restart</value>
+    <value>Перезапуск</value>
   </data>
   <data name="CommonErrorViewTitle" xml:space="preserve">
-    <value>Oh... something happened :(</value>
+    <value>Охх ... что-то случилось :(</value>
   </data>
   <data name="Settings" xml:space="preserve">
-    <value>Settings</value>
+    <value>Настройки</value>
   </data>
   <data name="SettingsAbout" xml:space="preserve">
-    <value>About</value>
+    <value>О программе</value>
   </data>
   <data name="SettingsAccountAdd" xml:space="preserve">
     <value>Добавить</value>
   </data>
   <data name="SettingsAccountDelete" xml:space="preserve">
-    <value>Delete</value>
+    <value>Удалить</value>
   </data>
   <data name="SettingsAccountEdit" xml:space="preserve">
     <value>Изменить</value>
   </data>
   <data name="SettingsAccounts" xml:space="preserve">
-    <value>Accounts</value>
+    <value>Аккаунты</value>
   </data>
   <data name="SettingsAccountSelectAccount" xml:space="preserve">
-    <value>Select an account to edit or use</value>
+    <value>Выберите учетную запись для редактирования или использования</value>
   </data>
   <data name="SettingsAutomaticReplies" xml:space="preserve">
-    <value>Automatic replies settings</value>
+    <value>Настройки автоматических ответов</value>
   </data>
   <data name="SettingsAutoResponses" xml:space="preserve">
-    <value>Automatic Responses</value>
+    <value>Автоматические ответы</value>
   </data>
   <data name="SettingsEnableAutoReplies" xml:space="preserve">
-    <value>Enable automatic replies for this account</value>
+    <value>Включить автоматические ответы для этой учетной записи</value>
   </data>
   <data name="SettingsEnterText" xml:space="preserve">
-    <value>Enter your message here</value>
+    <value>Введите свое сообщение</value>
   </data>
   <data name="SettingsMenuGeneral" xml:space="preserve">
-    <value>General</value>
+    <value>Главные</value>
   </data>
   <data name="SettingsNotifications" xml:space="preserve">
-    <value>Notifications</value>
+    <value>Оповещения</value>
   </data>
   <data name="SettingsPersonalization" xml:space="preserve">
-    <value>Personalization</value>
+    <value>Персонализация</value>
   </data>
   <data name="SettingsRestartMessage" xml:space="preserve">
-    <value>Some changes will be applied after restart.</value>
+    <value>Некоторые изменения будут применены после перезагрузки.</value>
   </data>
   <data name="SettingsSave" xml:space="preserve">
-    <value>Save changes</value>
+    <value>Сохранить изменения</value>
   </data>
   <data name="SettingsSaveRestart" xml:space="preserve">
-    <value>Save &amp; Restart</value>
+    <value>Сохранить &amp; Перезапустить</value>
   </data>
   <data name="SettingsSecurity" xml:space="preserve">
-    <value>Security</value>
+    <value>Безопастность</value>
   </data>
   <data name="SettingsSecurityPasswordReminder" xml:space="preserve">
     <value>Password Reminder</value>
@@ -193,28 +193,25 @@
     <value>Use a password to access the application</value>
   </data>
   <data name="SettingsUIAccentColor" xml:space="preserve">
-    <value>Accent color</value>
+    <value>Основной цвет</value>
   </data>
   <data name="SettingsUIBackgroundColor" xml:space="preserve">
-    <value>Background color</value>
+    <value>Фоновый цвет</value>
   </data>
   <data name="SettingsUICacheSize" xml:space="preserve">
-    <value>Cache size:</value>
+    <value>Размер кэша:</value>
   </data>
   <data name="SettingsUIClearCache" xml:space="preserve">
-    <value>Clear</value>
+    <value>Очистить</value>
   </data>
   <data name="SettingsUIEnabledBlur" xml:space="preserve">
     <value>Blur background (reduces performance)</value>
   </data>
   <data name="SettingsUILanguage" xml:space="preserve">
-    <value>Language</value>
-  </data>
-  <data name="SettingsUINotifications" xml:space="preserve">
-    <value>Show notification when track changes</value>
+    <value>Язык</value>
   </data>
   <data name="SettingsUINotificationsTitle" xml:space="preserve">
-    <value>Notifications</value>
+    <value>Оповещения</value>
   </data>
   <data name="SettingsUIShowTrayIcon" xml:space="preserve">
     <value>Show icon in the tray instead of taskbar</value>
@@ -241,78 +238,111 @@
     <value>Mailer was updated. Restart to apply changes.</value>
   </data>
   <data name="AccountImapAddr" xml:space="preserve">
-    <value>IMAP address</value>
+    <value>IMAP адрес</value>
   </data>
   <data name="AccountImapSsl" xml:space="preserve">
-    <value>Use SSL for IMAP</value>
+    <value>Использовать SSL для IMAP</value>
   </data>
   <data name="AccountLogin" xml:space="preserve">
-    <value>Login</value>
+    <value>Логин</value>
   </data>
   <data name="AccountMessagesName" xml:space="preserve">
-    <value>Name in messages</value>
+    <value>Имя</value>
   </data>
   <data name="AccountPassword" xml:space="preserve">
-    <value>Password</value>
+    <value>Пароль</value>
   </data>
   <data name="AccountSave" xml:space="preserve">
-    <value>Save</value>
+    <value>Сохранить</value>
   </data>
   <data name="AccountSetup" xml:space="preserve">
-    <value>Account setup</value>
+    <value>Настройка аккаунта</value>
   </data>
   <data name="AccountSmtpAddr" xml:space="preserve">
-    <value>SMTP address</value>
+    <value>SMTP адрес</value>
   </data>
   <data name="AccountSmtpSsl" xml:space="preserve">
-    <value>Use SSL for SMTP</value>
+    <value>Использовать SSL для SMTP</value>
   </data>
   <data name="AccountUsername" xml:space="preserve">
-    <value>Username</value>
+    <value>Имя пользователя</value>
   </data>
   <data name="CloseButton" xml:space="preserve">
-    <value>Close</value>
+    <value>Закрыть</value>
   </data>
   <data name="AccountSelect" xml:space="preserve">
-    <value>Select an account or add new</value>
+    <value>Выберите или добавьте аккаунт</value>
   </data>
   <data name="LoadingMessage" xml:space="preserve">
-    <value>Loading all the necessary information...</value>
+    <value>Загрузка всей необходимой информации...</value>
   </data>
   <data name="Ok" xml:space="preserve">
     <value>Ок</value>
   </data>
   <data name="WaitMessage" xml:space="preserve">
-    <value>Please, wait...</value>
+    <value>Пожалуйста, ожидайте...</value>
   </data>
   <data name="OmsSetup" xml:space="preserve">
     <value>SMTP Setup</value>
   </data>
   <data name="SmtpAddressTitle" xml:space="preserve">
-    <value>SMTP address</value>
+    <value>SMTP адрес</value>
   </data>
   <data name="SmtpEmailTitle" xml:space="preserve">
-    <value>Login</value>
+    <value>Логин</value>
   </data>
   <data name="SmtpNeedAuth" xml:space="preserve">
-    <value>SMTP auth needed</value>
+    <value>Надобность SMTP авторизации</value>
   </data>
   <data name="SmtpPasswordTitle" xml:space="preserve">
-    <value>Password</value>
+    <value>Пароль</value>
   </data>
   <data name="SmtpSetupTitle" xml:space="preserve">
-    <value>SMTP Setup</value>
+    <value>Настройка SMTP</value>
   </data>
   <data name="SmtpUseSslTitle" xml:space="preserve">
-    <value>Use SSL for SMTP</value>
+    <value>Использовать SSL для SMTP</value>
   </data>
   <data name="ShowNotifications" xml:space="preserve">
-    <value>Show notifications about new messages</value>
+    <value>Оповещать о новых сообщениях</value>
   </data>
   <data name="Apply" xml:space="preserve">
-    <value>Apply</value>
+    <value>Подтвердить</value>
   </data>
   <data name="UseImageAsBg" xml:space="preserve">
-    <value>Use image as custom background</value>
+    <value>Использовать изображение как фон</value>
+  </data>
+  <data name="AsReaded" xml:space="preserve">
+    <value>Прочитанным</value>
+  </data>
+  <data name="AsUnreaded" xml:space="preserve">
+    <value>Не прочитанным</value>
+  </data>
+  <data name="CreateFolder" xml:space="preserve">
+    <value>Создание новой папки</value>
+  </data>
+  <data name="Folders" xml:space="preserve">
+    <value>Папки</value>
+  </data>
+  <data name="FoldersClear" xml:space="preserve">
+    <value>Очистить</value>
+  </data>
+  <data name="FoldersDelete" xml:space="preserve">
+    <value>Удалить</value>
+  </data>
+  <data name="MessageClose" xml:space="preserve">
+    <value>Закрыть</value>
+  </data>
+  <data name="MessagesDelete" xml:space="preserve">
+    <value>Удалить</value>
+  </data>
+  <data name="MessagesMark" xml:space="preserve">
+    <value>Отметить</value>
+  </data>
+  <data name="MessagesMove" xml:space="preserve">
+    <value>Переместить</value>
+  </data>
+  <data name="NewFolderName" xml:space="preserve">
+    <value>Название</value>
   </data>
 </root>

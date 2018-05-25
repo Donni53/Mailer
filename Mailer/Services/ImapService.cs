@@ -53,6 +53,8 @@ namespace Mailer.Services
 
         public static async Task ImapAuth(Account account, bool newAccount, int id)
         {
+            if (ImapClient.IsConnected)
+                await ImapClient.DisconnectAsync();
             await ImapClient.ConnectAsync(account.ImapData.Address, account.ImapData.UseSsl ? 993 : 143);
             await ImapClient.LoginAsync(account.Email, account.Password);
             if (newAccount)

@@ -315,4 +315,37 @@
   <data name="UseImageAsBg" xml:space="preserve">
     <value>Use image as custom background</value>
   </data>
+  <data name="AsReaded" xml:space="preserve">
+    <value>As Readed</value>
+  </data>
+  <data name="AsUnreaded" xml:space="preserve">
+    <value>As Unreaded</value>
+  </data>
+  <data name="CreateFolder" xml:space="preserve">
+    <value>New folder</value>
+  </data>
+  <data name="Folders" xml:space="preserve">
+    <value>Folders</value>
+  </data>
+  <data name="FoldersClear" xml:space="preserve">
+    <value>Clear</value>
+  </data>
+  <data name="FoldersDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="MessageClose" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="MessagesDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="MessagesMark" xml:space="preserve">
+    <value>Mark</value>
+  </data>
+  <data name="MessagesMove" xml:space="preserve">
+    <value>Move</value>
+  </data>
+  <data name="NewFolderName" xml:space="preserve">
+    <value>Name</value>
+  </data>
 </root>

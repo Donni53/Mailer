@@ -443,10 +443,12 @@
     <EmbeddedResource Include="Resources\Localization\MainResources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>MainResources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <Content Include="NLog.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="ClassDiagram.cd" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>

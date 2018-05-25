@@ -215,7 +215,6 @@ namespace Mailer.ViewModel.Main
                 {
                     folder.EnvelopeCollection.Add(new EnvelopeWarpper(item));
                 }
-                //RaisePropertyChanged($"MailEnvelopeCollection");
             }
             catch (Exception e)
             {
@@ -237,8 +236,6 @@ namespace Mailer.ViewModel.Main
                     Actions.Add(new ContextAction(folderExtended.Name, new RelayCommand<string>(MoveMessages)));
                     FoldersExtended.Add(folderExtended);
                 }
-                //RaisePropertyChanged($"Actions");
-                //RaisePropertyChanged($"MailEnvelopeCollection");
             }
             catch (Exception e)
             {
@@ -430,7 +427,7 @@ namespace Mailer.ViewModel.Main
             }
         }
 
-        private async void NewMessage()
+        private void NewMessage()
         {
             
         }

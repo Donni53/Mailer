@@ -68,7 +68,8 @@ namespace Mailer.ViewModel.Flyouts
                     message.EncodeAllHeaders(Encoding.Default, HeaderEncodingOptions.None);
                     await message.SerializeAsync(cacheFilePath);
                 }
-                envelope.IsUnseen = false;
+                if (envelope.IsUnseen)
+                    envelope.IsUnseen = false; //TODO Check
             }
             catch (Exception e)
             {

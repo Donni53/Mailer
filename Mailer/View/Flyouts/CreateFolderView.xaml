@@ -10,15 +10,15 @@
              VerticalAlignment="Center">
     <Grid HorizontalAlignment="Center" Width="320" Height="180">
         <StackPanel Margin="0,20,0,20">
-            <TextBlock Text="Создани нового каталога" Foreground="{DynamicResource ForegroundBrush}" FontSize="24"
+            <TextBlock Text="{x:Static localization:MainResources.CreateFolder}" Foreground="{DynamicResource ForegroundBrush}" FontSize="24"
                        FontWeight="Light" />
-            <TextBlock Text="Название" FontSize="12" Margin="0,20,0,0" Foreground="{DynamicResource ForegroundBrush}" />
+            <TextBlock Text="{x:Static localization:MainResources.NewFolderName}" FontSize="12" Margin="0,20,0,0" Foreground="{DynamicResource ForegroundBrush}" />
             <TextBox x:Name="TitleTextBox" Margin="0,3,0,0" Text="{Binding Name}"
                      Style="{StaticResource CommonTextBoxStyle}" Foreground="{DynamicResource ForegroundBrush}" />
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
-                <Button Content="Подтвердить" Padding="23,3" Margin="0,0,10,0"
+                <Button Content="{x:Static localization:MainResources.Apply}" Padding="23,3" Margin="0,0,10,0"
                         Style="{StaticResource HighlightedButtonStyle}" Command="{Binding SaveCommand}" />
-                <Button Content="Отменить" Padding="23,3" Style="{StaticResource CommonButtonStyle}"
+                <Button Content="{x:Static localization:MainResources.CancelButton}" Padding="23,3" Style="{StaticResource CommonButtonStyle}"
                         Command="{Binding CloseCommand}" />
             </StackPanel>
         </StackPanel>
