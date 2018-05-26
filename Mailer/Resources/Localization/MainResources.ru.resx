@@ -348,4 +348,7 @@
   <data name="AddFolderHint" xml:space="preserve">
     <value>Добавить новую папку</value>
   </data>
+  <data name="Refresh" xml:space="preserve">
+    <value>Обновить</value>
+  </data>
 </root>

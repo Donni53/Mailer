@@ -20,8 +20,8 @@
             <BeginStoryboard Storyboard="{StaticResource PageLoadAnim}" />
         </EventTrigger>
     </Page.Triggers>
-    <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Width="320">
-        <StackPanel VerticalAlignment="Center" Margin="0,20,0,20"
+    <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Width="1024">
+        <StackPanel VerticalAlignment="Center" Margin="0,20,0,20" Width="320"
                     Visibility="{Binding IsWorking, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=True}">
             <TextBlock HorizontalAlignment="Center" Text="{x:Static localization:MainResources.AccountSetup}"
                        Foreground="{DynamicResource ForegroundBrush}" FontSize="24" FontWeight="Light" />
@@ -31,8 +31,7 @@
                      Style="{StaticResource CommonTextBoxStyle}" Foreground="{DynamicResource ForegroundBrush}" />
             <TextBlock Text="{x:Static localization:MainResources.AccountPassword}" FontSize="12" Margin="0,20,0,0"
                        Foreground="{DynamicResource ForegroundBrush}" />
-            <TextBox x:Name="PasswordTextBox" Margin="0,3,0,0" Text="{Binding Password, Mode=TwoWay}"
-                     Style="{StaticResource CommonTextBoxStyle}" Foreground="{DynamicResource ForegroundBrush}" />
+            <controls:BindablePasswordBox x:Name="PasswordTextBox" Margin="0,3,0,0" Password="{Binding Password}"/>
             <TextBlock Text="{x:Static localization:MainResources.AccountUsername}" FontSize="12" Margin="0,20,0,0"
                        Foreground="{DynamicResource ForegroundBrush}" />
             <TextBox x:Name="UsernameTextBox" Margin="0,3,0,0" Text="{Binding UserName, Mode=TwoWay}"

@@ -36,7 +36,7 @@
             </TextBlock>
             <TextBlock Text="Copyright © Daniil Novitsky 2018" Foreground="{DynamicResource ForegroundBrush}" />
             <TextBlock x:Name="SiteLink" FontWeight="Normal" TextWrapping="Wrap" Text="https://github.com/Donni53/"
-                       HorizontalAlignment="Left" FontSize="12">
+                       HorizontalAlignment="Left" FontSize="12" MouseLeftButtonUp="SiteLink_OnMouseLeftButtonUp">
                 <TextBlock.Style>
                     <Style TargetType="{x:Type TextBlock}">
                         <Setter Property="Cursor" Value="Hand" />

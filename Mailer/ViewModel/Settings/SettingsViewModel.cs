@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
+using Mailer.Controls;
 using Mailer.Helpers;
 using Mailer.Messages;
 using Mailer.Model;
@@ -44,7 +45,6 @@ namespace Mailer.ViewModel.Settings
 
         public SettingsViewModel()
         {
-            Domain.Settings.Load();
             InitializeCommands();
             _selectedTheme = Domain.Settings.Instance.Theme;
             _selectedColorScheme = AccentColors.FirstOrDefault(c => c.Name == Domain.Settings.Instance.AccentColor);
@@ -62,7 +62,6 @@ namespace Mailer.ViewModel.Settings
         {
             {MainResources.SettingsAccounts, "/View/Settings/AccountsView.xaml"},
             {MainResources.SettingsPersonalization, "/View/Settings/PersonalizationView.xaml"},
-            {MainResources.SettingsNotifications, "/View/Settings/NotificationsView.xaml"},
             {MainResources.SettingsAbout, "/View/Settings/AboutView.xaml"}
         };
 
@@ -308,7 +307,17 @@ namespace Mailer.ViewModel.Settings
             AddAccountCommand = new RelayCommand(AddAccount);
             CloseSettingsCommand = new RelayCommand(() =>
             {
-                ViewModelLocator.MainViewModel.GoBackCommand.Execute(null);
+                var frame = Application.Current.MainWindow.GetVisualDescendents().OfType<Frame>()
+                    .FirstOrDefault(f => f.Name == "RootFrame");
+                if (frame == null)
+                    return;
+                if (frame.CanGoBack)
+                    frame.GoBack();
+                else
+                    Messenger.Default.Send(new NavigateToPageMessage
+                    {
+                        Page = "/Main.MainPageView"
+                    });
             });
 
             SaveCommand = new RelayCommand(SaveSettings);

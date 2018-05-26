@@ -2,6 +2,7 @@
 using System.Windows.Navigation;
 using Mailer.Controls;
 using Mailer.ViewModel;
+using Mailer.ViewModel.Settings;
 
 namespace Mailer.View.Settings
 {
@@ -10,21 +11,27 @@ namespace Mailer.View.Settings
     /// </summary>
     public partial class SettingsView : PageBase
     {
+        private SettingsViewModel _viewModel;
         public SettingsView()
         {
             InitializeComponent();
+            _viewModel = new SettingsViewModel();
+            this.DataContext = _viewModel;
         }
 
         private void SettingsFrame_Navigated(object sender, NavigationEventArgs e)
         {
+            SettingsFrame.RemoveBackEntry();
+
             if (!(SettingsFrame.Content is FrameworkElement content))
                 return;
-            content.DataContext = ViewModelLocator.SettingsViewModel;
+
+            content.DataContext = _viewModel;
         }
 
         private void SettingsView_OnLoaded(object sender, RoutedEventArgs e)
         {
-            ViewModelLocator.SettingsViewModel.Activate();
+            _viewModel.Activate();
         }
     }
 }

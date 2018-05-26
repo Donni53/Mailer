@@ -36,9 +36,7 @@ namespace Mailer.ViewModel.Main
             get
             {
                 var frame = Application.Current.MainWindow.GetVisualDescendents().OfType<Frame>().FirstOrDefault();
-                if (frame == null)
-                    return false;
-                return frame.CanGoBack;
+                return frame != null && frame.CanGoBack;
             }
         }
 

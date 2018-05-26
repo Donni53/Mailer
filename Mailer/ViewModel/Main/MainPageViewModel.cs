@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
@@ -45,6 +46,7 @@ namespace Mailer.ViewModel.Main
         public RelayCommand ClearFolderCommand { get; set; }
         public RelayCommand DeleteFolderCommand { get; set; }
         public RelayCommand NewMessageCommand { get; private set; }
+        public RelayCommand RefreshCommand { get; private set; }
 
 
         public MainPageViewModel()
@@ -55,6 +57,7 @@ namespace Mailer.ViewModel.Main
             SelectedFolderNameChanged += OnSelectedFolderChanged;
             LoadInfo();
         }
+
 
         private void InitializeCommands()
         {
@@ -75,6 +78,7 @@ namespace Mailer.ViewModel.Main
             DeleteMessagesCommand = new RelayCommand(DeleteMessages);
             MarkMessagesCommand = new RelayCommand<MarkAs>(MarkMessages);
             NewMessageCommand = new RelayCommand(NewMessage);
+            RefreshCommand = new RelayCommand(LoadInfo);
         }
 
 

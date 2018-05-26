@@ -31,7 +31,11 @@ namespace Mailer
 
         private void App_OnStartup(object sender, StartupEventArgs e)
         {
+            LoggingService.Log("Mailer v" + Assembly.GetExecutingAssembly().GetName().Version + " started. OS: " + Environment.OSVersion);
             DispatcherHelper.Initialize();
+
+            Settings.Load();
+
             Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo(Settings.Instance.Language);
             Thread.CurrentThread.CurrentUICulture = Thread.CurrentThread.CurrentCulture;
 

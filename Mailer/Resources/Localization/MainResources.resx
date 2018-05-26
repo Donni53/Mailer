@@ -351,4 +351,7 @@
   <data name="AddFolderHint" xml:space="preserve">
     <value>Add new folder</value>
   </data>
+  <data name="Refresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
 </root>

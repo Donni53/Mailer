@@ -20,7 +20,7 @@
             <BeginStoryboard Storyboard="{StaticResource PageLoadAnim}" />
         </EventTrigger>
     </Page.Triggers>
-    <Grid HorizontalAlignment="Center" Width="350">
+    <Grid HorizontalAlignment="Center" Width="1024">
         <StackPanel Margin="0,20,0,20"
                     Visibility="{Binding IsWorking, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=True}"
                     HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -54,8 +54,6 @@
                 <Button Style="{StaticResource HighlightedButtonStyle}"
                         Content="{x:Static localization:MainResources.SettingsAccountAdd}"
                         Command="{Binding AddNewCommand}" Margin="10,0,0,0" />
-                <!--<Button Style="{StaticResource DeleteButtonStyle}" Command="{Binding DeleteMessageCommand}" HorizontalAlignment="Right"/>-->
-                <!--<Button Style="{StaticResource HighlightedButtonStyle}" Content=")))" Command="{Binding TextEditorCommand}"  Margin="10,0,0,0"/>-->
             </StackPanel>
         </StackPanel>
         <StackPanel Visibility="{Binding IsWorking, Converter={StaticResource BoolToVisibilityConverter}}"

@@ -1,4 +1,6 @@
-﻿using System.Windows.Controls;
+﻿using System.Diagnostics;
+using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace Mailer.View.Settings
 {
@@ -10,6 +12,11 @@ namespace Mailer.View.Settings
         public About()
         {
             InitializeComponent();
+        }
+
+        private void SiteLink_OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            Process.Start("https://github.com/Donni53/");
         }
     }
 }

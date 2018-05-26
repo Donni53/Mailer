@@ -40,7 +40,7 @@
             <Image Stretch="UniformToFill" x:Name="BackgroundImage" Margin="0,0,0,0" />
         </Grid>
         <Grid>
-            <Frame x:Name="RootFrame" Background="Transparent" NavigationUIVisibility="Hidden" />
+            <Frame x:Name="RootFrame" Background="Transparent" NavigationUIVisibility="Hidden" JournalOwnership="OwnsJournal"/>
             <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,5,5,0">
                 <Button x:Name="MailerButton" HorizontalAlignment="Left" Margin="0,0,10,0" Visibility="Hidden"
                         Foreground="{DynamicResource SidebarForegroundBrush}"
