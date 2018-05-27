@@ -57,6 +57,9 @@
     <Reference Include="GongSolutions.WPF.DragDrop, Version=1.2.0.57, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\gong-wpf-dragdrop.1.2.0-alpha0057\lib\net46\GongSolutions.WPF.DragDrop.dll</HintPath>
     </Reference>
+    <Reference Include="HtmlToXamlConverter, Version=1.0.5727.24510, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlToXamlConverter.1.0.5727.24510\lib\net45\HtmlToXamlConverter.dll</HintPath>
+    </Reference>
     <Reference Include="MailBee.NET, Version=11.2.0.590, Culture=neutral, PublicKeyToken=cd85b70fb26f9fc1, processorArchitecture=MSIL">
       <HintPath>..\packages\MailBee.NET.11.2.0\lib\net45\MailBee.NET.dll</HintPath>
     </Reference>
@@ -181,6 +184,7 @@
     <Compile Include="ViewModel\Flyouts\ConfirmViewModel.cs" />
     <Compile Include="ViewModel\Flyouts\CreateFolderViewModel.cs" />
     <Compile Include="ViewModel\Flyouts\MessageViewModel.cs" />
+    <Compile Include="ViewModel\Flyouts\NewMessageViewModel.cs" />
     <Compile Include="ViewModel\Main\MainPageViewModel.cs" />
     <Compile Include="ViewModel\Main\MainViewModel.cs" />
     <Compile Include="ViewModel\Main\TextEditorViewModel.cs" />
@@ -204,6 +208,9 @@
     </Compile>
     <Compile Include="View\Flyouts\MessageView.xaml.cs">
       <DependentUpon>MessageView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Flyouts\NewMessageView.xaml.cs">
+      <DependentUpon>NewMessageView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Main\MainPageView.xaml.cs">
       <DependentUpon>MainPageView.xaml</DependentUpon>
@@ -311,6 +318,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Flyouts\MessageView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Flyouts\NewMessageView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -441,7 +452,6 @@
     <Content Include="NLog.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="ClassDiagram.cd" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>

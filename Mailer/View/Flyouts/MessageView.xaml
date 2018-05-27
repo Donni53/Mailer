@@ -5,6 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Mailer.View.Flyouts"
       xmlns:localization="clr-namespace:Mailer.Resources.Localization"
+      xmlns:behaviours="clr-namespace:Mailer.Behaviours"
       mc:Ignorable="d" 
       d:DesignHeight="700" d:DesignWidth="1024"
       Background="{DynamicResource MainBackgroundBrush}">
@@ -31,11 +32,13 @@
             <TextBlock Grid.Row="3" Text="{Binding Message.DateReceived}" FontSize="18" 
                        HorizontalAlignment="Left" FontWeight="Light" 
                        Foreground="{DynamicResource ForegroundBrush}" />
-            <TextBox Grid.Row="4" Text="{Binding Message.BodyPlainText}" 
-                     Foreground="{DynamicResource ForegroundBrush}" 
-                     ScrollViewer.HorizontalScrollBarVisibility="Auto" 
-                     ScrollViewer.VerticalScrollBarVisibility="Auto" 
-                     Style="{StaticResource CommonTextBoxStyle}" />
+            <Grid Grid.Row="4">
+                <TextBox Text="{Binding Message.BodyPlainText}" 
+                         Foreground="{DynamicResource ForegroundBrush}" 
+                         ScrollViewer.HorizontalScrollBarVisibility="Auto" 
+                         ScrollViewer.VerticalScrollBarVisibility="Auto" 
+                         Style="{StaticResource CommonTextBoxStyle}" IsReadOnly="True"/>
+            </Grid>
             <StackPanel Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,5,0,0">
                 <Button Visibility="Hidden" Content="Ответить" Padding="23,3" Margin="0,0,10,0" 
                         Style="{StaticResource HighlightedButtonStyle}" Command="{Binding CopyCommand}" />

@@ -1,0 +1,58 @@
+﻿<UserControl x:Class="Mailer.View.Flyouts.NewMessageView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Mailer.View.Flyouts"
+             xmlns:localization="clr-namespace:Mailer.Resources.Localization"
+             mc:Ignorable="d" 
+             d:DesignHeight="700" d:DesignWidth="1024"
+             Background="{DynamicResource MainBackgroundBrush}">
+    <Grid>
+        <Grid Margin="10,0,10,10" 
+              Visibility="{Binding IsWorking, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=True}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30" />
+                <RowDefinition Height="30" />
+                <RowDefinition />
+                <RowDefinition Height="30" />
+            </Grid.RowDefinitions>
+            <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="0,0,0,0">
+                <TextBlock Text="Кому: " FontSize="22" 
+                           HorizontalAlignment="Left" FontWeight="Light" 
+                           Foreground="{DynamicResource ForegroundBrush}" />
+                <TextBox  Margin="10,5,0,0" Text="{Binding To}" Width="479"
+                         Style="{StaticResource CommonTextBoxStyle}" Foreground="{DynamicResource ForegroundBrush}" />
+            </StackPanel>
+            <StackPanel Grid.Row="1" Orientation="Horizontal">
+                <TextBlock Text="Тема:" FontSize="22" HorizontalAlignment="Left" 
+                           FontWeight="Light" Foreground="{DynamicResource ForegroundBrush}" />
+                <TextBox  Margin="10,5,0,0" Text="{Binding Subject}" Width="499"
+                          Style="{StaticResource CommonTextBoxStyle}" Foreground="{DynamicResource ForegroundBrush}" />
+            </StackPanel>
+            <TextBox Grid.Row="2" Text="{Binding Message}" Margin="0,10,0,0"
+                     Foreground="{DynamicResource ForegroundBrush}" 
+                     ScrollViewer.HorizontalScrollBarVisibility="Auto" 
+                     ScrollViewer.VerticalScrollBarVisibility="Auto" 
+                     Style="{StaticResource CommonTextBoxStyle}"/>
+            <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,5,0,0">
+                <TextBlock Foreground="Red" Text="{Binding Error}" Margin="0,0,10,0"
+                           Visibility="{Binding IsError, Converter={StaticResource NullToVisibilityConverter}}"
+                           TextWrapping="Wrap" />
+                <Button Content="Send" Padding="23,3" Margin="0,0,10,0" 
+                        Style="{StaticResource HighlightedButtonStyle}" Command="{Binding SendMessageCommand}" />
+                <Button Content="{x:Static localization:MainResources.MessageClose}" Padding="23,3" Style="{StaticResource CommonButtonStyle}" 
+                        Command="{Binding CloseMessageCommand}" />
+            </StackPanel>
+        </Grid>
+        <StackPanel 
+            Visibility="{Binding IsWorking, Converter={StaticResource BoolToVisibilityConverter}}" 
+            VerticalAlignment="Center" Margin="0,0,0,0">
+            <TextBlock Text="{x:Static localization:MainResources.WaitMessage}" FontSize="22" 
+                       HorizontalAlignment="Center" FontWeight="Light" 
+                       Foreground="{DynamicResource ForegroundBrush}" />
+            <ProgressBar Style="{StaticResource CommonProgressBarStyle}" 
+                         IsIndeterminate="{Binding IsWorking}" />
+        </StackPanel>
+    </Grid>
+</UserControl>

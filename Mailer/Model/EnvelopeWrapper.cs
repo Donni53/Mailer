@@ -98,7 +98,7 @@ namespace Mailer.Model
         {
             try
             {
-                await ImapService.ImapClient.SetMessageFlagsAsync(messageIndexSet, indexIsUid, systemFlags, action);
+                await ImapSmtpService.ImapClient.SetMessageFlagsAsync(messageIndexSet, indexIsUid, systemFlags, action);
             }
             catch (Exception e)
             {

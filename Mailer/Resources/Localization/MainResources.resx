@@ -351,7 +351,16 @@
   <data name="AddFolderHint" xml:space="preserve">
     <value>Add new folder</value>
   </data>
+  <data name="NewMessage" xml:space="preserve">
+    <value>New Message</value>
+  </data>
   <data name="Refresh" xml:space="preserve">
     <value>Refresh</value>
+  </data>
+  <data name="LoadFullMessages" xml:space="preserve">
+    <value>Load full versions of messages</value>
+  </data>
+  <data name="SaveMessages" xml:space="preserve">
+    <value>Save messages to cache</value>
   </data>
 </root>

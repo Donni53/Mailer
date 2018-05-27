@@ -348,7 +348,16 @@
   <data name="AddFolderHint" xml:space="preserve">
     <value>Добавить новую папку</value>
   </data>
+  <data name="NewMessage" xml:space="preserve">
+    <value>Написать письмо</value>
+  </data>
   <data name="Refresh" xml:space="preserve">
     <value>Обновить</value>
+  </data>
+  <data name="LoadFullMessages" xml:space="preserve">
+    <value>Загружать полные версии сообщений</value>
+  </data>
+  <data name="SaveMessages" xml:space="preserve">
+    <value>Сохранять сообщения в кэш</value>
   </data>
 </root>

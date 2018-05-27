@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Windows;
+using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 using Mailer.Controls;
 using Mailer.Model;
@@ -34,6 +35,8 @@ namespace Mailer.Domain
             SelectedAccount = -1;
             CustomBackgroundPath = "";
             CustomBackground = false;
+            SaveMessagesToCache = false;
+            LoadFullVersions = false;
         }
 
         public static Settings Instance { get; private set; } = new Settings();
@@ -63,6 +66,8 @@ namespace Mailer.Domain
         public bool AutoReplie { get; set; }
         public string AutoReplieText { get; set; }
         public int SelectedImage { get; set; }
+        public bool SaveMessagesToCache { get; set; }
+        public bool LoadFullVersions { get; set; }
 
         public static void Load()
         {

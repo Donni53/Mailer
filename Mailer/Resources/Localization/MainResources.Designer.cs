@@ -286,6 +286,15 @@ namespace Mailer.Resources.Localization {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Load full versions of messages.
+        /// </summary>
+        public static string LoadFullMessages {
+            get {
+                return ResourceManager.GetString("LoadFullMessages", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Loading all the necessary information....
         /// </summary>
         public static string LoadingMessage {
@@ -340,6 +349,15 @@ namespace Mailer.Resources.Localization {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на New Message.
+        /// </summary>
+        public static string NewMessage {
+            get {
+                return ResourceManager.GetString("NewMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Ok.
         /// </summary>
         public static string Ok {
@@ -363,6 +381,15 @@ namespace Mailer.Resources.Localization {
         public static string Refresh {
             get {
                 return ResourceManager.GetString("Refresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Save messages to cache.
+        /// </summary>
+        public static string SaveMessages {
+            get {
+                return ResourceManager.GetString("SaveMessages", resourceCulture);
             }
         }
         

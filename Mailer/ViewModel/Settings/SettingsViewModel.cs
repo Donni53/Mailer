@@ -42,6 +42,8 @@ namespace Mailer.ViewModel.Settings
         private ColorScheme _selectedColorScheme;
         private SettingsLanguage _selectedLanguage;
         private string _selectedTheme;
+        private bool _saveMessagesToCache;
+        private bool _loadFullVersions;
 
         public SettingsViewModel()
         {
@@ -54,6 +56,9 @@ namespace Mailer.ViewModel.Settings
             _selectedAccount = Domain.Settings.Instance.SelectedAccount;
             _customBackground = Domain.Settings.Instance.CustomBackground;
             _customBackgroundPath = Domain.Settings.Instance.CustomBackgroundPath;
+            _saveMessagesToCache = Domain.Settings.Instance.SaveMessagesToCache;
+            _loadFullVersions = Domain.Settings.Instance.LoadFullVersions;
+
             var lang = Languages.FirstOrDefault(l => l.LanguageCode == Domain.Settings.Instance.Language);
             _selectedLanguage = lang ?? Languages.First();
         }
@@ -97,6 +102,26 @@ namespace Mailer.ViewModel.Settings
         public List<Account> Accounts => Domain.Settings.Instance.Accounts;
 
         public string Version => Assembly.GetExecutingAssembly().GetName().Version.ToString();
+
+        public bool SaveMessagesToCache
+        {
+            get => _saveMessagesToCache;
+            set
+            {
+                if (Set(ref _saveMessagesToCache, value))
+                    CanSave = true;
+            }
+        }
+
+        public bool LoadFullVersions
+        {
+            get => _loadFullVersions;
+            set
+            {
+                if (Set(ref _loadFullVersions, value))
+                    CanSave = true;
+            }
+        }
 
         public string SelectedTheme
         {
@@ -448,7 +473,7 @@ namespace Mailer.ViewModel.Settings
 
         private void DeleteAccount()
         {
-            ImapService.ImapLogout(SelectedAccount);
+            ImapSmtpService.ImapLogout(SelectedAccount);
             //TODO Delete confirmation
         }
 
@@ -503,6 +528,8 @@ namespace Mailer.ViewModel.Settings
             Domain.Settings.Instance.CustomBackgroundPath = CustomBackgroundPath;
             Domain.Settings.Instance.AutoReplie = AutoReplie;
             Domain.Settings.Instance.AutoReplieText = AutoReplieText;
+            Domain.Settings.Instance.SaveMessagesToCache = SaveMessagesToCache;
+            Domain.Settings.Instance.LoadFullVersions = LoadFullVersions;
 
             if (SelectedAccountChanged && Domain.Settings.Instance.SelectedAccount != SelectedAccount)
             {
@@ -510,7 +537,7 @@ namespace Mailer.ViewModel.Settings
                 IsError = false;
                 try
                 {
-                    await ImapService.ImapAuth(Domain.Settings.Instance.Accounts[SelectedAccount], false, -1);
+                    await ImapSmtpService.ImapAuth(Domain.Settings.Instance.Accounts[SelectedAccount], false, -1);
                     Messenger.Default.Send(new NavigateToPageMessage
                     {
                         Page = "/Main.MainPageView"

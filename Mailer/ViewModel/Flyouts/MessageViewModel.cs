@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -51,8 +52,9 @@ namespace Mailer.ViewModel.Flyouts
         {
             try
             {
-                var messagefilenameMd5 = Md5Helper.Md5(ImapService.Account.Email + envelope.Uid);
+                var messagefilenameMd5 = Md5Helper.Md5(ImapSmtpService.Account.Email + envelope.Uid);
                 var cacheFilePath = @"Cache\" + messagefilenameMd5 + ".xml";
+                var htmlFilePath = @"Cache\" + messagefilenameMd5 + ".htm";
                 if (File.Exists(cacheFilePath))
                 {
                     MailMessage message = new MailMessage();
@@ -61,15 +63,23 @@ namespace Mailer.ViewModel.Flyouts
                 }
                 else
                 {
-                    var message = await ImapService.ImapClient.DownloadEntireMessageAsync(Convert.ToInt64(envelope.Uid), true);
+                    var message = await ImapSmtpService.ImapClient.DownloadEntireMessageAsync(Convert.ToInt64(envelope.Uid), true);
                     if (message.BodyPlainText == "")
                         message.MakePlainBodyFromHtmlBody();
                     Message = message;
                     message.EncodeAllHeaders(Encoding.Default, HeaderEncodingOptions.None);
-                    await message.SerializeAsync(cacheFilePath);
+                    if (Domain.Settings.Instance.SaveMessagesToCache)
+                        await message.SerializeAsync(cacheFilePath);
                 }
+
+                if (Domain.Settings.Instance.LoadFullVersions)
+                {
+                    await Message.SaveHtmlAndRelatedFilesAsync(htmlFilePath);
+                    Process.Start(htmlFilePath);
+                }
+
                 if (envelope.IsUnseen)
-                    envelope.IsUnseen = false; //TODO Check
+                    envelope.IsUnseen = false;
             }
             catch (Exception e)
             {

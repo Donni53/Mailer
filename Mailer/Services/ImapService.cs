@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight.Messaging;
 using MailBee.ImapMail;
+using MailBee.SmtpMail;
 using Mailer.Domain;
 using Mailer.Messages;
 using Mailer.Model;
@@ -13,15 +14,17 @@ using Mailer.ViewModel;
 
 namespace Mailer.Services
 {
-    public static class ImapService
+    public static class ImapSmtpService
     {
         private const string Key = "MN110-7DB5B590B5C3B5D7B5F4B56BC8C8-0D68";
         public static Account Account { get; set; }
         public static Imap ImapClient { get; set; }
+        public static Smtp SmtpClient { get; set; }
 
-        static ImapService()
+        static ImapSmtpService()
         {
             ImapClient = new Imap(Key);
+            SmtpClient = new Smtp(Key);
         }
 
         public static async Task MoveMessageAsync(List<string> messages, string newFolder)

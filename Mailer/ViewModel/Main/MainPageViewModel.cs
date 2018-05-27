@@ -198,7 +198,7 @@ namespace Mailer.ViewModel.Main
 
         public async void ChangeFolder(int folderIndex)
         {
-            await ImapService.ImapClient.SelectFolderAsync(FoldersExtended[folderIndex].Name);
+            await ImapSmtpService.ImapClient.SelectFolderAsync(FoldersExtended[folderIndex].Name);
         }
 
         public async Task LoadMessages(int folderIndex)
@@ -206,10 +206,10 @@ namespace Mailer.ViewModel.Main
             try
             {
                 var folder = FoldersExtended[folderIndex];
-                await ImapService.ImapClient.SelectFolderAsync(folder.Name);
+                await ImapSmtpService.ImapClient.SelectFolderAsync(folder.Name);
                 var msgCount = folder.LastLoadedIndex > 50 ? 50 : folder.LastLoadedIndex;
                 var range = folder.LastLoadedIndex + ":" + (folder.LastLoadedIndex - msgCount + 1);
-                var envelopes = await ImapService.ImapClient.DownloadEnvelopesAsync(range, false,
+                var envelopes = await ImapSmtpService.ImapClient.DownloadEnvelopesAsync(range, false,
                     EnvelopeParts.BodyStructure | EnvelopeParts.MessagePreview | EnvelopeParts.InternalDate | EnvelopeParts.Flags | EnvelopeParts.Uid, 0);
                 folder.LastLoadedIndex = folder.LastLoadedIndex - msgCount + 1;
 
@@ -232,10 +232,10 @@ namespace Mailer.ViewModel.Main
             {
                 FoldersExtended.Clear();
                 Actions.Clear();
-                Folders = await ImapService.ImapClient.DownloadFoldersAsync();
+                Folders = await ImapSmtpService.ImapClient.DownloadFoldersAsync();
                 foreach (Folder item in Folders)
                 {
-                    var folderInfo = await ImapService.ImapClient.GetFolderStatusAsync(item.Name);
+                    var folderInfo = await ImapSmtpService.ImapClient.GetFolderStatusAsync(item.Name);
                     var folderExtended = new FolderExtended(item.Name, item.ShortName, folderInfo.MessageCount, folderInfo.UnseenCount);
                     Actions.Add(new ContextAction(folderExtended.Name, new RelayCommand<string>(MoveMessages)));
                     FoldersExtended.Add(folderExtended);
@@ -253,7 +253,7 @@ namespace Mailer.ViewModel.Main
             {
                 foreach (var folder in FoldersExtended)
                 {
-                    var folderInfo = await ImapService.ImapClient.GetFolderStatusAsync(folder.Name);
+                    var folderInfo = await ImapSmtpService.ImapClient.GetFolderStatusAsync(folder.Name);
                     folder.MessagesCount = folderInfo.MessageCount;
                     folder.UnreadedMessagesCount = folderInfo.UnseenCount;
                     if (FoldersExtended[SelectedFolder].Name == folder.Name) continue;
@@ -283,7 +283,7 @@ namespace Mailer.ViewModel.Main
                 var flyout = new FlyoutControl { FlyoutContent = new ConfirmView($"Delete {FoldersExtended[SelectedFolder].Name} folder?") };
                 var result = (bool)await flyout.ShowAsync();
                 if (!result) return;
-                await ImapService.ImapClient.DeleteFolderAsync(FoldersExtended[SelectedFolder].Name);
+                await ImapSmtpService.ImapClient.DeleteFolderAsync(FoldersExtended[SelectedFolder].Name);
                 LoadInfo();
             }
             catch (Exception e)
@@ -299,7 +299,7 @@ namespace Mailer.ViewModel.Main
                 var flyout = new FlyoutControl { FlyoutContent = new ConfirmView($"Clear {FoldersExtended[SelectedFolder].Name} folder?") };
                 var result = (bool)await flyout.ShowAsync();
                 if (!result) return;
-                await ImapService.ImapClient.DeleteMessagesAsync("1:*", false);
+                await ImapSmtpService.ImapClient.DeleteMessagesAsync("1:*", false);
                 LoadInfo();
             }
             catch (Exception e)
@@ -319,7 +319,7 @@ namespace Mailer.ViewModel.Main
         {
             try
             {
-                await ImapService.DeleteMessageAsync(Convert.ToString(envelope.Uid));
+                await ImapSmtpService.DeleteMessageAsync(Convert.ToString(envelope.Uid));
                 FoldersExtended[SelectedFolder].EnvelopeCollection.Remove(envelope);
                 await UpdateFolders();
             }
@@ -358,7 +358,7 @@ namespace Mailer.ViewModel.Main
                     FoldersExtended[SelectedFolder].EnvelopeCollection.Remove(item);
                 }
                 if (uidsList.Count == 0) return;
-                await ImapService.DeleteMessageAsync(uidsList);
+                await ImapSmtpService.DeleteMessageAsync(uidsList);
                 await UpdateFolders();
             }
             catch (Exception e)
@@ -379,7 +379,7 @@ namespace Mailer.ViewModel.Main
                     FoldersExtended[SelectedFolder].EnvelopeCollection.Remove(item);
                 }
                 if (uidsList.Count == 0) return;
-                await ImapService.MoveMessageAsync(uidsList, folder);
+                await ImapSmtpService.MoveMessageAsync(uidsList, folder);
                 await UpdateFolders();
             }
             catch (Exception e)
@@ -422,7 +422,7 @@ namespace Mailer.ViewModel.Main
                     }
                 }
                 if (uidsList.Count == 0) return;
-                await ImapService.MarkMessages(uidsList, systemMessageFlag, messageFlagAction);
+                await ImapSmtpService.MarkMessages(uidsList, systemMessageFlag, messageFlagAction);
 
             }
             catch (Exception e)
@@ -431,9 +431,11 @@ namespace Mailer.ViewModel.Main
             }
         }
 
-        private void NewMessage()
+        private async void NewMessage()
         {
-            
+            var flyout = new FlyoutControl { FlyoutContent = new NewMessageView() };
+            var result = await flyout.ShowAsync();
+            await UpdateFolders();
         }
     }
 }

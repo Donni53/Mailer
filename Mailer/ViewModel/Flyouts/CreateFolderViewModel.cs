@@ -30,7 +30,7 @@ namespace Mailer.ViewModel.Flyouts
         {
             try
             {
-                ImapService.ImapClient.CreateFolderAsync(Name);
+                ImapSmtpService.ImapClient.CreateFolderAsync(Name);
             }
             catch (Exception e)
             {
