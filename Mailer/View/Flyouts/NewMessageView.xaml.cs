@@ -28,5 +28,16 @@ namespace Mailer.View.Flyouts
             _viewModel = new NewMessageViewModel();
             DataContext = _viewModel;
         }
+
+        private void Rtb_DragOver(object sender, DragEventArgs e)
+        {
+            e.Effects = e.Data.GetDataPresent(DataFormats.FileDrop) ? DragDropEffects.All : DragDropEffects.None;
+            e.Handled = false;
+        }
+
+        private void Rtb_Drop(object sender, DragEventArgs e)
+        {
+            _viewModel.HandleDrop(e);
+        }
     }
 }

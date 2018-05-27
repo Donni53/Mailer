@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Mailer.View.Flyouts"
              xmlns:localization="clr-namespace:Mailer.Resources.Localization"
+             xmlns:controls="clr-namespace:Mailer.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="700" d:DesignWidth="1024"
              Background="{DynamicResource MainBackgroundBrush}">
@@ -30,11 +31,14 @@
                 <TextBox  Margin="10,5,0,0" Text="{Binding Subject}" Width="499"
                           Style="{StaticResource CommonTextBoxStyle}" Foreground="{DynamicResource ForegroundBrush}" />
             </StackPanel>
-            <TextBox Grid.Row="2" Text="{Binding Message}" Margin="0,10,0,0"
+            <!--<TextBox Grid.Row="2" Text="{Binding Message}" Margin="0,10,0,0"
                      Foreground="{DynamicResource ForegroundBrush}" 
                      ScrollViewer.HorizontalScrollBarVisibility="Auto" 
                      ScrollViewer.VerticalScrollBarVisibility="Auto" 
-                     Style="{StaticResource CommonTextBoxStyle}"/>
+                     Style="{StaticResource CommonTextBoxStyle}" AcceptsReturn="True" TextWrapping ="WrapWithOverflow"/>-->
+            <controls:BindableRichTextBox x:Name="Rtb" AllowDrop="True" Grid.Row="2" Margin="0,5,0,0"
+                                          Document="{Binding Document}" DragOver="Rtb_DragOver" Drop="Rtb_Drop"
+                                          Style="{StaticResource CommonRtbStyle}" Block.LineHeight="1"/>
             <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,5,0,0">
                 <TextBlock Foreground="Red" Text="{Binding Error}" Margin="0,0,10,0"
                            Visibility="{Binding IsError, Converter={StaticResource NullToVisibilityConverter}}"

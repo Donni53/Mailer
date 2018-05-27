@@ -75,6 +75,7 @@ namespace Mailer.ViewModel.Accounts
                 {
                     Page = "/Main.MainPageView"
                 });
+                IsError = false;
             }
             catch (Exception ex)
             {

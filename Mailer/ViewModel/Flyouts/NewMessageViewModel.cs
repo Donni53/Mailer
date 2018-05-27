@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Documents;
 using GalaSoft.MvvmLight.Command;
 using MailBee;
 using MailBee.Security;
@@ -20,7 +22,24 @@ namespace Mailer.ViewModel.Flyouts
         private bool _isError;
         public string To { get; set; }
         public string Subject { get; set; }
-        public string Message { get; set; }
+        public FlowDocument Document { get; set; }
+
+        public List<string> FontList { get; set; } = new List<string>
+        {
+            "Arial",
+            "Times New Roman",
+            "Lucida Console",
+            "Tahoma"
+        };
+
+        public List<string> FontSizeList { get; set; } = new List<string>
+        {
+            "8",
+            "12",
+            "16",
+            "32",
+            "82"
+        };
 
         public RelayCommand SendMessageCommand { get; private set; }
         public RelayCommand CloseMessageCommand { get; private set; }
@@ -28,6 +47,7 @@ namespace Mailer.ViewModel.Flyouts
         public NewMessageViewModel()
         {
             InitializeCommands();
+            Document = new FlowDocument();
         }
 
         public string Error
@@ -48,6 +68,31 @@ namespace Mailer.ViewModel.Flyouts
             CloseMessageCommand = new RelayCommand(CloseMessage);
         }
 
+        public void HandleDrop(DragEventArgs e)
+        {
+            if (!e.Data.GetDataPresent(DataFormats.FileDrop)) return;
+            string[] docPath = (string[])e.Data.GetData(DataFormats.FileDrop);
+
+            var dataFormat = DataFormats.Rtf;
+
+            if (e.KeyStates == DragDropKeyStates.ShiftKey) dataFormat = DataFormats.Text;
+
+            TextRange range;
+            FileStream fStream;
+            if (!File.Exists(docPath[0])) return;
+            try
+            {
+                range = new TextRange(Document.ContentStart, Document.ContentEnd);
+                fStream = new FileStream(docPath[0], FileMode.OpenOrCreate);
+                range.Load(fStream, dataFormat);
+                fStream.Close();
+            }
+            catch (Exception)
+            {
+                LoggingService.Log("File could not be opened. Make sure the file is a text file.");
+            }
+        }
+
         private async void SendMessage()
         {
             IsWorking = true;
@@ -55,6 +100,8 @@ namespace Mailer.ViewModel.Flyouts
             {
                 if (ImapSmtpService.SmtpClient.IsConnected)
                     await ImapSmtpService.SmtpClient.DisconnectAsync();
+                ImapSmtpService.SmtpClient.SmtpServers.Clear();
+                ImapSmtpService.SmtpClient.ResetMessage();
                 SmtpServer server = new SmtpServer(ImapSmtpService.Account.SmtpData.Address, ImapSmtpService.Account.Email, ImapSmtpService.Account.Password);
                 server.SslMode = SslStartupMode.UseStartTls;
                 ImapSmtpService.SmtpClient.SmtpServers.Add(server);
@@ -65,7 +112,7 @@ namespace Mailer.ViewModel.Flyouts
                 ImapSmtpService.SmtpClient.From.Email = ImapSmtpService.Account.Email;
                 ImapSmtpService.SmtpClient.To.AddFromString(To);
                 ImapSmtpService.SmtpClient.Subject = Subject;
-                ImapSmtpService.SmtpClient.BodyHtmlText = Message;
+                ImapSmtpService.SmtpClient.BodyHtmlText = new TextRange(Document.ContentStart, Document.ContentEnd).Text;
                 await ImapSmtpService.SmtpClient.SendAsync();
                 IsError = false;
                 CloseMessage();

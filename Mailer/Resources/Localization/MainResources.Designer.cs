@@ -259,6 +259,33 @@ namespace Mailer.Resources.Localization {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Load.
+        /// </summary>
+        public static string DbLoad {
+            get {
+                return ResourceManager.GetString("DbLoad", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Portable cache database.
+        /// </summary>
+        public static string DbLoadSave {
+            get {
+                return ResourceManager.GetString("DbLoadSave", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Create.
+        /// </summary>
+        public static string DbSave {
+            get {
+                return ResourceManager.GetString("DbSave", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Folders.
         /// </summary>
         public static string Folders {

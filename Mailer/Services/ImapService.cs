@@ -89,12 +89,12 @@ namespace Mailer.Services
             if (Settings.Instance.Accounts.Count == 0)
                 Messenger.Default.Send(new NavigateToPageMessage
                 {
-                    Page = "/Account.AccountSetupView"
+                    Page = "/Accounts.AccountSetupView"
                 });
             else
                 Messenger.Default.Send(new NavigateToPageMessage
                 {
-                    Page = "/Account.AccountSelectView"
+                    Page = "/Accounts.AccountSelectView"
                 });
         }
     }

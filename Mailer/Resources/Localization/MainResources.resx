@@ -363,4 +363,13 @@
   <data name="SaveMessages" xml:space="preserve">
     <value>Save messages to cache</value>
   </data>
+  <data name="DbLoad" xml:space="preserve">
+    <value>Load</value>
+  </data>
+  <data name="DbLoadSave" xml:space="preserve">
+    <value>Portable cache database</value>
+  </data>
+  <data name="DbSave" xml:space="preserve">
+    <value>Create</value>
+  </data>
 </root>

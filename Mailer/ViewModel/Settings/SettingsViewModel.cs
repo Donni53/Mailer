@@ -18,7 +18,9 @@ using Mailer.Messages;
 using Mailer.Model;
 using Mailer.Resources.Localization;
 using Mailer.Services;
+using Mailer.Services.Mailer.Database;
 using Mailer.UI.Extensions;
+using Mailer.View.Flyouts;
 using Microsoft.Win32;
 
 namespace Mailer.ViewModel.Settings
@@ -98,6 +100,8 @@ namespace Mailer.ViewModel.Settings
         public RelayCommand EditAccountCommand { get; private set; }
         public RelayCommand DeleteAccountCommand { get; private set; }
         public RelayCommand AddAccountCommand { get; private set; }
+        public RelayCommand LoadFromDbCommand { get; private set; }
+        public RelayCommand SaveToDbCommand { get; private set; }
 
         public List<Account> Accounts => Domain.Settings.Instance.Accounts;
 
@@ -385,6 +389,20 @@ namespace Mailer.ViewModel.Settings
                 var cacheSize = await CalculateFolderSizeAsync("Cache");
                 CacheSize = StringHelper.FormatSize(Math.Round(cacheSize, 1));
             });
+
+            LoadFromDbCommand = new RelayCommand(LoadFromDb);
+            SaveToDbCommand = new RelayCommand(SaveToDb);
+
+        }
+
+        private async void SaveToDb()
+        {
+            await DataBaseLocator.DataBase.AddCache();
+        }
+
+        private async void LoadFromDb()
+        {
+            await DataBaseLocator.DataBase.LoadCache();
         }
 
         private void SelectBackgroundImage()
@@ -471,10 +489,12 @@ namespace Mailer.ViewModel.Settings
             });
         }
 
-        private void DeleteAccount()
+        private async void DeleteAccount()
         {
+            var flyout = new FlyoutControl { FlyoutContent = new ConfirmView($"Delete {Domain.Settings.Instance.Accounts[SelectedAccount].Email} account?") };
+            var result = (bool)await flyout.ShowAsync();
+            if (!result) return;
             ImapSmtpService.ImapLogout(SelectedAccount);
-            //TODO Delete confirmation
         }
 
         private async void SaveSettings()

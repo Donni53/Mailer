@@ -360,4 +360,13 @@
   <data name="SaveMessages" xml:space="preserve">
     <value>Сохранять сообщения в кэш</value>
   </data>
+  <data name="DbLoad" xml:space="preserve">
+    <value>Загрузить</value>
+  </data>
+  <data name="DbLoadSave" xml:space="preserve">
+    <value>Портативная база данных кеша</value>
+  </data>
+  <data name="DbSave" xml:space="preserve">
+    <value>Сохранить</value>
+  </data>
 </root>
