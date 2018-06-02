@@ -84,6 +84,7 @@ namespace Mailer.ViewModel.Flyouts
             catch (Exception e)
             {
                 LoggingService.Log(e);
+                CloseMessage();
             }
         }
 

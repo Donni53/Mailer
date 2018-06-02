@@ -24,23 +24,6 @@ namespace Mailer.ViewModel.Flyouts
         public string Subject { get; set; }
         public FlowDocument Document { get; set; }
 
-        public List<string> FontList { get; set; } = new List<string>
-        {
-            "Arial",
-            "Times New Roman",
-            "Lucida Console",
-            "Tahoma"
-        };
-
-        public List<string> FontSizeList { get; set; } = new List<string>
-        {
-            "8",
-            "12",
-            "16",
-            "32",
-            "82"
-        };
-
         public RelayCommand SendMessageCommand { get; private set; }
         public RelayCommand CloseMessageCommand { get; private set; }
 

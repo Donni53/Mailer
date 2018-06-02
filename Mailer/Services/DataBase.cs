@@ -105,29 +105,6 @@ namespace Mailer.Services
                 CloseConnection();
             }
 
-            public List<Contact> LoadUsers(string user)
-            {
-                OpenConnection();
-                var result = new List<Contact>();
-                try
-                {
-                    var sql = $"SELECT * FROM UserContacts WHERE user = '{user}'";
-                    var command = new SQLiteCommand(sql, Connection);
-                    var reader = command.ExecuteReaderAsync();
-                    while (reader.Result.Read())
-                    {
-                        var tmp = (Contact)ByteConverters.ByteArrayToObject((byte[])reader.Result["contact"]);
-                        result.Add(tmp);
-                    }
-                    CloseConnection();
-                }
-                catch (Exception e)
-                {
-                    LoggingService.Log(e);
-                }
-                return result;
-            }
-
             public async Task CreateTable(string table)
             {
                 OpenConnection();

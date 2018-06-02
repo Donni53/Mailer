@@ -372,4 +372,10 @@
   <data name="DbSave" xml:space="preserve">
     <value>Create</value>
   </data>
+  <data name="Subject" xml:space="preserve">
+    <value>Subject: </value>
+  </data>
+  <data name="To" xml:space="preserve">
+    <value>To: </value>
+  </data>
 </root>

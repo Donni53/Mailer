@@ -369,4 +369,10 @@
   <data name="DbSave" xml:space="preserve">
     <value>Сохранить</value>
   </data>
+  <data name="Subject" xml:space="preserve">
+    <value>Тема: </value>
+  </data>
+  <data name="To" xml:space="preserve">
+    <value>Кому: </value>
+  </data>
 </root>

@@ -13,7 +13,6 @@ namespace Mailer.ViewModel
     {
         public static MainViewModel MainViewModel { get; } = new MainViewModel();
         public static AccountSetupViewModel AccountSetupViewModel { get; } = new AccountSetupViewModel();
-        public static Smtp SmtpClient { get; set; } = new Smtp("MN110-7DB5B590B5C3B5D7B5F4B56BC8C8-0D68");
         public ViewModelLocator()
         {
 
