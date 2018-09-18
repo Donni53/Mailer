@@ -13,7 +13,7 @@ namespace Mailer.Helpers
             if (!NetworkInterface.GetIsNetworkAvailable()) return null;
 
 
-            IPHostEntry host = Dns.GetHostEntry(Dns.GetHostName());
+            var host = Dns.GetHostEntry(Dns.GetHostName());
 
             return host.AddressList.Where(a => a.AddressFamily == AddressFamily.InterNetwork).Select(a => a.ToString())
                 .ToList();

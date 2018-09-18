@@ -82,7 +82,7 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsChecked" Value="True">
                             <Setter TargetName="Icon" Property="Data" Value="{StaticResource LikeIcon}" />
-                            <Setter TargetName="Icon" Property="Fill" Value="{DynamicResource AccentBrush}"/>
+                            <Setter TargetName="Icon" Property="Fill" Value="{DynamicResource AccentBrush}" />
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="Icon" Property="Opacity" Value="1" />

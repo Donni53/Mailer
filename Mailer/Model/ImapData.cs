@@ -7,6 +7,7 @@
             Address = address;
             UseSsl = useSsl;
         }
+
         public string Address { get; set; }
         public bool UseSsl { get; set; }
     }

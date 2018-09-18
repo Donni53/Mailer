@@ -18,7 +18,6 @@ using Mailer.Messages;
 using Mailer.Model;
 using Mailer.Resources.Localization;
 using Mailer.Services;
-using Mailer.Services.Mailer.Database;
 using Mailer.UI.Extensions;
 using Mailer.View.Flyouts;
 using Microsoft.Win32;
@@ -38,14 +37,14 @@ namespace Mailer.ViewModel.Settings
         private bool _enableTrayIcon;
         private string _error;
         private bool _isError;
+        private bool _loadFullVersions;
         private bool _restartRequired;
+        private bool _saveMessagesToCache;
         private int _selectedAccount;
         private bool _selectedAccountChanged;
         private ColorScheme _selectedColorScheme;
         private SettingsLanguage _selectedLanguage;
         private string _selectedTheme;
-        private bool _saveMessagesToCache;
-        private bool _loadFullVersions;
 
         public SettingsViewModel()
         {
@@ -392,7 +391,6 @@ namespace Mailer.ViewModel.Settings
 
             LoadFromDbCommand = new RelayCommand(LoadFromDb);
             SaveToDbCommand = new RelayCommand(SaveToDb);
-
         }
 
         private async void SaveToDb()
@@ -491,8 +489,12 @@ namespace Mailer.ViewModel.Settings
 
         private async void DeleteAccount()
         {
-            var flyout = new FlyoutControl { FlyoutContent = new ConfirmView($"Delete {Domain.Settings.Instance.Accounts[SelectedAccount].Email} account?") };
-            var result = (bool)await flyout.ShowAsync();
+            var flyout = new FlyoutControl
+            {
+                FlyoutContent =
+                    new ConfirmView($"Delete {Domain.Settings.Instance.Accounts[SelectedAccount].Email} account?")
+            };
+            var result = (bool) await flyout.ShowAsync();
             if (!result) return;
             ImapSmtpService.ImapLogout(SelectedAccount);
         }
@@ -584,7 +586,7 @@ namespace Mailer.ViewModel.Settings
 
         private static float CalculateFolderSize(string folder)
         {
-            float folderSize = 0.0f;
+            var folderSize = 0.0f;
             try
             {
                 if (!Directory.Exists(folder))

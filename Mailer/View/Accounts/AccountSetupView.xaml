@@ -31,7 +31,7 @@
                      Style="{StaticResource CommonTextBoxStyle}" Foreground="{DynamicResource ForegroundBrush}" />
             <TextBlock Text="{x:Static localization:MainResources.AccountPassword}" FontSize="12" Margin="0,20,0,0"
                        Foreground="{DynamicResource ForegroundBrush}" />
-            <controls:BindablePasswordBox x:Name="PasswordTextBox" Margin="0,3,0,0" Password="{Binding Password}"/>
+            <controls:BindablePasswordBox x:Name="PasswordTextBox" Margin="0,3,0,0" Password="{Binding Password}" />
             <TextBlock Text="{x:Static localization:MainResources.AccountUsername}" FontSize="12" Margin="0,20,0,0"
                        Foreground="{DynamicResource ForegroundBrush}" />
             <TextBox x:Name="UsernameTextBox" Margin="0,3,0,0" Text="{Binding UserName, Mode=TwoWay}"

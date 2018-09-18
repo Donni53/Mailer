@@ -1,30 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Data;
+using System.Data.SQLite;
+using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Mailer.Helpers;
-using Mailer.Model;
-using NLog.Fluent;
 
 namespace Mailer.Services
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Data;
-    using System.Data.SQLite;
-    using System.Globalization;
-    using System.IO;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-
     namespace Mailer.Database
     {
         public class DataBase
         {
-            public SQLiteConnection Connection;
             public const string DbName = "MailerSettings.db";
+            public SQLiteConnection Connection;
 
             public DataBase()
             {
@@ -54,12 +43,11 @@ namespace Mailer.Services
                 try
                 {
                     if (!Directory.Exists(@"Cache")) return;
-                    List<string> filesnames = Directory.GetFiles(@"Cache").ToList<string>();
+                    var filesnames = Directory.GetFiles(@"Cache").ToList();
                     foreach (var item in filesnames)
-                    {
                         using (var sr = new StreamReader(item))
                         {
-                            string line = sr.ReadToEnd();
+                            var line = sr.ReadToEnd();
                             var lineBytes = ByteConverters.ObjectToByteArray(line);
                             var sql = "INSERT INTO Cache ('filename', 'file') VALUES (@filename, @file)";
                             var command = new SQLiteCommand(sql, Connection);
@@ -68,13 +56,12 @@ namespace Mailer.Services
                             command.Parameters["@file"].Value = lineBytes;
                             await command.ExecuteNonQueryAsync();
                         }
-                    }
-
                 }
                 catch (Exception e)
                 {
                     LoggingService.Log(e);
                 }
+
                 CloseConnection();
             }
 
@@ -85,14 +72,14 @@ namespace Mailer.Services
                 {
                     if (!Directory.Exists(@"Cache"))
                         Directory.CreateDirectory(@"Cache");
-                    var sql = $"SELECT * FROM Cache";
+                    var sql = "SELECT * FROM Cache";
                     var command = new SQLiteCommand(sql, Connection);
                     var reader = command.ExecuteReaderAsync();
                     while (reader.Result.Read())
                     {
-                        string filename = (string)reader.Result["filename"];
-                        string filecontent = (string)ByteConverters.ByteArrayToObject((byte[])reader.Result["file"]);
-                        using (StreamWriter sw = new StreamWriter(filename))
+                        var filename = (string) reader.Result["filename"];
+                        var filecontent = (string) ByteConverters.ByteArrayToObject((byte[]) reader.Result["file"]);
+                        using (var sw = new StreamWriter(filename))
                         {
                             await sw.WriteAsync(filecontent);
                         }
@@ -102,6 +89,7 @@ namespace Mailer.Services
                 {
                     LoggingService.Log(e);
                 }
+
                 CloseConnection();
             }
 
@@ -111,27 +99,25 @@ namespace Mailer.Services
                 try
                 {
                     const string sql = @" CREATE TABLE Cache (filename text PRIMARY KEY, file blob);";
-                    SQLiteCommand command = new SQLiteCommand(sql, Connection);
+                    var command = new SQLiteCommand(sql, Connection);
                     await command.ExecuteNonQueryAsync();
-
                 }
                 catch (Exception e)
                 {
                     LoggingService.Log(e);
                 }
+
                 CloseConnection();
             }
 
             public async Task DropTable(string table)
             {
                 OpenConnection();
-                string sql = @"DROP TABLE IF EXISTS "+table+";";
+                var sql = @"DROP TABLE IF EXISTS " + table + ";";
                 var command = new SQLiteCommand(sql, Connection);
                 await command.ExecuteNonQueryAsync();
                 CloseConnection();
             }
-
         }
     }
-
 }

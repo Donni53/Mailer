@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight.Messaging;
 using MailBee.ImapMail;
@@ -10,16 +7,12 @@ using MailBee.SmtpMail;
 using Mailer.Domain;
 using Mailer.Messages;
 using Mailer.Model;
-using Mailer.ViewModel;
 
 namespace Mailer.Services
 {
     public static class ImapSmtpService
     {
         private const string Key = "MN110-7DB5B590B5C3B5D7B5F4B56BC8C8-0D68";
-        public static Account Account { get; set; }
-        public static Imap ImapClient { get; set; }
-        public static Smtp SmtpClient { get; set; }
 
         static ImapSmtpService()
         {
@@ -27,9 +20,13 @@ namespace Mailer.Services
             SmtpClient = new Smtp(Key);
         }
 
+        public static Account Account { get; set; }
+        public static Imap ImapClient { get; set; }
+        public static Smtp SmtpClient { get; set; }
+
         public static async Task MoveMessageAsync(List<string> messages, string newFolder)
         {
-            var messagesSet = messages.Aggregate("", (current, t) => current + (t + ","));
+            var messagesSet = messages.Aggregate("", (current, t) => current + t + ",");
             await ImapClient.MoveMessagesAsync(messagesSet, true, newFolder);
         }
 
@@ -40,7 +37,7 @@ namespace Mailer.Services
 
         public static async Task DeleteMessageAsync(List<string> messages)
         {
-            var messagesSet = messages.Aggregate("", (current, t) => current + (t + ","));
+            var messagesSet = messages.Aggregate("", (current, t) => current + t + ",");
             await ImapClient.DeleteMessagesAsync(messagesSet, true);
         }
 
@@ -49,9 +46,10 @@ namespace Mailer.Services
             await ImapClient.DeleteMessagesAsync(messageUid, true);
         }
 
-        public static async Task MarkMessages(List<string> messages, SystemMessageFlags systemMessageFlags, MessageFlagAction messageFlagAction)
+        public static async Task MarkMessages(List<string> messages, SystemMessageFlags systemMessageFlags,
+            MessageFlagAction messageFlagAction)
         {
-            var messagesSet = messages.Aggregate("", (current, t) => current + (t + ","));
+            var messagesSet = messages.Aggregate("", (current, t) => current + t + ",");
             await ImapClient.SetMessageFlagsAsync(messagesSet, true, systemMessageFlags, messageFlagAction);
         }
 

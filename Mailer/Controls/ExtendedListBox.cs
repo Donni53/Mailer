@@ -50,10 +50,10 @@ namespace Mailer.Controls
 
         private UIElement FindElementRecursive(FrameworkElement parent, Type targetType)
         {
-            int childCount = VisualTreeHelper.GetChildrenCount(parent);
+            var childCount = VisualTreeHelper.GetChildrenCount(parent);
             UIElement returnElement = null;
             if (childCount > 0)
-                for (int i = 0; i < childCount; i++)
+                for (var i = 0; i < childCount; i++)
                 {
                     var element = VisualTreeHelper.GetChild(parent, i);
                     if (element.GetType() == targetType)

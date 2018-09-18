@@ -19,8 +19,8 @@ namespace Mailer.UI.Extensions
             toDo.Enqueue(root.GetVisualChildren());
             while (toDo.Count > 0)
             {
-                IEnumerable<FrameworkElement> children = toDo.Dequeue();
-                foreach (FrameworkElement child in children)
+                var children = toDo.Dequeue();
+                foreach (var child in children)
                 {
                     yield return child;
                     toDo.Enqueue(child.GetVisualChildren());
@@ -38,7 +38,7 @@ namespace Mailer.UI.Extensions
             if (root == null)
                 yield break;
 
-            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(root); i++)
+            for (var i = 0; i < VisualTreeHelper.GetChildrenCount(root); i++)
                 yield return VisualTreeHelper.GetChild(root, i) as FrameworkElement;
         }
 
@@ -49,7 +49,7 @@ namespace Mailer.UI.Extensions
         /// <returns>An enumerator of the ancestors</returns>
         public static IEnumerable<FrameworkElement> GetVisualAncestors(this FrameworkElement node)
         {
-            FrameworkElement parent = node.GetVisualParent();
+            var parent = node.GetVisualParent();
             while (parent != null)
             {
                 yield return parent;
@@ -69,28 +69,20 @@ namespace Mailer.UI.Extensions
 
         public static Visual GetDescendantByType(Visual element, Type type)
         {
-            if (element == null)
-            {
-                return null;
-            }
-            if (element.GetType() == type)
-            {
-                return element;
-            }
+            if (element == null) return null;
+
+            if (element.GetType() == type) return element;
+
             Visual foundElement = null;
-            if (element is FrameworkElement)
+            if (element is FrameworkElement) (element as FrameworkElement).ApplyTemplate();
+
+            for (var i = 0; i < VisualTreeHelper.GetChildrenCount(element); i++)
             {
-                (element as FrameworkElement).ApplyTemplate();
-            }
-            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(element); i++)
-            {
-                Visual visual = VisualTreeHelper.GetChild(element, i) as Visual;
+                var visual = VisualTreeHelper.GetChild(element, i) as Visual;
                 foundElement = GetDescendantByType(visual, type);
-                if (foundElement != null)
-                {
-                    break;
-                }
+                if (foundElement != null) break;
             }
+
             return foundElement;
         }
     }

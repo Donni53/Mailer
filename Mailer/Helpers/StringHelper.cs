@@ -12,9 +12,9 @@ namespace Mailer.Helpers
             if (orders == null)
                 orders = new[] {"GB", "MB", "KB", "Bytes"};
 
-            long max = (long) Math.Pow(scale, orders.Length - 1);
+            var max = (long) Math.Pow(scale, orders.Length - 1);
 
-            foreach (string order in orders)
+            foreach (var order in orders)
             {
                 if (bytes > max)
                     return $"{decimal.Divide((decimal) bytes, max):##.##} {order}";

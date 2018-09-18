@@ -36,6 +36,7 @@ namespace Mailer.ViewModel.Flyouts
             {
                 LoggingService.Log(e);
             }
+
             Close(true);
         }
 

@@ -145,7 +145,7 @@ namespace Mailer.Behaviours
                 var itemsControl = (ListBox) AssociatedObject;
                 var count = itemsControl.Items.Count;
 
-                for (int i = 0; i < count; i++)
+                for (var i = 0; i < count; i++)
                 {
                     var container = (FrameworkElement) itemsControl.ItemContainerGenerator.ContainerFromIndex(i);
                     if (container != null)
@@ -157,7 +157,7 @@ namespace Mailer.Behaviours
                 var itemsControl = (ItemsControl) AssociatedObject;
                 var count = itemsControl.Items.Count;
 
-                for (int i = 0; i < count; i++)
+                for (var i = 0; i < count; i++)
                 {
                     var container = (FrameworkElement) itemsControl.ItemContainerGenerator.ContainerFromIndex(i);
                     if (container != null)
@@ -168,7 +168,7 @@ namespace Mailer.Behaviours
             {
                 var panel = (Panel) AssociatedObject;
                 var count = panel.Children.Count;
-                for (int i = 0; i < count; i++) result.Add((FrameworkElement) panel.Children[i]);
+                for (var i = 0; i < count; i++) result.Add((FrameworkElement) panel.Children[i]);
             }
 
             return result;

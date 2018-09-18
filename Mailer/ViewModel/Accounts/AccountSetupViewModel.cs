@@ -62,10 +62,7 @@ namespace Mailer.ViewModel.Accounts
 
         private void InitializeCommands()
         {
-            CloseCommand = new RelayCommand(() =>
-            {
-                ViewModelLocator.MainViewModel.GoBackCommand.Execute(null);
-            });
+            CloseCommand = new RelayCommand(() => { ViewModelLocator.MainViewModel.GoBackCommand.Execute(null); });
 
             SaveCommand = new RelayCommand(Save);
         }
@@ -78,7 +75,8 @@ namespace Mailer.ViewModel.Accounts
             {
                 var imapData = new ImapData(ImapServer, true);
                 var smtpData = new SmtpData(SmtpAddress, SmtpSsl, SmtpAuth);
-                await ImapSmtpService.ImapAuth(new Account(UserName, Login, Password, imapData, smtpData), NewAccount, Id);
+                await ImapSmtpService.ImapAuth(new Account(UserName, Login, Password, imapData, smtpData), NewAccount,
+                    Id);
                 Messenger.Default.Send(new NavigateToPageMessage
                 {
                     Page = "/Main.MainPageView"

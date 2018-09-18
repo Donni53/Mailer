@@ -8,6 +8,7 @@
             UseSsl = useSsl;
             Auth = auth;
         }
+
         public string Address { get; set; }
         public bool UseSsl { get; set; }
         public bool Auth { get; set; }

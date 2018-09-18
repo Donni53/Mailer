@@ -33,7 +33,7 @@ namespace Mailer.UI.Converters
 
             if (value is IList)
             {
-                bool empty = ((IList) value).Count == 0;
+                var empty = ((IList) value).Count == 0;
                 if (invert)
                     empty = !empty;
                 if (empty)

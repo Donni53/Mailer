@@ -1,22 +1,14 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Windows.Documents;
-using MailBee.ImapMail;
-using MailBee.Mime;
 using Mailer.Annotations;
 
 namespace Mailer.Model
 {
-
     public class FolderExtended : INotifyPropertyChanged
     {
-        private int _unreadedMessagesCount;
         private int _messagesCount;
-
-        public ObservableCollection<EnvelopeWarpper> EnvelopeCollection { get; set; }
+        private int _unreadedMessagesCount;
 
         public FolderExtended(string name, string shortName, int messagesCount, int unreadedMessagesCount)
         {
@@ -28,6 +20,8 @@ namespace Mailer.Model
             EnvelopeCollection = new ObservableCollection<EnvelopeWarpper>();
         }
 
+        public ObservableCollection<EnvelopeWarpper> EnvelopeCollection { get; set; }
+
         public string Name { get; set; }
         public string ShortName { get; set; }
 
@@ -38,7 +32,7 @@ namespace Mailer.Model
             {
                 _messagesCount = value;
                 OnPropertyChanged();
-            } 
+            }
         }
 
         public int UnreadedMessagesCount

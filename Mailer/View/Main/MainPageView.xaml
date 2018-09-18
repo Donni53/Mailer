@@ -21,25 +21,31 @@
         <CollectionViewSource x:Key="EnvelopeCollection" Source="{Binding MailEnvelopeCollection}" />
 
         <Style x:Key="TextBlockButtonStyle" TargetType="{x:Type Button}">
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="Foreground" Value="{DynamicResource ForegroundBrush}"/>
-            <Setter Property="FontSize" Value="11"/>
-            <Setter Property="FontWeight" Value="SemiBold"/>
-            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Foreground" Value="{DynamicResource ForegroundBrush}" />
+            <Setter Property="FontSize" Value="11" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="BorderThickness" Value="0" />
             <Setter Property="Opacity" Value="0.5" />
             <Setter Property="Cursor" Value="Hand" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
-                        <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
-                            <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
+                            <ContentPresenter x:Name="contentPresenter" Focusable="False"
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              RecognizesAccessKey="True"
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Opacity" Value="1"/>
+                                <Setter Property="Opacity" Value="1" />
                             </Trigger>
                             <Trigger Property="IsPressed" Value="True">
-                                <Setter Property="Opacity" Value="0.9"/>
+                                <Setter Property="Opacity" Value="0.9" />
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -110,66 +116,97 @@
                          HorizontalContentAlignment="Stretch"
                          SelectedIndex="{Binding SelectedFolder}">
                     <i:Interaction.Behaviors>
-                        <behaviours:TransitionBehaviour Transition="{StaticResource MainMenuLoadAnim}" TransitionDelay="40" />
+                        <behaviours:TransitionBehaviour Transition="{StaticResource MainMenuLoadAnim}"
+                                                        TransitionDelay="40" />
                     </i:Interaction.Behaviors>
                 </ListBox>
                 <StackPanel Orientation="Horizontal" Margin="10,0,0,0">
-                    <Button Content="{x:Static localization:MainResources.FoldersClear}" Style="{StaticResource TextBlockButtonStyle}" HorizontalAlignment="Left" Command="{Binding ClearFolderCommand}"/>
-                    <Button Content="{x:Static localization:MainResources.FoldersDelete}" Style="{StaticResource TextBlockButtonStyle}" HorizontalAlignment="Left" Margin="10,0,0,0" Command="{Binding DeleteFolderCommand}"/>
-                    <Button Content="{x:Static localization:MainResources.Refresh}" Style="{StaticResource TextBlockButtonStyle}" HorizontalAlignment="Left" Margin="10,0,0,0" Command="{Binding RefreshCommand}"/>
+                    <Button Content="{x:Static localization:MainResources.FoldersClear}"
+                            Style="{StaticResource TextBlockButtonStyle}" HorizontalAlignment="Left"
+                            Command="{Binding ClearFolderCommand}" />
+                    <Button Content="{x:Static localization:MainResources.FoldersDelete}"
+                            Style="{StaticResource TextBlockButtonStyle}" HorizontalAlignment="Left" Margin="10,0,0,0"
+                            Command="{Binding DeleteFolderCommand}" />
+                    <Button Content="{x:Static localization:MainResources.Refresh}"
+                            Style="{StaticResource TextBlockButtonStyle}" HorizontalAlignment="Left" Margin="10,0,0,0"
+                            Command="{Binding RefreshCommand}" />
                 </StackPanel>
-                <Button Style="{StaticResource HighlightedButtonStyle}" Content="{x:Static localization:MainResources.NewMessage}" Command="{Binding NewMessageCommand}"  Margin="0,5,0,0" Height="30"/>
+                <Button Style="{StaticResource HighlightedButtonStyle}"
+                        Content="{x:Static localization:MainResources.NewMessage}"
+                        Command="{Binding NewMessageCommand}" Margin="0,5,0,0" Height="30" />
             </StackPanel>
             <Grid Grid.Column="1" Margin="0,33,10,0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition />
                 </Grid.RowDefinitions>
-                <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="28,0,0,0" Visibility="{Binding IsMessagesLoading, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=True}">
-                    <CheckBox IsChecked="{Binding IsChecked, Mode=TwoWay}" FontSize="12" Opacity="0.7" Foreground="{DynamicResource ForegroundBrush}"
-                              VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,5,0"/>
-                    <Button x:Name="MarkButton" Content="{x:Static localization:MainResources.MessagesMark}" Style="{StaticResource TextBlockButtonStyle}" Margin="0,0,0,0" HorizontalAlignment="Center" Click="MarkButton_OnClick">
+                <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="28,0,0,0"
+                            Visibility="{Binding IsMessagesLoading, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=True}">
+                    <CheckBox IsChecked="{Binding IsChecked, Mode=TwoWay}" FontSize="12" Opacity="0.7"
+                              Foreground="{DynamicResource ForegroundBrush}"
+                              VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,5,0" />
+                    <Button x:Name="MarkButton" Content="{x:Static localization:MainResources.MessagesMark}"
+                            Style="{StaticResource TextBlockButtonStyle}" Margin="0,0,0,0" HorizontalAlignment="Center"
+                            Click="MarkButton_OnClick">
                         <Button.ContextMenu>
-                            <ContextMenu Style="{StaticResource CommonContextMenuStyle}" ItemContainerStyle="{StaticResource CommonContextMenuItemStyle}" Focusable="False">
-                                <MenuItem Header="{x:Static localization:MainResources.AsReaded}" Command="{Binding MarkMessagesCommand}" CommandParameter="{x:Static helpers:MarkAs.Readed}"/>
-                                <MenuItem Header="{x:Static localization:MainResources.AsUnreaded}" Command="{Binding MarkMessagesCommand}" CommandParameter="{x:Static helpers:MarkAs.Unreaded}"/>
+                            <ContextMenu Style="{StaticResource CommonContextMenuStyle}"
+                                         ItemContainerStyle="{StaticResource CommonContextMenuItemStyle}"
+                                         Focusable="False">
+                                <MenuItem Header="{x:Static localization:MainResources.AsReaded}"
+                                          Command="{Binding MarkMessagesCommand}"
+                                          CommandParameter="{x:Static helpers:MarkAs.Readed}" />
+                                <MenuItem Header="{x:Static localization:MainResources.AsUnreaded}"
+                                          Command="{Binding MarkMessagesCommand}"
+                                          CommandParameter="{x:Static helpers:MarkAs.Unreaded}" />
                             </ContextMenu>
                         </Button.ContextMenu>
                     </Button>
-                    <Button x:Name="MoveButton" Content="{x:Static localization:MainResources.MessagesMove}" Style="{StaticResource TextBlockButtonStyle}" Margin="20,0,0,0" HorizontalAlignment="Center" Click="MoveButton_OnClick">
+                    <Button x:Name="MoveButton" Content="{x:Static localization:MainResources.MessagesMove}"
+                            Style="{StaticResource TextBlockButtonStyle}" Margin="20,0,0,0"
+                            HorizontalAlignment="Center" Click="MoveButton_OnClick">
                         <Button.ContextMenu>
-                            <ContextMenu Style="{StaticResource CommonContextMenuStyle}" Focusable="False" ItemsSource="{Binding Actions}" ItemContainerStyle ="{StaticResource CommonContextMoveMenuItemStyle}"/>
+                            <ContextMenu Style="{StaticResource CommonContextMenuStyle}" Focusable="False"
+                                         ItemsSource="{Binding Actions}"
+                                         ItemContainerStyle="{StaticResource CommonContextMoveMenuItemStyle}" />
                         </Button.ContextMenu>
                     </Button>
-                    <Button x:Name="DeleteButton" Content="{x:Static localization:MainResources.MessagesDelete}" Style="{StaticResource TextBlockButtonStyle}" Margin="20,0,0,0" HorizontalAlignment="Center" Command="{Binding DeleteMessagesCommand}"/>
+                    <Button x:Name="DeleteButton" Content="{x:Static localization:MainResources.MessagesDelete}"
+                            Style="{StaticResource TextBlockButtonStyle}" Margin="20,0,0,0"
+                            HorizontalAlignment="Center" Command="{Binding DeleteMessagesCommand}" />
                 </StackPanel>
                 <Grid Grid.Row="1">
                     <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition/>
-                            <RowDefinition Height="Auto"/>
+                            <RowDefinition />
+                            <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
                         <ListBox Grid.Row="0" x:Name="MessagesListBox"
-                             Visibility="{Binding IsMessagesLoading, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=True}"
-                             ItemsSource="{Binding Source={StaticResource EnvelopeCollection}}"
-                             Style="{StaticResource CommonListBoxStyle}"
-                             Foreground="{DynamicResource ForegroundBrush}"
-                             ItemContainerStyle="{StaticResource AudioListBoxItemStyle}"
-                             ItemTemplate="{StaticResource MessageItemTemplate}"
-                             VirtualizingStackPanel.ScrollUnit="Pixel"
-                             ScrollViewer.ScrollChanged="MessagesListBox_OnScrollChanged"
-                             ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                                 Visibility="{Binding IsMessagesLoading, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=True}"
+                                 ItemsSource="{Binding Source={StaticResource EnvelopeCollection}}"
+                                 Style="{StaticResource CommonListBoxStyle}"
+                                 Foreground="{DynamicResource ForegroundBrush}"
+                                 ItemContainerStyle="{StaticResource AudioListBoxItemStyle}"
+                                 ItemTemplate="{StaticResource MessageItemTemplate}"
+                                 VirtualizingStackPanel.ScrollUnit="Pixel"
+                                 ScrollViewer.ScrollChanged="MessagesListBox_OnScrollChanged"
+                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                             <ListBox.RenderTransform>
                                 <TranslateTransform />
                             </ListBox.RenderTransform>
                             <i:Interaction.Behaviors>
-                                <behaviours:TransitionBehaviour Transition="{StaticResource AudioLoadAnim}" TransitionDelay="40" />
+                                <behaviours:TransitionBehaviour Transition="{StaticResource AudioLoadAnim}"
+                                                                TransitionDelay="40" />
                             </i:Interaction.Behaviors>
                         </ListBox>
-                        <Button Grid.Row="1" Style="{StaticResource HighlightedButtonStyle}" Visibility="{Binding IsLoadMoreButtonVisible, Converter={StaticResource BoolToVisibilityConverter}}" Content="Load more" 
-                            Command="{Binding LoadMoreCommand}" CommandParameter="{Binding SelectedFolder}"  Margin="0,10,0,10" Width="150" Height="25" VerticalAlignment="Bottom"/>
+                        <Button Grid.Row="1" Style="{StaticResource HighlightedButtonStyle}"
+                                Visibility="{Binding IsLoadMoreButtonVisible, Converter={StaticResource BoolToVisibilityConverter}}"
+                                Content="Load more"
+                                Command="{Binding LoadMoreCommand}" CommandParameter="{Binding SelectedFolder}"
+                                Margin="0,10,0,10" Width="150" Height="25" VerticalAlignment="Bottom" />
                     </Grid>
-                    <StackPanel Visibility="{Binding IsMessagesLoading, Converter={StaticResource BoolToVisibilityConverter}}" VerticalAlignment="Center" Margin="0,0,0,0">
+                    <StackPanel
+                        Visibility="{Binding IsMessagesLoading, Converter={StaticResource BoolToVisibilityConverter}}"
+                        VerticalAlignment="Center" Margin="0,0,0,0">
                         <TextBlock Text="{x:Static localization:MainResources.WaitMessage}" FontSize="22"
                                    HorizontalAlignment="Center" FontWeight="Light"
                                    Foreground="{DynamicResource ForegroundBrush}" />
@@ -177,7 +214,7 @@
                                      IsIndeterminate="{Binding IsMessagesLoading}" />
                     </StackPanel>
                 </Grid>
-                
+
             </Grid>
             <Rectangle Width="1" Grid.Column="1" HorizontalAlignment="Left"
                        Fill="{DynamicResource MainBackgroundSplitterBrush}" SnapsToDevicePixels="True"

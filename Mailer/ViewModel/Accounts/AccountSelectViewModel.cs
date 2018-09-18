@@ -68,7 +68,7 @@ namespace Mailer.ViewModel.Accounts
             IsError = false;
             try
             {
-                await ImapSmtpService.ImapAuth( Domain.Settings.Instance.Accounts[SelectedAccount], false, -1);
+                await ImapSmtpService.ImapAuth(Domain.Settings.Instance.Accounts[SelectedAccount], false, -1);
                 Domain.Settings.Instance.SelectedAccount = SelectedAccount;
                 Domain.Settings.Instance.Save();
                 Messenger.Default.Send(new NavigateToPageMessage

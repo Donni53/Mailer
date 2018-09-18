@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Input;
-using System.Windows.Media;
 using Mailer.Controls;
 using Mailer.UI.Extensions;
 using Mailer.ViewModel.Main;
@@ -27,7 +25,8 @@ namespace Mailer.View.Main
 
         private void MessagesListBox_OnScrollChanged(object sender, ScrollChangedEventArgs e)
         {
-            var scrollViewer = VisualTreeHelperExtensions.GetDescendantByType((ListBox)sender, typeof(ScrollViewer)) as ScrollViewer;
+            var scrollViewer =
+                VisualTreeHelperExtensions.GetDescendantByType((ListBox) sender, typeof(ScrollViewer)) as ScrollViewer;
             if (scrollViewer.VerticalOffset == scrollViewer.ScrollableHeight)
             {
                 _viewModel.AtListBottom = true;
@@ -46,11 +45,12 @@ namespace Mailer.View.Main
             if (MarkButton.ContextMenu == null || MarkButton.ContextMenu.IsOpen) return;
             e.Handled = true;
 
-            var mouseRightClickEvent = new MouseButtonEventArgs(Mouse.PrimaryDevice, Environment.TickCount, MouseButton.Right)
-            {
-                RoutedEvent = Mouse.MouseUpEvent,
-                Source = sender,
-            };
+            var mouseRightClickEvent =
+                new MouseButtonEventArgs(Mouse.PrimaryDevice, Environment.TickCount, MouseButton.Right)
+                {
+                    RoutedEvent = Mouse.MouseUpEvent,
+                    Source = sender
+                };
             InputManager.Current.ProcessInput(mouseRightClickEvent);
         }
 
@@ -59,11 +59,12 @@ namespace Mailer.View.Main
             if (MoveButton.ContextMenu == null || MoveButton.ContextMenu.IsOpen) return;
             e.Handled = true;
 
-            var mouseRightClickEvent = new MouseButtonEventArgs(Mouse.PrimaryDevice, Environment.TickCount, MouseButton.Right)
-            {
-                RoutedEvent = Mouse.MouseUpEvent,
-                Source = sender,
-            };
+            var mouseRightClickEvent =
+                new MouseButtonEventArgs(Mouse.PrimaryDevice, Environment.TickCount, MouseButton.Right)
+                {
+                    RoutedEvent = Mouse.MouseUpEvent,
+                    Source = sender
+                };
             InputManager.Current.ProcessInput(mouseRightClickEvent);
         }
     }

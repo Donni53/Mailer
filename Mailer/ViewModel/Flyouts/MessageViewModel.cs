@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -20,14 +19,6 @@ namespace Mailer.ViewModel.Flyouts
     {
         private MailMessage _message;
 
-        public MailMessage Message
-        {
-            get => _message;
-            set => Set(ref _message, value);
-        }
-
-        public RelayCommand CloseMessageCommand { get; private set; }
-
         public MessageViewModel(EnvelopeWarpper envelope)
         {
             InitializeCommands();
@@ -35,6 +26,14 @@ namespace Mailer.ViewModel.Flyouts
             Message = new MailMessage();
             LoadEmailAsync(envelope);
         }
+
+        public MailMessage Message
+        {
+            get => _message;
+            set => Set(ref _message, value);
+        }
+
+        public RelayCommand CloseMessageCommand { get; private set; }
 
 
         private void InitializeCommands()
@@ -57,13 +56,15 @@ namespace Mailer.ViewModel.Flyouts
                 var htmlFilePath = @"Cache\" + messagefilenameMd5 + ".htm";
                 if (File.Exists(cacheFilePath))
                 {
-                    MailMessage message = new MailMessage();
+                    var message = new MailMessage();
                     await message.DeserializeAsync(cacheFilePath);
                     Message = message;
                 }
                 else
                 {
-                    var message = await ImapSmtpService.ImapClient.DownloadEntireMessageAsync(Convert.ToInt64(envelope.Uid), true);
+                    var message =
+                        await ImapSmtpService.ImapClient.DownloadEntireMessageAsync(Convert.ToInt64(envelope.Uid),
+                            true);
                     if (message.BodyPlainText == "")
                         message.MakePlainBodyFromHtmlBody();
                     Message = message;

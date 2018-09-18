@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using System.Windows;
 using GalaSoft.MvvmLight.Command;
 using Mailer.Controls;
@@ -12,16 +8,16 @@ namespace Mailer.ViewModel.Flyouts
 {
     public class ConfirmViewModel : ViewModelBase
     {
-        public string Message { get; set; }
-
-        public RelayCommand ApplyCommand { get; private set; }
-        public RelayCommand<bool> CloseCommand { get; private set; }
-
         public ConfirmViewModel(string message)
         {
             Message = message;
             InitializeCommands();
         }
+
+        public string Message { get; set; }
+
+        public RelayCommand ApplyCommand { get; private set; }
+        public RelayCommand<bool> CloseCommand { get; private set; }
 
         private void InitializeCommands()
         {

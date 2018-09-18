@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data.SQLite;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
@@ -12,9 +10,7 @@ using System.Windows.Threading;
 using GalaSoft.MvvmLight.Threading;
 using Mailer.Controls;
 using Mailer.Domain;
-using Mailer.Model;
 using Mailer.Services;
-using Mailer.Services.Mailer.Database;
 using Mailer.View.Flyouts;
 using Application = System.Windows.Application;
 
@@ -27,11 +23,12 @@ namespace Mailer
     {
         public static readonly string Root = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
         private NotifyIcon _trayIcon;
-        
+
 
         private void App_OnStartup(object sender, StartupEventArgs e)
         {
-            LoggingService.Log("Mailer v" + Assembly.GetExecutingAssembly().GetName().Version + " started. OS: " + Environment.OSVersion);
+            LoggingService.Log("Mailer v" + Assembly.GetExecutingAssembly().GetName().Version + " started. OS: " +
+                               Environment.OSVersion);
             DispatcherHelper.Initialize();
 
             Settings.Load();

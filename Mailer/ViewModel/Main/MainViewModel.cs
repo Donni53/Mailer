@@ -84,7 +84,7 @@ namespace Mailer.ViewModel.Main
 
         private void OnNavigateToPage(NavigateToPageMessage message)
         {
-            Type type = Type.GetType("Mailer.View." + message.Page.Substring(1), false);
+            var type = Type.GetType("Mailer.View." + message.Page.Substring(1), false);
             if (type == null)
             {
                 if (Debugger.IsAttached)

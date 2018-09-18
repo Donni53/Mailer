@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Documents;
 using GalaSoft.MvvmLight.Command;
-using MailBee;
 using MailBee.Security;
 using MailBee.SmtpMail;
 using Mailer.Controls;
@@ -20,18 +16,19 @@ namespace Mailer.ViewModel.Flyouts
     {
         private string _error;
         private bool _isError;
-        public string To { get; set; }
-        public string Subject { get; set; }
-        public FlowDocument Document { get; set; }
-
-        public RelayCommand SendMessageCommand { get; private set; }
-        public RelayCommand CloseMessageCommand { get; private set; }
 
         public NewMessageViewModel()
         {
             InitializeCommands();
             Document = new FlowDocument();
         }
+
+        public string To { get; set; }
+        public string Subject { get; set; }
+        public FlowDocument Document { get; set; }
+
+        public RelayCommand SendMessageCommand { get; private set; }
+        public RelayCommand CloseMessageCommand { get; private set; }
 
         public string Error
         {
@@ -54,7 +51,7 @@ namespace Mailer.ViewModel.Flyouts
         public void HandleDrop(DragEventArgs e)
         {
             if (!e.Data.GetDataPresent(DataFormats.FileDrop)) return;
-            string[] docPath = (string[])e.Data.GetData(DataFormats.FileDrop);
+            var docPath = (string[]) e.Data.GetData(DataFormats.FileDrop);
 
             var dataFormat = DataFormats.Rtf;
 
@@ -85,7 +82,8 @@ namespace Mailer.ViewModel.Flyouts
                     await ImapSmtpService.SmtpClient.DisconnectAsync();
                 ImapSmtpService.SmtpClient.SmtpServers.Clear();
                 ImapSmtpService.SmtpClient.ResetMessage();
-                SmtpServer server = new SmtpServer(ImapSmtpService.Account.SmtpData.Address, ImapSmtpService.Account.Email, ImapSmtpService.Account.Password);
+                var server = new SmtpServer(ImapSmtpService.Account.SmtpData.Address,
+                    ImapSmtpService.Account.Email, ImapSmtpService.Account.Password);
                 server.SslMode = SslStartupMode.UseStartTls;
                 ImapSmtpService.SmtpClient.SmtpServers.Add(server);
                 await ImapSmtpService.SmtpClient.ConnectAsync();
@@ -95,7 +93,8 @@ namespace Mailer.ViewModel.Flyouts
                 ImapSmtpService.SmtpClient.From.Email = ImapSmtpService.Account.Email;
                 ImapSmtpService.SmtpClient.To.AddFromString(To);
                 ImapSmtpService.SmtpClient.Subject = Subject;
-                ImapSmtpService.SmtpClient.BodyHtmlText = new TextRange(Document.ContentStart, Document.ContentEnd).Text;
+                ImapSmtpService.SmtpClient.BodyHtmlText =
+                    new TextRange(Document.ContentStart, Document.ContentEnd).Text;
                 await ImapSmtpService.SmtpClient.SendAsync();
                 IsError = false;
                 CloseMessage();
@@ -106,6 +105,7 @@ namespace Mailer.ViewModel.Flyouts
                 Error = e.Message;
                 LoggingService.Log(e);
             }
+
             IsWorking = false;
         }
 
