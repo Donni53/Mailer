@@ -12,4 +12,4 @@ Mailer - simple IMAP/SMTP email client
 
 ![About Window](https://pp.userapi.com/c846420/v846420043/ee069/04mJbAe8Axs.jpg)
 
-You can connect with us by email: student@belstu.by
+You can connect with me by email: student@belstu.by
